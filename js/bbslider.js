@@ -12,8 +12,8 @@
  * Copyright (c) 2013 Richard Hung.
  *
  * License
- * Bare Bones Slider by Richard Hung is licensed under a Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License.
- * http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US
+ * Bare Bones Slider by Richard Hung is licensed under a Creative Commons Attribution-NonCommercial 3.0 Unported License.
+ * http://creativecommons.org/licenses/by-nc/3.0/deed.en_US
  */
 
 (function($) {
@@ -81,7 +81,7 @@
 				// Create autoheight 
 				if (settings.autoHeight == true) {
 					// Get max panel height and width
-					var h = Math.max.apply(Math, $(panel).map(function() { return $(this).outerHeight(true); }));
+					var h = Math.max.apply(Math, $(panel).map(function() { return $(this).height(true); }));
 					$(wrapper).height(h);
 				}// End autoheight
 				
