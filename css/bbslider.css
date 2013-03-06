@@ -1,0 +1,48 @@
+/* CSS Document */
+
+.bbslider-wrapper {
+	display:block;
+	overflow:hidden;
+	position:relative;
+}
+.bbslider-wrapper .panel {
+	display:block;
+	position:absolute;
+	width:100%;
+}
+.bbslider-wrapper .prev-control-wrapper {
+	display:block;
+	z-index:10;
+	width:50px;
+	height:100%;
+	position:absolute;
+	left:0;
+}
+.bbslider-wrapper .next-control-wrapper {
+	display:block;
+	z-index:10;
+	width:50px;
+	height:100%;
+	position:absolute;
+	right:0;
+}
+.bbslider-wrapper .prev-control-wrapper .prev,
+.bbslider-wrapper .next-control-wrapper .next {
+	display:none;
+}
+.bbslider-wrapper .prev-control-wrapper:hover a,
+.bbslider-wrapper .next-control-wrapper:hover a  {
+	display:block;
+	width:50px;
+	height:100%;
+	background-repeat:no-repeat;
+	background-position:center;
+	text-indent:-9999px;
+	overflow:hidden;
+}
+.bbslider-wrapper .prev {
+	background-image:url("../images/prev.png");
+}
+.bbslider-wrapper .next {
+	background-image:url("../images/next.png");
+}

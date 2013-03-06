@@ -1,0 +1,28 @@
+{
+"name": "bbslider",
+"title": "Bare Bones Slider",
+"description": "jQuery slider with little bloat but lots of customization.",
+"keywords": [
+"slider",
+"animation"
+],
+"version": "1.0.2",
+"author": {
+"name": "Richard Hung",
+"email": "richardhung111@gmail.com",
+"url": "http://www.magicmediamuse.com/"
+},
+"licenses": [
+{
+"type": "Creative Commons Attribution-NonCommercial 3.0 Unported License",
+"url": "http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"
+}
+],
+"bugs": "https://github.com/Richard1320/Bare-Bones-Slider/issues",
+"homepage": "http://www.bbslider.com",
+"docs": "http://www.bbslider.com",
+"download": "http://www.bbslider.com/download.php",
+"dependencies": {
+"jquery": ">=1.5"
+}
+}
