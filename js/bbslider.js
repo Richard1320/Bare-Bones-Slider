@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.2
+ * 1.0.3
  * 
  * Copyright (c) 2013 Richard Hung.
  *
@@ -81,8 +81,15 @@
 				// Create autoheight 
 				if (settings.autoHeight == true) {
 					// Get max panel height and width
-					var h = Math.max.apply(Math, $(panel).map(function() { return $(this).height(true); }));
-					$(wrapper).height(h);
+					var hi = 0;
+					$(panel).each(function(){
+						var h = $(this).outerHeight();
+						if(h > hi){
+							hi = h;
+						}    
+					});
+
+					$(wrapper).height(hi);
 				}// End autoheight
 				
 				// Create placeholder 
