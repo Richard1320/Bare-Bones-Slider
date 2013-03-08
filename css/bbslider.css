@@ -17,6 +17,7 @@
 	height:100%;
 	position:absolute;
 	left:0;
+	background-image:url("../images/blank.gif");
 }
 .bbslider-wrapper .next-control-wrapper {
 	display:block;
@@ -25,6 +26,7 @@
 	height:100%;
 	position:absolute;
 	right:0;
+	background-image:url("../images/blank.gif");
 }
 .bbslider-wrapper .prev-control-wrapper .prev,
 .bbslider-wrapper .next-control-wrapper .next {
