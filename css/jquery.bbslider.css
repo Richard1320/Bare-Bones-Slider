@@ -10,6 +10,9 @@
 	position:absolute;
 	width:100%;
 }
+.bbslider-wrapper .panel * {
+	filter:inherit;
+}
 .bbslider-wrapper .prev-control-wrapper {
 	display:block;
 	z-index:10;

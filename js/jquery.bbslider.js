@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.3
+ * 1.0.4
  * 
  * Copyright (c) 2013 Richard Hung.
  *
@@ -329,10 +329,15 @@
 		}, // End pagerUpdate
 		bindpager : function() {
 			$(this).bind('click',function(e) {
+				
 
 				// Remove # from href and get index
 				// pagerIndex = parseInt($(this).attr('href').replace('#','')) - 1;
-				var pagerIndex = parseInt($(this).attr('href').substring(1)) - 1;
+				var href       = $(this).attr('href');
+				var hash       = href.substring(href.indexOf('#'));
+				// alert(hash);
+				var pagerIndex = parseInt(hash.substring(1)) - 1;
+				// alert(hash.substring(1));
 				
 				var wid        = $(this).attr('data-link');
 				var wrapper    = $('#'+wid);
@@ -524,11 +529,11 @@
 			if ($.isFunction(callback)) {
 				callback.call(this);
 			}
+			
 		}, // End back page 
 		forPage : function(pIndex) {
 			var pCount = $(this).data('pCount');
 			var loop   = $(this).data('loop');
-			
 			// Load new image
 			if ($(this).data('onDemand') == true) {
 				$(this).children('.panel').eq(pIndex).bbslider('loadImg');
@@ -593,7 +598,7 @@
 			var pIndex   = $(this).data('pIndex');
 			var easing   = $(this).data('easing');
 			var duration = $(this).data('duration');
-
+			
 			// Remove current page		
 			$(panel).eq(cIndex).animate(
 				{
