@@ -34,7 +34,7 @@
 				placeholder: '/images/blank.gif', // Location of placeholder image
 				auto:        false,               // Pages play automatically
 				timer:       5000,                // Amount of time for autoplay
-				loop:        false,               // Loop back to the beginning
+				loop:        true,                // Loop back to the beginning
 				transition:  'fade',              // Transition for page turning
 				callback:    null,                // Callback function after each new page.
 				easing:      'swing',             // Easing transition
