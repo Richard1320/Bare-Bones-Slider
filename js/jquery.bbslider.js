@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.4
+ * 1.0.5
  * 
  * Copyright (c) 2013 Richard Hung.
  *
@@ -40,6 +40,7 @@
 				easing:      'swing',             // Easing transition
 				autoHeight:  true,                // Automatically set height 
 				pauseOnHit:  true,                // Pause autoplay when controls or pagers used 
+				randomPlay:  false,               // Autoplay goes to random slides
 				loopTrans:   true                 // Use backward and forward transition for loop
 			}; // End options
 			
@@ -71,7 +72,8 @@
 					loop:       settings.loop,
 					timer:      settings.timer,
 					loopTrans:  settings.loopTrans,
-					pauseOnHit: settings.pauseOnHit
+					pauseOnHit: settings.pauseOnHit,
+					randomPlay: settings.randomPlay
 				});
 				
 				// Apply basic CSS
@@ -248,15 +250,21 @@
 			})
 		}, // End destroy
 		play : function() { 
-			var wrapper  = $(this);
-			var autoPlay = $(wrapper).data('autoPlay');
+			var wrapper    = $(this);
+			var autoPlay   = $(wrapper).data('autoPlay');
+			var randomPlay = $(wrapper).data('randomPlay');
 			
 			// check if slider is already playing
 			if (autoPlay == false) {
 				var timer = $(wrapper).data('timer');
 				
 				var tid = setInterval(function() {
-					$(wrapper).bbslider('next');
+					// Check for random play
+					if (randomPlay == true) {
+						$(wrapper).bbslider('randomSlide');
+					} else {
+						$(wrapper).bbslider('next');
+					}
 				}, timer); // End setinterval
 				
 				$(wrapper).data('tid',tid);
@@ -271,6 +279,26 @@
 				$(wrapper).data('autoPlay',false);
 			}
  	    }, // End pause
+		randomSlide : function() {
+			var wrapper   = $(this);
+			var pCount    = $(wrapper).data('pCount');
+			var loopTrans = $(wrapper).data('loopTrans');
+			var pIndex    = $(wrapper).data('pIndex');
+			
+			var x = Math.round(1 + Math.floor(Math.random() * pCount));
+			var y = x - 1;
+			
+			// Check if to keep using forward animation
+			if (loopTrans == true) {
+				$(wrapper).data('cIndex',pIndex);
+				$(wrapper).data('pIndex',y);
+				
+				$(wrapper).bbslider('forPage',y);
+			} else {
+				$(wrapper).bbslider('travel',y);
+			}
+			
+		}, // End randomSlide
 		placeholder : function(placeholder) { 
 			var images = $(this).find('img');
 			$(images).each(function() {
@@ -335,7 +363,6 @@
 				// pagerIndex = parseInt($(this).attr('href').replace('#','')) - 1;
 				var href       = $(this).attr('href');
 				var hash       = href.substring(href.indexOf('#'));
-				// alert(hash);
 				var pagerIndex = parseInt(hash.substring(1)) - 1;
 				// alert(hash.substring(1));
 				
@@ -458,23 +485,21 @@
 				}
 			}
 		}, // End next 
-		travel : function() {
+		travel : function(xIndex) {
 			
-			// Remove # from href and get index
-			// pagerIndex = parseInt($(this).attr('href').replace('#','')) - 1;
 			var pIndex = $(this).data('pIndex');
-			var pagerIndex = parseInt($(this).attr('href').substring(1)) - 1;
-			if (pagerIndex > pIndex) { // New page is after current page, show next animation
+
+			if (pIndex < xIndex) { // New page is after current page, show next animation
 				var cIndex = pIndex;
-				var pIndex = pagerIndex;
+				var pIndex = xIndex;
 				
 				$(this).data('pIndex',pIndex);
 				$(this).data('cIndex',cIndex);
 				
 				$(this).bbslider('forPage',pIndex);
-			} else if (pagerIndex < pIndex) { // New page is before current page, show previous animation
+			} else if (pIndex > xIndex) { // New page is before current page, show previous animation
 				var cIndex = pIndex;
-				var pIndex = pagerIndex;
+				var pIndex = xIndex;
 				
 				$(this).data('pIndex',pIndex);
 				$(this).data('cIndex',cIndex);
@@ -534,6 +559,7 @@
 		forPage : function(pIndex) {
 			var pCount = $(this).data('pCount');
 			var loop   = $(this).data('loop');
+			
 			// Load new image
 			if ($(this).data('onDemand') == true) {
 				$(this).children('.panel').eq(pIndex).bbslider('loadImg');
@@ -612,6 +638,7 @@
 					opacity: 1
 				}, duration, easing
 			); // End animation
+
 		}, // End fade
 		blindFor : function() {
 			var panel    = $(this).children('.panel');
