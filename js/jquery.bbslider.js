@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.5
+ * 1.0.6
  * 
  * Copyright (c) 2013 Richard Hung.
  *
@@ -28,7 +28,7 @@
 				controls:    false,               // Display next / prev controls
 				pager:       false,               // Create clickable pagination links
 				pagerWrap:   '.pager-wrap',       // Container for pagination (Created externally)
-				paneInfo:    false,               // Display current page information
+				pageInfo:    false,               // Display current panel information
 				infoWrap:    '.info-wrap',        // Container for page information (Created externally)
 				onDemand:    false,               // Create placeholder image and load on-demand
 				placeholder: '/images/blank.gif', // Location of placeholder image
@@ -58,22 +58,26 @@
 				
 				// Bind variables to object
 				$(wrapper).data({
-					autoPlay:   false,
-					pIndex:     pIndex,
-					cIndex:     cIndex,
-					pCount:     pCount,
-					transition: settings.transition,
-					easing:     settings.easing,
-					duration:   settings.duration,
-					onDemand:   settings.onDemand,
-					infoWrap:   settings.infoWrap,
-					paneInfo:   settings.paneInfo,
-					callback:   settings.callback,
-					loop:       settings.loop,
-					timer:      settings.timer,
-					loopTrans:  settings.loopTrans,
-					pauseOnHit: settings.pauseOnHit,
-					randomPlay: settings.randomPlay
+					autoPlay:    false,
+					pIndex:      pIndex,
+					cIndex:      cIndex,
+					pCount:      pCount,
+					transition:  settings.transition,
+					easing:      settings.easing,
+					duration:    settings.duration,
+					onDemand:    settings.onDemand,
+					infoWrap:    settings.infoWrap,
+					pageInfo:    settings.pageInfo,
+					callback:    settings.callback,
+					loop:        settings.loop,
+					timer:       settings.timer,
+					loopTrans:   settings.loopTrans,
+					pauseOnHit:  settings.pauseOnHit,
+					randomPlay:  settings.randomPlay,
+					placeholder: settings.placeholder,
+					pager:       settings.pager,
+					pagerWrap:   settings.pagerWrap,
+					autoHeight:  settings.autoHeight
 				});
 				
 				// Apply basic CSS
@@ -96,7 +100,7 @@
 				
 				// Create placeholder 
 				if (settings.onDemand == true) {
-					$(wrapper).bbslider('placeholder',settings.placeholder);
+					$(wrapper).bbslider('placeholder');
 				}// End placeholder
 				
 				
@@ -106,7 +110,7 @@
 				} // End onDemand check
 			
 				// Create page numbers info function
-				if (settings.paneInfo == true) {
+				if (settings.pageInfo == true) {
 					$(wrapper).bbslider('infoParse');
 				};// End infoParse
 				
@@ -183,6 +187,96 @@
 			}); // End object loop
 	
 		}, // End init
+		update : function() {
+			return this.each(function(){
+				
+				// Create variables
+				var wrapper    = $(this);
+				var panel      = $(wrapper).children();
+				var pCount     = $(panel).length; // number of pages
+				var onDemand   = $(wrapper).data('onDemand'); 
+				var pageInfo   = $(wrapper).data('pageInfo'); 
+				var pager      = $(wrapper).data('pager');
+				var autoHeight = $(wrapper).data('autoHeight');
+				var pIndex     = $(wrapper).data('pIndex');
+
+				// Set data
+				$(wrapper).data('pCount',pCount);
+				
+				// Apply basic CSS
+				$(panel).addClass('panel');
+				
+				// Create autoheight 
+				if (autoHeight == true) {
+					// Get max panel height and width
+					var hi = 0;
+					$(panel).each(function(){
+						var h = $(this).outerHeight();
+						if(h > hi){
+							hi = h;
+						}    
+					});
+
+					$(wrapper).height(hi);
+				}// End autoheight
+				
+				// Create placeholder 
+				if (onDemand == true) {
+					$(wrapper).bbslider('placeholder');
+				}// End placeholder
+				
+				
+				// Only show one image
+				if (onDemand == true) {
+					$(panel).eq(pIndex).bbslider('loadImg');
+				} // End onDemand check
+			
+				// Create page numbers info function
+				if (pageInfo == true) {
+					$(wrapper).bbslider('infoParse');
+				};// End infoParse
+				
+				// Hide panels and show first panel
+				var transition = $(wrapper).data('transition');
+				switch (transition) {
+					case 'fade':
+						$(panel).css({ opacity: 0 }).eq(pIndex).css({ opacity: 1 });
+						break;
+					case 'slide':
+						$(panel).hide().eq(pIndex).show();
+						break;
+					case 'blind':
+						// Hide panels and show opening panel
+						$(panel).wrapInner('<div class="panel-inner" />');
+						var pWrap = $(wrapper).find('.panel-inner');
+						$(panel).css({
+							overflow:'hidden',
+							position:'absolute',
+							height:'100%',
+							width:0
+						}).eq(pIndex).css({
+							width:'100%'
+						});
+						$(pWrap).css({
+							top:0,
+							bottom:0,
+							left:0,
+							right:0
+						});
+						break;
+					case 'none':
+					default:
+						$(panel).hide().eq(pIndex).show();
+				} // End transition switch
+	
+				// Create pager if true
+				if (pager == true) {
+					$(this).bbslider('pager');			
+				} // End pager check
+				
+			
+			}); // End object loop
+		}, // End update
 		destroy : function() {
 			return this.each(function(){
 				
@@ -202,7 +296,7 @@
 				} // End onDemand check
 			
 				// Remove page numbers info function
-				if ($(wrapper).data('paneInfo') == true) {
+				if ($(wrapper).data('pageInfo') == true) {
 					var infoWrap = $(wrapper).data('infoWrap');
 					$(infoWrap).empty();
 				};// End infoParse
@@ -299,8 +393,9 @@
 			}
 			
 		}, // End randomSlide
-		placeholder : function(placeholder) { 
-			var images = $(this).find('img');
+		placeholder : function() { 
+			var placeholder = $(this).data('placeholder');
+			var images      = $(this).find('img');
 			$(images).each(function() {
 				//Write the original source to a temporary location
 				$(this).attr('data-placeholder', $(this).attr('src'));
@@ -325,11 +420,15 @@
 			
 			$(infoWrap).text(page + ' of ' + pCount);
 		}, // End infoParse
-		pager : function(pagerWrap) {
+		pager : function() {
 			var pCount    = $(this).data('pCount');
+			var pagerWrap = $(this).data('pagerWrap');
 			// var pagerList = $(pagerWrap).children('.page-list');
 			var panel     = $(this).find('.panel');
 			var wid       = $(this).attr('id');
+			
+			// remove any previous pager-list
+			$(pagerWrap).find('#'+wid+'-pager').remove();
 			
 			var pagerList = $('<ul class="page-list" id="'+wid+'-pager" />').appendTo(pagerWrap);
 			
@@ -544,7 +643,7 @@
 			$(this).find('.next-control-wrapper').css('display','block');
 			
 			// Create page numbers info function
-			if ($(this).data('paneInfo') == true) {
+			if ($(this).data('pageInfo') == true) {
 				$(this).bbslider('infoParse');
 			};// End infoParse
 			
@@ -593,7 +692,7 @@
 			$(this).find('.prev-control-wrapper').css('display','block');
 			
 			// Create page numbers info function
-			if ($(this).data('paneInfo') == true) {
+			if ($(this).data('pageInfo') == true) {
 				$(this).bbslider('infoParse');
 			};// End infoParse
 			
