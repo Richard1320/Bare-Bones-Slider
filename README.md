@@ -7,8 +7,16 @@ Author: Richard Hung
 
 More documentation and examples: http://www.bbslider.com
 
+Key Features
+--------------------
+
+* Loads images on demand
+* Allows you to make your own pagination and controls
+* Public methods that you can call outside of the plugin
+* Variables can be retrieved at any time
+
 How to Use
-==========
+--------------------
 
 Bare Bones slider has a .js and a .css file in addition to the jQuery library. Optionally, you can include the <a href="http://gsgd.co.uk/sandbox/jquery/easing/" target="_blank">easing plugin</a> for animations.
 
