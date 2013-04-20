@@ -24,7 +24,7 @@ Bare Bones slider has a .js and a .css file in addition to the jQuery library. O
 <link type="text/css" href="css/bbslider.css" rel="stylesheet" media="screen" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="js/bbslider.min.js"></script>
+<script type="text/javascript" src="js/jquery.bbslider.min.js"></script>
 ```
 
 Create a container for the slider and children for the panels.
