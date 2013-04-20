@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.7
+ * 1.0.8
  * 
  * Copyright (c) 2013 Richard Hung.
  * 
@@ -89,7 +89,7 @@
 					// Get max panel height and width
 					var hi = 0;
 					panel.each(function(){
-						var h = $(this).outerHeight();
+						var h = $(this).outerHeight(true);
 						if(h > hi){
 							hi = h;
 						}    
@@ -211,7 +211,7 @@
 					// Get max panel height and width
 					var hi = 0;
 					panel.each(function(){
-						var h = $(this).outerHeight();
+						var h = $(this).outerHeight(true);
 						if(h > hi){
 							hi = h;
 						}    

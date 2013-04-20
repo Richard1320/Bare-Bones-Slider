@@ -21,7 +21,7 @@ How to Use
 Bare Bones slider has a .js and a .css file in addition to the jQuery library. Optionally, you can include the <a href="http://gsgd.co.uk/sandbox/jquery/easing/" target="_blank">easing plugin</a> for animations.
 
 ```
-<link type="text/css" href="css/bbslider.css" rel="stylesheet" media="screen" />
+<link type="text/css" href="css/jquery.bbslider.css" rel="stylesheet" media="screen" />
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="js/jquery.bbslider.min.js"></script>
