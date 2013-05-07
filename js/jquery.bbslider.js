@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.8
+ * 1.0.9
  * 
  * Copyright (c) 2013 Richard Hung.
  * 
@@ -192,7 +192,7 @@
 				
 				// Create variables
 				var wrapper    = $(this);
-				var panel      = wrapper.children();
+				var panel      = wrapper.children(':not(.control-wrapper)');
 				var pCount     = panel.length; // number of pages
 				var onDemand   = wrapper.data('onDemand'); 
 				var pageInfo   = wrapper.data('pageInfo'); 
@@ -230,7 +230,7 @@
 				if (onDemand == true) {
 					panel.eq(pIndex).bbslider('loadImg');
 				} // End onDemand check
-			
+				
 				// Create page numbers info function
 				if (pageInfo == true) {
 					wrapper.bbslider('infoParse');
@@ -507,10 +507,10 @@
 			var loop    = this.data('loop');
 			
 			// Create variables for wrapper
-			var prev = $('<a class="prev controls" href="#">Prev</a>').prependTo(this);
-			var next = $('<a class="next controls" href="#">Next</a>').prependTo(this);
-			prev.wrap('<div class="prev-control-wrapper"></div>');
-			next.wrap('<div class="next-control-wrapper"></div>');
+			var prev = $('<a class="prev control" href="#">Prev</a>').prependTo(this);
+			var next = $('<a class="next control" href="#">Next</a>').prependTo(this);
+			prev.wrap('<div class="prev-control-wrapper control-wrapper" />');
+			next.wrap('<div class="next-control-wrapper control-wrapper" />');
 			var prevWrap = this.children('.prev-control-wrapper');
 			var nextWrap = this.children('.next-control-wrapper');
 			
