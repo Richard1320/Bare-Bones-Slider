@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" width="507" height="338"  />
-<title>BB Slider</title>
+<title>Bare Bones Slider</title>
 <link type="text/css" href="css/jquery.bbslider.css" rel="stylesheet" media="screen" width="507" height="338"  />
 
 <style>
@@ -11,9 +11,6 @@
 }
 </style>
 
-<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
-<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="js/jquery.bbslider.min.js"></script>
 </head>
 
 <body>
@@ -21,7 +18,7 @@
 
 <p>More info and examples at <a target="_blank" href="http://www.bbslider.com/">http://www.bbslider.com/</a></p>
 
-<h2>Default</h2>
+<h2 id="default-head">Default</h2>
 <p>Doesn't do anything without controls, navigation, or autoplay.</p>
 <div id="default">
     <div title="Glasses"><img src="images/demo/131645522.jpg" alt="glasses" width="507" height="338"  /></div>
@@ -31,13 +28,8 @@
     <div title="Lion"><img src="images/demo/200355486-002.jpg" alt="lion" width="507" height="338"  /></div>
     <div title="Cows"><img src="images/demo/96502411.jpg" alt="cows" width="507" height="338"  /></div>
 </div>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#default').bbslider();
-});
-</script>
 
-<h2>Autoplay</h2>
+<h2 id="autoplay-head">Autoplay</h2>
 <p>Slides play automatically.</p>
 <div id="auto">
     <div title="Glasses"><img src="images/demo/131645522.jpg" alt="glasses" width="507" height="338"  /></div>
@@ -47,17 +39,8 @@ $(document).ready(function() {
     <div title="Lion"><img src="images/demo/200355486-002.jpg" alt="lion" width="507" height="338"  /></div>
     <div title="Cows"><img src="images/demo/96502411.jpg" alt="cows" width="507" height="338"  /></div>
 </div>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#auto').bbslider({
-		auto: true,
-		timer:3000,
-		loop:true
-	});
-});
-</script>
 
-<h2>Pagination</h2>
+<h2 id="pagination-head">Pagination</h2>
 <p>Bare Bones Slider supports two different kinds of pagination, depending on your needs. You can allow the slider to create pagination for you, or you can create your own. <strong>For pagination to work, the slider object needs a unique id.</strong> A few options will allow the slider to create a custom pagination for you. The code is the same for the custom pagination so you can use this to find the right syntax. Adding a title to the panel and turning on pagerTitle will use a title instead of a number. </p>
 
 <div id="pager">
@@ -69,17 +52,8 @@ $(document).ready(function() {
     <div title="Cows"><img src="images/demo/96502411.jpg" alt="cows" width="507" height="338"  /></div>
 </div>
 <div id="pagination-wrapper"></div>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#pager').bbslider({
-		pager:      true,
-		pagerWrap:  '#pagination-wrapper',
-		pagerTitle: true
-	});
-});
-</script>
 
-<h2>Controls</h2>
+<h2 id="controls-head">Controls</h2>
 <p>Add next and previous controls that appear when hovered on the sides of the slider. The previous control doesn't show on the first panel and next doesn't show on the last panel if loop is false.</p>
 <div id="controls">
     <div title="Glasses"><img src="images/demo/131645522.jpg" alt="glasses" width="507" height="338"  /></div>
@@ -89,17 +63,9 @@ $(document).ready(function() {
     <div title="Lion"><img src="images/demo/200355486-002.jpg" alt="lion" width="507" height="338"  /></div>
     <div title="Cows"><img src="images/demo/96502411.jpg" alt="cows" width="507" height="338"  /></div>
 </div>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#controls').bbslider({
-		controls: true,
-		loop:     false
-	});
-});
-</script>
 
-<h2>Transitions</h2>
-<h3>None</h3>
+<h2 id="transitions-head">Transitions</h2>
+<h3 id="none-head">None</h3>
 <div id="none">
     <div title="Glasses"><img src="images/demo/131645522.jpg" alt="glasses" width="507" height="338"  /></div>
     <div title="Mouse"><img src="images/demo/138071106.jpg" alt="mouse" width="507" height="338"  /></div>
@@ -108,16 +74,8 @@ $(document).ready(function() {
     <div title="Lion"><img src="images/demo/200355486-002.jpg" alt="lion" width="507" height="338"  /></div>
     <div title="Cows"><img src="images/demo/96502411.jpg" alt="cows" width="507" height="338"  /></div>
 </div>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#none').bbslider({
-		controls:   true,
-		transition: 'none',
-	});
-});
-</script>
 
-<h3>Fade</h3>
+<h3 id="fade-head">Fade</h3>
 <div id="fade">
     <div title="Glasses"><img src="images/demo/131645522.jpg" alt="glasses" width="507" height="338"  /></div>
     <div title="Mouse"><img src="images/demo/138071106.jpg" alt="mouse" width="507" height="338"  /></div>
@@ -126,18 +84,8 @@ $(document).ready(function() {
     <div title="Lion"><img src="images/demo/200355486-002.jpg" alt="lion" width="507" height="338"  /></div>
     <div title="Cows"><img src="images/demo/96502411.jpg" alt="cows" width="507" height="338"  /></div>
 </div>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#fade').bbslider({
-		controls:   true,
-		transition: 'fade',
-		easing:     'easeInOutExpo',
-		duration:   1000
-	});
-});
-</script>
 
-<h3>Slide</h3>
+<h3 id="slide-head">Slide</h3>
 <div id="slide">
     <div title="Glasses"><img src="images/demo/131645522.jpg" alt="glasses" width="507" height="338"  /></div>
     <div title="Mouse"><img src="images/demo/138071106.jpg" alt="mouse" width="507" height="338"  /></div>
@@ -146,18 +94,8 @@ $(document).ready(function() {
     <div title="Lion"><img src="images/demo/200355486-002.jpg" alt="lion" width="507" height="338"  /></div>
     <div title="Cows"><img src="images/demo/96502411.jpg" alt="cows" width="507" height="338"  /></div>
 </div>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#slide').bbslider({
-		controls:   true,
-		transition: 'slide',
-		easing:     'easeInOutExpo',
-		duration:   1000
-	});
-});
-</script>
 
-<h3>Blind</h3>
+<h3 id="blind-head">Blind</h3>
 <div id="blind">
     <div title="Glasses"><img src="images/demo/131645522.jpg" alt="glasses" width="507" height="338"  /></div>
     <div title="Mouse"><img src="images/demo/138071106.jpg" alt="mouse" width="507" height="338"  /></div>
@@ -166,19 +104,9 @@ $(document).ready(function() {
     <div title="Lion"><img src="images/demo/200355486-002.jpg" alt="lion" width="507" height="338"  /></div>
     <div title="Cows"><img src="images/demo/96502411.jpg" alt="cows" width="507" height="338"  /></div>
 </div>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#blind').bbslider({
-		controls:   true,
-		transition: 'blind',
-		easing:     'easeInOutExpo',
-		duration:   1000
-	});
-});
-</script>
 
 
-<h2>Callback</h2>
+<h2 id="callback-head">Callback</h2>
 <p>Function that activates after every slide.</p>
 <div id="callback">
     <div title="Glasses"><img src="images/demo/131645522.jpg" alt="glasses" width="507" height="338"  /></div>
@@ -189,21 +117,101 @@ $(document).ready(function() {
     <div title="Cows"><img src="images/demo/96502411.jpg" alt="cows" width="507" height="338"  /></div>
 </div>
 <div id="call-log"></div>
+
+<h2 id="update-head">Update</h2>
+<p>Change up the content and then update the slider to reflect those changes.</p>
+<div id="update">
+    <div title="Glasses"><img src="images/demo/131645522.jpg" alt="glasses" width="507" height="338"  /></div>
+    <div title="Mouse"><img src="images/demo/138071106.jpg" alt="mouse" width="507" height="338"  /></div>
+    <div title="Business"><img src="images/demo/143177148.jpg" alt="business" width="507" height="338"  /></div>
+    <div title="Monkey"><img src="images/demo/143921954.jpg" alt="monkey" width="507" height="338"  /></div>
+    <div title="Lion"><img src="images/demo/200355486-002.jpg" alt="lion" width="507" height="338"  /></div>
+    <div title="Cows"><img src="images/demo/96502411.jpg" alt="cows" width="507" height="338"  /></div>
+</div>
+<p><a href="#" id="add-slides">Add Slides</a> | <a href="#" id="update-slider">Update Slider</a></p>
+<p id="update-info"></p>
+<div id="update-pager"></div>
+
+<script type="text/javascript" src="js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="js/jquery.bbslider.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	$('#default').bbslider();
+
+	$('#auto').bbslider({
+		auto: true,
+		timer:3000,
+		loop:true
+	});
+	
+	$('#pager').bbslider({
+		pager:      true,
+		pagerWrap:  '#pagination-wrapper',
+		pagerTitle: true
+	});
+
+	$('#controls').bbslider({
+		controls: true,
+		loop:     false
+	});
+	
+	$('#none').bbslider({
+		controls:   true,
+		transition: 'none'
+	});
+	
+	$('#fade').bbslider({
+		controls:   true,
+		transition: 'fade',
+		easing:     'easeInOutExpo',
+		duration:   1000
+	});
+	
+	$('#slide').bbslider({
+		controls:   true,
+		transition: 'slide',
+		easing:     'easeInOutExpo',
+		duration:   1000
+	});
+	
+	$('#blind').bbslider({
+		controls:   true,
+		transition: 'blind',
+		easing:     'easeInOutExpo',
+		duration:   1000
+	});
+	
 	var callme = function() {
 		var pCount = $('#callback').data('pCount');
 		var pIndex = $('#callback').data('pIndex');
 		var panel  = pIndex + 1;
-		$('#call-log').append('<p>Panel ' + panel + ' of ' + pCount + ' total panels has completed.');
+		$('#call-log').append('<p>Panel ' + panel + ' of ' + pCount + ' total panels has completed.</p>');
 	}
 	$('#callback').bbslider({
 		controls: true,
 		callback: callme
 	});
+
+	$('#update').bbslider({
+		pager:     true,
+		pagerWrap: '#update-pager',
+		pageInfo:  true,
+		infoWrap:  '#update-info'
+	});
+	$('#add-slides').click(function(e) {
+		var wrapper = $('#update');
+		wrapper.children('.panel').clone().appendTo(wrapper);
+		e.preventDefault();
+	});
+	$('#update-slider').click(function(e) {
+		$('#update').bbslider('update');
+		e.preventDefault();
+	});
+
 });
 </script>
-
 
 </body>
 </html>
