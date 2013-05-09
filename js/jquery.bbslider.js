@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.0.9
+ * 1.1.0
  * 
  * Copyright (c) 2013 Richard Hung.
  * 
@@ -114,38 +114,10 @@
 					wrapper.bbslider('infoParse');
 				};// End infoParse
 				
-				// Hide panels and show first panel
-				var transition = settings.transition;
-				switch (transition) {
-					case 'fade':
-						panel.css({ opacity: 0 }).eq(pIndex).css({ opacity: 1 });
-						break;
-					case 'slide':
-						panel.hide().eq(pIndex).show();
-						break;
-					case 'blind':
-						// Hide panels and show opening panel
-						panel.wrapInner('<div class="panel-inner" />');
-						var pWrap = wrapper.find('.panel-inner');
-						panel.css({
-							overflow:'hidden',
-							position:'absolute',
-							height:'100%',
-							width:0
-						}).eq(pIndex).css({
-							width:'100%'
-						});
-						pWrap.css({
-							top:0,
-							bottom:0,
-							left:0,
-							right:0
-						});
-						break;
-					case 'none':
-					default:
-						panel.hide().eq(pIndex).show();
-				} // End transition switch
+				// Setup the slider
+				wrapper.bbslider('setup');
+				
+
 	
 				// Create pager if true
 				if (settings.pager == true) {
@@ -225,7 +197,6 @@
 					wrapper.bbslider('placeholder');
 				}// End placeholder
 				
-				
 				// Only show one image
 				if (onDemand == true) {
 					panel.eq(pIndex).bbslider('loadImg');
@@ -236,45 +207,14 @@
 					wrapper.bbslider('infoParse');
 				};// End infoParse
 				
-				// Hide panels and show first panel
-				var transition = wrapper.data('transition');
-				switch (transition) {
-					case 'fade':
-						panel.css({ opacity: 0 }).eq(pIndex).css({ opacity: 1 });
-						break;
-					case 'slide':
-						panel.hide().eq(pIndex).show();
-						break;
-					case 'blind':
-						// Hide panels and show opening panel
-						panel.wrapInner('<div class="panel-inner" />');
-						var pWrap = wrapper.find('.panel-inner');
-						panel.css({
-							overflow:'hidden',
-							position:'absolute',
-							height:'100%',
-							width:0
-						}).eq(pIndex).css({
-							width:'100%'
-						});
-						pWrap.css({
-							top:0,
-							bottom:0,
-							left:0,
-							right:0
-						});
-						break;
-					case 'none':
-					default:
-						panel.hide().eq(pIndex).show();
-				} // End transition switch
-	
 				// Create pager if true
 				if (pager == true) {
 					wrapper.bbslider('pager');			
 				} // End pager check
-				
 			
+				// Setup the slider
+				wrapper.bbslider('setup');
+				
 			}); // End object loop
 		}, // End update
 		destroy : function() {
@@ -398,6 +338,45 @@
 				}
 			});
 		}, // End randomSlide
+		setup : function() {
+			// Hide panels and show first panel
+			var wrapper    = this;
+			var panel      = wrapper.children('.panel');
+			var pIndex     = wrapper.data('pIndex');
+			var transition = wrapper.data('transition');
+			
+			switch (transition) {
+				case 'fade':
+					panel.css({ opacity: 0 }).eq(pIndex).css({ opacity: 1 });
+					break;
+				case 'slide':
+					panel.hide().eq(pIndex).show();
+					break;
+				case 'blind':
+					// Hide panels and show opening panel
+					panel.wrapInner('<div class="panel-inner" />');
+					var pWrap = wrapper.find('.panel-inner');
+					panel.css({
+						overflow:'hidden',
+						position:'absolute',
+						height:'100%',
+						width:0
+					}).eq(pIndex).css({
+						width:'100%'
+					});
+					pWrap.css({
+						top:0,
+						bottom:0,
+						left:0,
+						right:0
+					});
+					break;
+				case 'none':
+				default:
+					panel.hide().eq(pIndex).show();
+			} // End transition switch
+			
+		}, // End setup
 		placeholder : function() { 
 			var placeholder = this.data('placeholder');
 			var images      = this.find('img');
