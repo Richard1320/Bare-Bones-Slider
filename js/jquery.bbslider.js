@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.1.0
+ * 1.1.1
  * 
  * Copyright (c) 2013 Richard Hung.
  * 
@@ -41,7 +41,9 @@
 				autoHeight:  true,                // Automatically set height 
 				pauseOnHit:  true,                // Pause autoplay when controls or pagers used 
 				randomPlay:  false,               // Autoplay goes to random slides
-				loopTrans:   true                 // Use backward and forward transition for loop
+				loopTrans:   true,                // Use backward and forward transition for loop
+				touch:       false,               // Allow touchscreen controls
+				touchoffset: 50                   // Amount of pixels to swipe for touch controls
 			}; // End options
 			
 			// Override default options
@@ -117,7 +119,6 @@
 				// Setup the slider
 				wrapper.bbslider('setup');
 				
-
 	
 				// Create pager if true
 				if (settings.pager == true) {
@@ -150,6 +151,45 @@
 					
 				}// End controls check
 				
+				// Touch controls
+				if (settings.touch == true) {
+					
+					var getX;
+					var getN;
+					var offset;
+					
+					wrapper.bind('touchstart',function(e) {
+						e.preventDefault();
+						var touch  = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+						
+						getX = touch.pageX;
+						// console.log(touch.pageY+' '+touch.pageX);
+						// alert('Touch on: '+touch.pageY+' '+touch.pageX);
+					}); // end touchstart
+					/*
+					wrapper.bind('touchmove',function(e) {
+						e.preventDefault();
+						var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+						// console.log(touch.pageY+' '+touch.pageX);
+						alert('Touch move: '+touch.pageY+' '+touch.pageX);
+					}); // end touchmove
+					*/
+					wrapper.bind('touchend',function(e) {
+						e.preventDefault();
+						var touch  = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+						
+						getN   = touch.pageX;
+						offset = settings.touchoffset;
+
+						if (getN > getX + offset) {
+							wrapper.bbslider('prev');
+						} else if (getN < getX - offset) {
+							wrapper.bbslider('next');
+						}
+						// alert('Touch off: '+touch.pageY+' '+touch.pageX);
+						// console.log(touch.pageY+' '+touch.pageX);
+					}); // end touchend
+				}// End touch
 				
 				// auto play
 				if (settings.auto == true) {
