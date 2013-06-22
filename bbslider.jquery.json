@@ -2,12 +2,12 @@
 	
 "name": "bbslider",
 "title": "Bare Bones Slider",
-"description": "Bare Bones Slider is a jQuery slider that is very flexible. It features on-demand image loading, callbacks, public methods, retrievable variables and lots of options.",
+"description": "Bare Bones Slider is a jQuery slider that is very flexible. It features on-demand image loading, touch controls, public methods, retrievable variables, and callbacks.",
 "keywords": [
 	"slider",
 	"animation"
 ],
-"version": "1.1.0",
+"version": "1.1.1",
 "author": {
 	"name": "Richard Hung",
 	"email": "richardhung111@gmail.com",
