@@ -14,6 +14,7 @@ Key Features
 * Allows you to make your own pagination and controls
 * Public methods that you can call outside of the plugin
 * Variables can be retrieved at any time
+* Touch controls for phones
 
 How to Use
 --------------------
