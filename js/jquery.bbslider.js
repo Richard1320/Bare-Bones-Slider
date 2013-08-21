@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.1.1
+ * 1.1.2
  * 
  * Copyright (c) 2013 Richard Hung.
  * 
@@ -416,6 +416,9 @@
 					panel.hide().eq(pIndex).show();
 			} // End transition switch
 			
+			// add active class to panel
+			panel.eq(pIndex).addClass('active');
+			
 		}, // End setup
 		placeholder : function() { 
 			var placeholder = this.data('placeholder');
@@ -647,7 +650,12 @@
 			return this.each(function() {
 				var wrapper = $(this);
 				var loop    = wrapper.data('loop');
-	
+				var pIndex  = wrapper.data('pIndex');
+				var panel   = wrapper.children('.panel');
+				
+				// Add active class to panel
+				panel.removeClass('active').eq(pIndex).addClass('active');
+				
 				// Load new image
 				if (wrapper.data('onDemand') == true) {
 					wrapper.children('.panel').eq(pIndex).bbslider('loadImg');
@@ -699,6 +707,11 @@
 				var wrapper = $(this);
 				var pCount  = wrapper.data('pCount');
 				var loop    = wrapper.data('loop');
+				var pIndex  = wrapper.data('pIndex');
+				var panel   = wrapper.children('.panel');
+				
+				// Add active class to panel
+				panel.removeClass('active').eq(pIndex).addClass('active');
 				
 				// Load new image
 				if (wrapper.data('onDemand') == true) {
