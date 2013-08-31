@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.1.2
+ * 1.1.3
  * 
  * Copyright (c) 2013 Richard Hung.
  * 
@@ -100,14 +100,12 @@
 					wrapper.height(hi);
 				}// End autoheight
 				
-				// Create placeholder 
+				// image load on demand
 				if (settings.onDemand == true) {
+					// Create placeholder 
 					wrapper.bbslider('placeholder');
-				}// End placeholder
-				
-				
-				// Only show one image
-				if (settings.onDemand == true) {
+					
+					// Only show one image
 					panel.eq(pIndex).bbslider('loadImg');
 				} // End onDemand check
 			
@@ -232,13 +230,12 @@
 					wrapper.height(hi);
 				}// End autoheight
 				
-				// Create placeholder 
+				// on-demand image loading
 				if (onDemand == true) {
+					// Create placeholder 
 					wrapper.bbslider('placeholder');
-				}// End placeholder
 				
-				// Only show one image
-				if (onDemand == true) {
+					// Only show one image
 					panel.eq(pIndex).bbslider('loadImg');
 				} // End onDemand check
 				
@@ -265,7 +262,7 @@
 				
 				// Remove CSS
 				wrapper.removeClass('bbslider-wrapper');
-				panel.removeClass('panel');
+				panel.removeClass('panel active');
 				
 				// remove autoheight 
 				wrapper.css('height','');
@@ -422,12 +419,14 @@
 		}, // End setup
 		placeholder : function() { 
 			var placeholder = this.data('placeholder');
-			var images      = this.find('img');
+			var images      = this.children('.panel').find('img');
 			$(images).each(function() {
-				//Write the original source to a temporary location
-				$(this).attr('data-placeholder', $(this).attr('src'));
-				//Change the image source to the loading image
-				$(this).attr('src', placeholder);
+				if(!$(this).attr('data-placeholder')) {
+					//Write the original source to a temporary location
+					$(this).attr('data-placeholder', $(this).attr('src'));
+					//Change the image source to the loading image
+					$(this).attr('src', placeholder);
+				}
 			});
  	    }, // End placeholder
  	    loadImg : function() {
@@ -437,7 +436,7 @@
 				//alert('image found');
 				$(this).attr('src', $(this).attr('data-placeholder')).removeAttr('data-placeholder');
 			});
-				
+			
 		}, // End load image
  	    infoParse : function() { 
 			var wrapper  = this;
@@ -658,7 +657,7 @@
 				
 				// Load new image
 				if (wrapper.data('onDemand') == true) {
-					wrapper.children('.panel').eq(pIndex).bbslider('loadImg');
+					panel.eq(pIndex).bbslider('loadImg');
 				} // End onDemand check
 				
 				// Stop current animations
@@ -715,7 +714,7 @@
 				
 				// Load new image
 				if (wrapper.data('onDemand') == true) {
-					wrapper.children('.panel').eq(pIndex).bbslider('loadImg');
+					panel.eq(pIndex).bbslider('loadImg');
 				} // End onDemand check
 				
 				// Stop current animations
