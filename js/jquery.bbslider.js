@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.1.4
+ * 1.1.5
  * 
  * Copyright (c) 2013 Richard Hung.
  * 
@@ -86,20 +86,6 @@
 				wrapper.addClass('bbslider-wrapper');
 				panel.addClass('panel');
 				
-				// Create autoheight 
-				if (settings.autoHeight == true) {
-					// Get max panel height and width
-					var hi = 0;
-					panel.each(function(){
-						var h = $(this).outerHeight(true);
-						if(h > hi){
-							hi = h;
-						}    
-					});
-
-					wrapper.height(hi);
-				}// End autoheight
-				
 				// image load on demand
 				if (settings.onDemand == true) {
 					// Create placeholder 
@@ -113,9 +99,6 @@
 				if (settings.pageInfo == true) {
 					wrapper.bbslider('infoParse');
 				};// End infoParse
-				
-				// Setup the slider
-				wrapper.bbslider('setup');
 				
 	
 				// Create pager if true
@@ -194,6 +177,23 @@
 					wrapper.bbslider('play');
 				} // End autoplay
 			
+				// Setup the slider
+				wrapper.bbslider('setup');
+				
+				// Create autoheight 
+				if (settings.autoHeight == true) {
+					// Get max panel height and width
+					var hi = 0;
+					panel.each(function(){
+						var h = $(this).outerHeight(true);
+						if(h > hi){
+							hi = h;
+						}    
+					});
+
+					wrapper.height(hi);
+				}// End autoheight
+				
 			}); // End object loop
 	
 		}, // End init
@@ -216,20 +216,6 @@
 				// Apply basic CSS
 				panel.addClass('panel');
 				
-				// Create autoheight 
-				if (autoHeight == true) {
-					// Get max panel height and width
-					var hi = 0;
-					panel.each(function(){
-						var h = $(this).outerHeight(true);
-						if(h > hi){
-							hi = h;
-						}    
-					});
-
-					wrapper.height(hi);
-				} // End autoheight
-				
 				// on-demand image loading
 				if (onDemand == true) {
 					// Create placeholder 
@@ -251,6 +237,19 @@
 			
 				// Setup the slider
 				wrapper.bbslider('setup');
+				
+				// Create autoheight 
+				if (autoHeight == true) {
+					// Get max panel height and width
+					var hi = 0;
+					panel.each(function(){
+						var h = $(this).outerHeight(true);
+						if(h > hi){
+							hi = h;
+						}    
+					});
+					wrapper.height(hi);
+				} // End autoheight
 				
 			}); // End object loop
 		}, // End update
@@ -393,12 +392,25 @@
 					break;
 				case 'blind':
 					// Hide panels and show opening panel
+					var width  = wrapper.width();
+
 					panel.children('.panel-inner').contents().unwrap();
 					panel.wrapInner('<div class="panel-inner" />');
 					panel.addClass('blind').eq(pIndex).css({
 						width:'100%'
 					});
+					panel.children('.panel-inner').width(width);
 					
+					var hi = 0;
+					panel.children('.panel-inner').each(function(){
+						var h = $(this).wrapInner('<div>').children().outerHeight(true);
+						if(h > hi){
+							hi = h;
+						}
+						$(this).children().contents().unwrap();
+					});
+					panel.height(hi);
+					panel.children('.panel-inner').height(hi);
 					break;
 				case 'none':
 				default:
