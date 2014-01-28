@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.1.5
+ * 1.1.6
  * 
  * Copyright (c) 2013 Richard Hung.
  * 
@@ -324,7 +324,8 @@
 				
 				// check if slider is already playing
 				if (autoPlay == false) {
-					var timer = wrapper.data('timer');
+					var duration = wrapper.data('duration');
+					var timer    = wrapper.data('timer');
 					
 					var tid = setInterval(function() {
 						// Check for random play
@@ -333,7 +334,7 @@
 						} else {
 							wrapper.bbslider('next');
 						}
-					}, timer); // End setinterval
+					}, timer + duration); // End setinterval
 					
 					wrapper.data('tid',tid);
 					wrapper.data('autoPlay',true);
@@ -342,8 +343,9 @@
  	    }, // End play
 		pause : function() { 
 			return this.each(function() {
-				var tid      = $(this).data('tid');
-				var autoPlay = $(this).data('autoPlay');
+				var wrapper  = $(this);
+				var tid      = wrapper.data('tid');
+				var autoPlay = wrapper.data('autoPlay');
 				if (autoPlay == true) {
 					clearInterval(tid);
 					wrapper.data('autoPlay',false);
@@ -565,10 +567,16 @@
 				var pCount    = wrapper.data('pCount');
 				var pIndex    = wrapper.data('pIndex');
 				var loopTrans = wrapper.data('loopTrans');
-				var cIndex    = pIndex;		
+				var cIndex    = pIndex;
 						
 				wrapper.data('cIndex',cIndex);
 				
+				// reset autoplay timer
+				if (wrapper.data('autoPlay')) {
+					wrapper.bbslider('pause').bbslider('play');
+				}
+
+				// check if first / last
 				if (pIndex > 0) { // It is not the first panel, move backward
 					pIndex = cIndex - 1;
 					
@@ -602,6 +610,12 @@
 				
 				wrapper.data('cIndex',cIndex);
 				
+				// reset autoplay timer
+				if (wrapper.data('autoPlay')) {
+					wrapper.bbslider('pause').bbslider('play');
+				}
+				
+				// check if first / last
 				if (pCount > pIndex + 1) { // It is not the last panel, move forward
 					pIndex = cIndex + 1;
 					
@@ -626,9 +640,14 @@
 		}, // End next 
 		travel : function(xIndex) {
 			return this.each(function() {
-				var wrapper = $(this);
-				var pIndex  = wrapper.data('pIndex');
+				var wrapper  = $(this);
+				var pIndex   = wrapper.data('pIndex');
 	
+				// reset autoplay timer
+				if (wrapper.data('autoPlay')) {
+					wrapper.bbslider('pause').bbslider('play');
+				}
+
 				if (pIndex < xIndex) { // New page is after current page, show next animation
 					var cIndex = pIndex;
 					var pIndex = xIndex;
@@ -715,7 +734,7 @@
 				var loop    = wrapper.data('loop');
 				var pIndex  = wrapper.data('pIndex');
 				var panel   = wrapper.children('.panel');
-				
+								
 				// Add active class to panel
 				panel.removeClass('active').eq(pIndex).addClass('active');
 				
@@ -745,11 +764,11 @@
 					default:
 						wrapper.bbslider('toggle');
 				} // End transition switch
-	
+				
 				// Check if on last page and hide control
 				if (pCount <= pIndex + 1 && loop == false) {
 					wrapper.find('.next-control-wrapper').css('display','none');
-				}//  End prev control check
+				} //  End prev control check
 				
 				// Display the prev control
 				wrapper.find('.prev-control-wrapper').css('display','block');
@@ -766,7 +785,7 @@
 				if ($.isFunction(callback)) {
 					callback.call(this);
 				}
-						
+				
 			});
 		}, // End forward page 
 		toggle : function() {
