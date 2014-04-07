@@ -7,9 +7,9 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.1.6
+ * 1.1.7
  * 
- * Copyright (c) 2013 Richard Hung.
+ * Copyright (c) 2014 Richard Hung.
  * 
  * License
  * Bare Bones Slider by Richard Hung is licensed under a Creative Commons Attribution-NonCommercial 3.0 Unported License.
@@ -382,9 +382,7 @@
 			
 			switch (transition) {
 				case 'fade':
-					panel.addClass('fade').eq(pIndex).css({
-						opacity: 1
-					});
+					panel.addClass('fade').eq(pIndex).fadeIn();
 					break;
 				case 'slide':
 					panel.addClass('slide').eq(pIndex).show();
@@ -810,18 +808,10 @@
 			var duration = wrapper.data('duration');
 			
 			// Remove current page		
-			panel.eq(cIndex).animate(
-				{
-					opacity: 0
-				}, duration, easing
-			); // End animation
+			panel.eq(cIndex).fadeOut(duration, easing);
 			
 			// display the page
-			panel.eq(pIndex).animate(
-				{
-					opacity: 1
-				}, duration, easing
-			); // End animation
+			panel.eq(pIndex).fadeIn(duration, easing); 
 
 		}, // End fade
 		blindFor : function() {
