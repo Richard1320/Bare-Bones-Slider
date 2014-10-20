@@ -10,6 +10,34 @@
 	position:absolute;
 	width:100%;
 }
+/*
+.bbslider-wrapper.css3 .panel {
+    -o-transition-property: all;
+	-ms-transition-property: all;
+    -moz-transition-property: all;
+    -webkit-transition-property: all;
+	transition-property:all;
+}
+*/
+.bbslider-wrapper.css3 .panel.init {
+	-o-transition: none !important;
+	-ms-transition: none !important;
+	-moz-transition: none !important;
+	-webkit-transition: none !important;
+	transition:none !important;
+}
+.bbslider-wrapper.css3 .panel .panel-inner {
+    -o-transition-duration: inherit;
+	-ms-transition-duration: inherit;
+    -moz-transition-duration: inherit;
+    -webkit-transition-duration: inherit;
+	transition-duration:inherit;
+    -o-transition-timing-function: inherit;
+	-ms-transition-timing-function: inherit;
+    -moz-transition-timing-function: inherit;
+    -webkit-transition-timing-function: inherit;
+	transition-timing-function:inherit;
+}
 .bbslider-wrapper .prev-control-wrapper {
 	display:block;
 	z-index:10;
@@ -63,11 +91,35 @@
 .bbslider-wrapper .panel.fade {
 	display:none;
 }
+.bbslider-wrapper.css3 .panel.fade {
+    -o-transition-property: opacity;
+	-ms-transition-property: opacity;
+    -moz-transition-property: opacity;
+    -webkit-transition-property: opacity;
+	transition-property:opacity;
+	opacity:0;
+}
 .bbslider-wrapper .panel.slide {
 	display:none;
 }
+.bbslider-wrapper.css3 .panel.slide {
+    -o-transition-property: left, right;
+	-ms-transition-property: left, right;
+    -moz-transition-property: left, right;
+    -webkit-transition-property: left, right;
+	transition-property:left, right;
+	display:block;
+}
 .bbslider-wrapper .panel.slideVert {
 	display:none;
+}
+.bbslider-wrapper.css3 .panel.slideVert {
+    -o-transition-property: top;
+	-ms-transition-property: top;
+    -moz-transition-property: top;
+    -webkit-transition-property: top;
+	transition-property:top;
+	display:block;
 }
 .bbslider-wrapper .panel.blind {
 	overflow:hidden;
@@ -78,6 +130,17 @@
 .bbslider-wrapper .panel.blind .panel-inner {
 	position:absolute;
 }
+.bbslider-wrapper.css3 .panel.blind,
+.bbslider-wrapper.css3 .panel.blind .panel-inner {
+    -o-transition-property: left, right, margin, width;
+	-ms-transition-property: left, right, margin, width;
+    -moz-transition-property: left, right, margin, width;
+    -webkit-transition-property: left, right, margin, width;
+	transition-property:left, right, margin, width;
+}
 .bbslider-wrapper .panel.none {
 	display:none;
+}
+.bbslider-wrapper .panel.none.active {
+	display:block;
 }
