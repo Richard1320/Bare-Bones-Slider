@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.1.8
+ * 1.1.9
  * 
  * Copyright (c) 2014 Richard Hung.
  * 
@@ -23,28 +23,30 @@
 
 			// Set default parameters
 			var defaultSettings = {
-				page:        1,                   // Page to start on
-				duration:    1000,                // Duration of transition
-				controls:    false,               // Display next / prev controls
-				pager:       false,               // Create clickable pagination links
-				pagerWrap:   '.pager-wrap',       // Container for pagination (Created externally)
-				pageInfo:    false,               // Display current panel information
-				infoWrap:    '.info-wrap',        // Container for page information (Created externally)
-				onDemand:    false,               // Create placeholder image and load on-demand
-				placeholder: '/images/blank.gif', // Location of placeholder image
-				auto:        false,               // Pages play automatically
-				timer:       5000,                // Amount of time for autoplay
-				loop:        true,                // Loop back to the beginning
-				transition:  'fade',              // Fade, slide, slideVert or none
-				callback:    null,                // Callback function after each new page.
-				easing:      'swing',             // Easing transition
-				autoHeight:  true,                // Automatically set height 
-				pauseOnHit:  true,                // Pause autoplay when controls or pagers used 
-				randomPlay:  false,               // Autoplay goes to random slides
-				loopTrans:   true,                // Use backward and forward transition for loop
-				touch:       false,               // Allow touchscreen controls
-				touchoffset: 50,                  // Amount of pixels to swipe for touch controls
-				css3: true                        // Use CSS3 transitions instead of jQuery animate
+				page:         1,                   // Page to start on
+				duration:     1000,                // Duration of transition
+				controls:     false,               // Display next / prev controls
+				pager:        false,               // Create clickable pagination links
+				pagerWrap:    '.pager-wrap',       // Container for pagination (Created externally)
+				pageInfo:     false,               // Display current panel information
+				infoWrap:     '.info-wrap',        // Container for page information (Created externally)
+				onDemand:     false,               // Create placeholder image and load on-demand
+				placeholder:  '/images/blank.gif', // Location of placeholder image
+				auto:         false,               // Pages play automatically
+				timer:        5000,                // Amount of time for autoplay
+				loop:         true,                // Loop back to the beginning
+				transition:   'fade',              // Fade, slide, slideVert, or none
+				callback:     null,                // Callback function after each new page.
+				easing:       'swing',             // Easing transition
+				autoHeight:   true,                // Automatically set height 
+				pauseOnHit:   true,                // Pause autoplay when controls or pagers used 
+				randomPlay:   false,               // Autoplay goes to random slides
+				loopTrans:    true,                // Use backward and forward transition for loop
+				touch:        false,               // Allow touchscreen controls
+				touchoffset:  50,                  // Amount of pixels to swipe for touch controls
+				css3:         true,                // Use CSS3 transitions instead of jQuery animate
+				carousel:     false,               // Number of items per slide
+				carouselMove: 1                    // Amount of slides to move per carousel prev / next
 			}; // End options
 			
 			// Override default options
@@ -61,28 +63,29 @@
 				
 				// Bind variables to object
 				wrapper.data({
-					autoPlay:    false,
-					pIndex:      pIndex,
-					cIndex:      cIndex,
-					pCount:      pCount,
-					transition:  settings.transition,
-					easing:      settings.easing,
-					duration:    settings.duration,
-					onDemand:    settings.onDemand,
-					infoWrap:    settings.infoWrap,
-					pageInfo:    settings.pageInfo,
-					callback:    settings.callback,
-					loop:        settings.loop,
-					timer:       settings.timer,
-					loopTrans:   settings.loopTrans,
-					pauseOnHit:  settings.pauseOnHit,
-					randomPlay:  settings.randomPlay,
-					placeholder: settings.placeholder,
-					pager:       settings.pager,
-					pagerWrap:   settings.pagerWrap,
-					autoHeight:  settings.autoHeight,
-					css3:        settings.css3,
-					isAnim:      false
+					autoPlay:     false,
+					pIndex:       pIndex,
+					cIndex:       cIndex,
+					pCount:       pCount,
+					transition:   settings.transition,
+					easing:       settings.easing,
+					duration:     settings.duration,
+					onDemand:     settings.onDemand,
+					infoWrap:     settings.infoWrap,
+					pageInfo:     settings.pageInfo,
+					callback:     settings.callback,
+					loop:         settings.loop,
+					timer:        settings.timer,
+					loopTrans:    settings.loopTrans,
+					pauseOnHit:   settings.pauseOnHit,
+					randomPlay:   settings.randomPlay,
+					placeholder:  settings.placeholder,
+					pager:        settings.pager,
+					pagerWrap:    settings.pagerWrap,
+					autoHeight:   settings.autoHeight,
+					css3:         settings.css3,
+					carousel:     settings.carousel,
+					carouselMove: settings.carouselMove
 				});
 				
 				// Apply basic CSS
@@ -254,7 +257,7 @@
 						var h = $(this).outerHeight(true);
 						if(h > hi){
 							hi = h;
-						}    
+						}
 					});
 					wrapper.height(hi);
 				} // End autoheight
@@ -268,7 +271,7 @@
 				var panel   = wrapper.children('.panel');
 				
 				// Remove CSS
-				wrapper.removeClass('bbslider-wrapper css3');
+				wrapper.removeClass('bbslider-wrapper css3 carousel');
 				panel.removeClass('panel active slide fade blind none slideVert');
 				
 				// remove autoheight 
@@ -390,58 +393,93 @@
 			var css3       = wrapper.data('css3');
 			var duration   = wrapper.data('duration');
 			var easing     = wrapper.data('easing');
+			var carousel   = wrapper.data('carousel');
+			var pCount     = wrapper.data('pCount');
 			
-			switch (transition) {
-				case 'fade':
-					panel.addClass('fade');
-					if (css3) {
-						panel.addClass('init').eq(pIndex).show().css('opacity',1);
+			if (carousel) {
+				
+				wrapper.addClass('carousel');
+				var itemWidth = 100 / parseInt(carousel);
+				var end       = pIndex + parseInt(carousel);					
+				
+				var left = 0;
+				
+				panel.css({
+					width: itemWidth+'%',
+					left:  '100%'
+				});
+				
+				// loop through and show multiple slides
+				for ( var i = pIndex; i < end; i++ ) {
+					if (i < pCount) {
+						
+						panel.eq(i).css('left',left+'%');
 					} else {
-						panel.eq(pIndex).fadeIn();
+						// end is higher than number of slides
+						// loop back to beginning
+						var x = i - pCount;
+						
+						panel.eq(x).css('left',left+'%');
 					}
-					break;
-				case 'slide':
-					panel.addClass('slide');
-					if (css3) {
-						panel.addClass('init').css('left','100%').eq(pIndex).css('left',0);
-					} else {
-						panel.eq(pIndex).show();
-					}
-					break;
-				case 'slideVert':
-					panel.addClass('slideVert');
-					if (css3) {
-						panel.addClass('init').css('top','-100%').eq(pIndex).css('top',0);
-					} else {
-						panel.eq(pIndex).show();
-					}
-					break;
-				case 'blind':
-					// Hide panels and show opening panel
-					var width  = wrapper.width();
-
-					panel.children('.panel-inner').contents().unwrap();
-					panel.wrapInner('<div class="panel-inner" />');
-					panel.addClass('blind init').eq(pIndex).css({
-						width:'100%'
-					});
-					panel.children('.panel-inner').width(width);
+					left = left + itemWidth;
+				} // end carousel item loop
 					
-					var hi = 0;
-					panel.children('.panel-inner').each(function(){
-						var h = $(this).wrapInner('<div>').children().outerHeight(true);
-						if(h > hi){
-							hi = h;
+				if (css3) {
+					panel.addClass('init');
+				}
+			} else {
+				switch (transition) {
+					case 'fade':
+						panel.addClass('fade');
+						if (css3) {
+							panel.addClass('init').eq(pIndex).show().css('opacity',1);
+						} else {
+							panel.eq(pIndex).fadeIn();
 						}
-						$(this).children().contents().unwrap();
-					});
-					panel.height(hi);
-					panel.children('.panel-inner').height(hi);
-					break;
-				case 'none':
-				default:
-					panel.addClass('none');
-			} // End transition switch
+						break;
+					case 'slide':
+						panel.addClass('slide');
+						if (css3) {
+							panel.addClass('init').css('left','100%').eq(pIndex).css('left',0);
+						} else {
+							panel.eq(pIndex).show();
+						}
+						break;
+					case 'slideVert':
+						panel.addClass('slideVert');
+						if (css3) {
+							panel.addClass('init').css('top','-100%').eq(pIndex).css('top',0);
+						} else {
+							panel.eq(pIndex).show();
+						}
+						break;
+					case 'blind':
+						// Hide panels and show opening panel
+						var width  = wrapper.width();
+	
+						panel.children('.panel-inner').contents().unwrap();
+						panel.wrapInner('<div class="panel-inner" />');
+						panel.addClass('blind init').eq(pIndex).css({
+							width:'100%'
+						});
+						panel.children('.panel-inner').width(width);
+						
+						var hi = 0;
+						panel.children('.panel-inner').each(function(){
+							var h = $(this).wrapInner('<div>').children().outerHeight(true);
+							if(h > hi){
+								hi = h;
+							}
+							$(this).children().contents().unwrap();
+						});
+						panel.height(hi);
+						panel.children('.panel-inner').height(hi);
+						break;
+					case 'none':
+					default:
+						panel.addClass('none');
+				} // End transition switch
+			} // end carousel check
 			
 			// add active class to panel
 			panel.eq(pIndex).addClass('active');
@@ -601,12 +639,14 @@
 		}, // End controls 
 		prev : function() {
 			return this.each(function() {
-				var wrapper   = $(this);
-				var loop      = wrapper.data('loop');
-				var pCount    = wrapper.data('pCount');
-				var pIndex    = wrapper.data('pIndex');
-				var loopTrans = wrapper.data('loopTrans');
-				var cIndex    = pIndex;
+				var wrapper      = $(this);
+				var loop         = wrapper.data('loop');
+				var pCount       = wrapper.data('pCount');
+				var pIndex       = wrapper.data('pIndex');
+				var loopTrans    = wrapper.data('loopTrans');
+				var carousel     = wrapper.data('carousel');
+				var carouselMove = wrapper.data('carouselMove');
+				var cIndex       = pIndex;
 						
 				wrapper.data('cIndex',cIndex);
 				
@@ -616,7 +656,14 @@
 				}
 
 				// check if first / last
-				if (pIndex > 0) { // It is not the first panel, move backward
+				if (carousel) {
+					pIndex = cIndex - carouselMove;
+					if (pIndex < 0) {
+						var pIndex = pIndex + pCount;
+					}
+					wrapper.data('pIndex',pIndex);
+					wrapper.bbslider('backPage',pIndex);
+				} else if (pIndex > 0) { // It is not the first panel, move backward
 					pIndex = cIndex - 1;
 					
 					wrapper.data('pIndex',pIndex);
@@ -640,12 +687,14 @@
 		}, // End prev 
 		next : function() {
 			return this.each(function() {
-				var wrapper   = $(this);
-				var loop      = wrapper.data('loop');
-				var pCount    = wrapper.data('pCount');
-				var pIndex    = wrapper.data('pIndex');
-				var loopTrans = wrapper.data('loopTrans');
-				var cIndex    = pIndex;
+				var wrapper      = $(this);
+				var loop         = wrapper.data('loop');
+				var pCount       = wrapper.data('pCount');
+				var pIndex       = wrapper.data('pIndex');
+				var loopTrans    = wrapper.data('loopTrans');
+				var carousel     = wrapper.data('carousel');
+				var carouselMove = wrapper.data('carouselMove');
+				var cIndex       = pIndex;
 				
 				wrapper.data('cIndex',cIndex);
 				
@@ -655,7 +704,15 @@
 				}
 				
 				// check if first / last
-				if (pCount > pIndex + 1) { // It is not the last panel, move forward
+				if (carousel) {
+					pIndex = cIndex + carouselMove;
+					if (pCount < pIndex + carousel + 1) {
+						var pIndex = pIndex - pCount;
+					}
+					wrapper.data('pIndex',pIndex);
+					wrapper.bbslider('forPage',pIndex);
+					
+				} else if (pCount > pIndex + 1) { // It is not the last panel, move forward
 					pIndex = cIndex + 1;
 					
 					wrapper.data('pIndex',pIndex);
@@ -681,13 +738,55 @@
 			return this.each(function() {
 				var wrapper  = $(this);
 				var pIndex   = wrapper.data('pIndex');
+				var carousel = wrapper.data('carousel');
+				var pCount   = wrapper.data('pCount');
 	
 				// reset autoplay timer
 				if (wrapper.data('autoPlay')) {
 					wrapper.bbslider('pause').bbslider('play');
 				}
-
-				if (pIndex < xIndex) { // New page is after current page, show next animation
+				
+				if (carousel) {
+					var cIndex = pIndex;
+					var pIndex = xIndex;
+					
+					wrapper.data('pIndex',pIndex);
+					wrapper.data('cIndex',cIndex);
+					/*
+					//if ((pIndex > cIndex && pIndex + carousel + 1 < pCount) || (pIndex > cIndex && pIndex + carousel + 1 > pCount)) {
+					if ((pIndex > cIndex && pIndex + carousel + 1 < pCount) || (pIndex > cIndex && pIndex + carousel + 1 > pCount) || (pIndex > cIndex && pIndex + carousel > 0) {
+						wrapper.bbslider('forPage',pIndex);
+						console.log(pIndex);
+					} else {
+						wrapper.bbslider('backPage',pIndex);
+						//alert('bk');
+					}
+					*/
+					if (pIndex > cIndex) {
+						var low  = pIndex - pCount;
+						var high = pIndex;
+					} else {
+						var low  = pIndex;
+						var high = pIndex + pCount;
+					}
+					
+					var array   = [ low, high ];
+					var goal    = cIndex;
+					var closest = null;
+					
+					$.each(array, function(){
+					  if (closest === null || Math.abs(this - goal) < Math.abs(closest - goal)) {
+						closest = this;
+					  }
+					});
+					//alert(closest);
+					if (closest > goal) {
+						wrapper.bbslider('forPage',pIndex);
+					} else {
+						wrapper.bbslider('backPage',pIndex);
+					}
+					
+				} else if (pIndex < xIndex) { // New page is after current page, show next animation
 					var cIndex = pIndex;
 					var pIndex = xIndex;
 					
@@ -705,14 +804,17 @@
 					wrapper.bbslider('backPage',pIndex);
 				}// End pager check
 				
+				
 			});
 		}, // End travel 
 		backPage : function(pIndex) {
 			return this.each(function() {
-				var wrapper = $(this);
-				var loop    = wrapper.data('loop');
-				var pIndex  = wrapper.data('pIndex');
-				var panel   = wrapper.children('.panel');
+				var wrapper    = $(this);
+				var loop       = wrapper.data('loop');
+				var pIndex     = wrapper.data('pIndex');
+				var transition = wrapper.data('transition');
+				var carousel   = wrapper.data('carousel');
+				var panel      = wrapper.children('.panel');
 				
 				// Add active class to panel
 				panel.removeClass('active').eq(pIndex).addClass('active');
@@ -725,26 +827,40 @@
 				// Stop current animations
 				wrapper.children('.panel').stop(true,true);
 				
-				var transition = wrapper.data('transition');
-				switch (transition) {
-					case 'fade':
-						wrapper.bbslider('fade');
-						break;
-					case 'slide':
-						wrapper.bbslider('slideBack');
-						break;
-					case 'slideVert':
-						wrapper.bbslider('slideVertBack');
-						break;
-					case 'blind':
-						wrapper.bbslider('blindBack');
-						break;
-					/*
-					case 'none':
-					default:
-						wrapper.bbslider('toggle');
-					*/
-				} // End transition switch
+				if (carousel) {
+					switch (transition) {
+						case 'fade':
+							wrapper.bbslider('carFade');
+							break;
+						case 'slide':
+							wrapper.bbslider('carSlideBack');
+							break;
+						case 'none':
+						default:
+							wrapper.bbslider('carToggle');
+					} // End transition switch
+					
+				} else {
+					switch (transition) {
+						case 'fade':
+							wrapper.bbslider('fade');
+							break;
+						case 'slide':
+							wrapper.bbslider('slideBack');
+							break;
+						case 'slideVert':
+							wrapper.bbslider('slideVertBack');
+							break;
+						case 'blind':
+							wrapper.bbslider('blindBack');
+							break;
+						/*
+						case 'none':
+						default:
+							wrapper.bbslider('toggle');
+						*/
+					} // End transition switch
+				} // end carousel check
 				
 				// Check if on first page and hide control
 				if (pIndex == 0 && loop == false) {
@@ -770,11 +886,13 @@
 		}, // End back page 
 		forPage : function(pIndex) {
 			return this.each(function() {
-				var wrapper = $(this);
-				var pCount  = wrapper.data('pCount');
-				var loop    = wrapper.data('loop');
-				var pIndex  = wrapper.data('pIndex');
-				var panel   = wrapper.children('.panel');
+				var wrapper    = $(this);
+				var pCount     = wrapper.data('pCount');
+				var loop       = wrapper.data('loop');
+				var pIndex     = wrapper.data('pIndex');
+				var carousel   = wrapper.data('carousel');
+				var transition = wrapper.data('transition');
+				var panel      = wrapper.children('.panel');
 								
 				// Add active class to panel
 				panel.removeClass('active').eq(pIndex).addClass('active');
@@ -787,26 +905,40 @@
 				// Stop current animations
 				wrapper.children('.panel').stop(true,true);
 				
-				var transition = wrapper.data('transition');
-				switch (transition) {
-					case 'fade':
-						wrapper.bbslider('fade');
-						break;
-					case 'slide':
-						wrapper.bbslider('slideFor');
-						break;
-					case 'slideVert':
-						wrapper.bbslider('slideVertFor');
-						break;
-					case 'blind':
-						wrapper.bbslider('blindFor');
-						break;
-					/*
-					case 'none':
-					default:
-						wrapper.bbslider('toggle');
-					*/
-				} // End transition switch
+				if (carousel) {
+					switch (transition) {
+						case 'fade':
+							wrapper.bbslider('carFade');
+							break;
+						case 'slide':
+							wrapper.bbslider('carSlideFor');
+							break;
+						case 'none':
+						default:
+							wrapper.bbslider('carToggle');
+					} // End transition switch
+					
+				} else {
+					switch (transition) {
+						case 'fade':
+							wrapper.bbslider('fade');
+							break;
+						case 'slide':
+							wrapper.bbslider('slideFor');
+							break;
+						case 'slideVert':
+							wrapper.bbslider('slideVertFor');
+							break;
+						case 'blind':
+							wrapper.bbslider('blindFor');
+							break;
+						/*
+						case 'none':
+						default:
+							wrapper.bbslider('toggle');
+						*/
+					} // End transition switch
+				} // end carousel check
 				
 				// Check if on last page and hide control
 				if (pCount <= pIndex + 1 && loop == false) {
@@ -831,6 +963,318 @@
 				
 			});
 		}, // End forward page 
+		carToggle : function() {
+			var wrapper   = this;
+			var panel     = wrapper.children('.panel');
+			var pCount    = wrapper.data('pCount');
+			var carousel  = wrapper.data('carousel');
+			var css3      = wrapper.data('css3');
+			var pIndex    = wrapper.data('pIndex');
+			var cIndex    = wrapper.data('cIndex');
+			var itemWidth = 100 / parseInt(carousel);
+			var end       = pIndex + parseInt(carousel);	
+			
+			// remove all panels
+			panel.css('left','100%');
+			
+			var left = 0;
+			// loop through and show multiple slides
+			for ( var i = pIndex; i < end; i++ ) {
+				if (i < pCount) {
+					var x = i;
+				} else {
+					// end is higher than number of slides
+					// loop back to beginning
+					var x = i - pCount;
+					
+				}
+				
+				panel.eq(x).css('left',left+'%');
+				
+				left  = left + itemWidth;
+			}
+			
+		}, // End carToggle
+		carFade : function() {
+			var wrapper   = this;
+			var panel     = wrapper.children('.panel');
+			var easing    = wrapper.data('easing');
+			var pCount    = wrapper.data('pCount');
+			var duration  = wrapper.data('duration');
+			var carousel  = wrapper.data('carousel');
+			var css3      = wrapper.data('css3');
+			var pIndex    = wrapper.data('pIndex');
+			var cIndex    = wrapper.data('cIndex');
+			var itemWidth = 100 / parseInt(carousel);
+			var end       = pIndex + parseInt(carousel);	
+			
+			// console.log(pIndex);
+			if (css3) {
+								
+				var resetSlides  = wrapper.data('resetSlides');
+				var resetTimeout = wrapper.data('resetTimeout');
+				
+				if (resetTimeout) {
+					resetSlides();
+					clearTimeout(resetTimeout);
+				}
+				
+				// hide panels
+				panel.removeClass('init').css('opacity',0);
+				
+				// reset active slide
+				resetSlides = function() {
+					// remove all panels
+					panel.addClass('init').css('left','100%');
+					panel.css('display');
+					
+					var start = 0;
+					// loop through and show multiple slides
+					for ( var i = pIndex; i < end; i++ ) {
+						if (i < pCount) {
+							var x = i;
+						} else {
+							// end is higher than number of slides
+							// loop back to beginning
+							var x = i - pCount;
+							
+						}
+						
+						// hide panels
+						panel.eq(x).css('left',start+'%');
+						panel.eq(x).css('display');
+						panel.eq(x).removeClass('init').css('opacity',1);
+						
+						start = start + itemWidth;
+					}
+				
+					resetTimeout = false;
+				};
+				resetTimeout = setTimeout(resetSlides,duration);
+				
+				wrapper.data({
+					resetSlides:  resetSlides,
+					resetTimeout: resetTimeout
+				});
+				
+				
+			} else { // no css3, use jQuery
+				
+				panel.stop(true,true).animate({
+					opacity: 0
+				},duration,easing,function() {
+					var start = 0;
+					// loop through and show multiple slides
+					for ( var i = pIndex; i < end; i++ ) {
+						if (i < pCount) {
+							var x = i;
+						} else {
+							// end is higher than number of slides
+							// loop back to beginning
+							var x = i - pCount;
+							
+						}
+						
+						panel.eq(x).css('left',start+'%').animate({
+							opacity: 1
+						},duration,easing);
+						
+						start = start + itemWidth;
+					}
+				});
+				
+			} // end css3 check
+			
+		}, // End carFade
+		carSlideFor : function() {
+			var wrapper      = this;
+			var panel        = wrapper.children('.panel');
+			var easing       = wrapper.data('easing');
+			var pCount       = wrapper.data('pCount');
+			var duration     = wrapper.data('duration');
+			var carousel     = wrapper.data('carousel');
+			var css3         = wrapper.data('css3');
+			var pIndex       = wrapper.data('pIndex');
+			var cIndex       = wrapper.data('cIndex');
+			var slideSkip    = pIndex - cIndex;
+			var itemWidth    = 100 / parseInt(carousel);
+			var movement     = itemWidth * slideSkip;
+			var end          = pIndex + parseInt(carousel);	
+			
+			// check if end slide is before current slide
+			// extend the end to loop all slides
+			if (pIndex < cIndex) {
+				slideSkip = pIndex - cIndex + pCount;
+				movement  = itemWidth * slideSkip;
+				end       = end + pCount;
+			}
+			// console.log(pIndex);
+			if (css3) {
+				
+				var resetSlides  = wrapper.data('resetSlides');
+				var resetTimeout = wrapper.data('resetTimeout');
+				
+				if (resetTimeout) {
+					resetSlides();
+					clearTimeout(resetTimeout);
+				}
+				
+				var start = 0;
+				var left  = start - movement;
+				// loop through and show multiple slides
+				for ( var i = cIndex; i < end; i++ ) {
+					if (i < pCount) {
+						var x = i;
+					} else {
+						// end is higher than number of slides
+						// loop back to beginning
+						var x = i - pCount;
+						
+					}
+					
+					panel.eq(x).css('left',start+'%');
+					panel.eq(x).css('display');
+					panel.eq(x).removeClass('init').css('left',left+'%');
+					
+					start = start + itemWidth;
+					left  = left + itemWidth;
+				}
+				
+				
+				// reset active slide
+				resetSlides = function() {
+					
+					
+				panel.addClass('init');
+				resetTimeout = false;
+				};
+				resetTimeout = setTimeout(resetSlides,duration);
+				
+				wrapper.data({
+					resetSlides:  resetSlides,
+					resetTimeout: resetTimeout
+				});
+				
+			} else { // no css3, use jQuery
+				
+				var start = 0;
+				var left  = start - movement;
+				// loop through and show multiple slides
+				for ( var i = cIndex; i < end; i++ ) {
+					if (i < pCount) {
+						var x = i;
+					} else {
+						// end is higher than number of slides
+						// loop back to beginning
+						var x = i - pCount;
+						
+					}
+					
+					panel.eq(x).css('left',start+'%').animate({
+						left: left+'%'
+					});
+					
+					start = start + itemWidth;
+					left  = left + itemWidth;
+				}
+			} // end css3 check
+			
+		}, // End carSlideFor
+		carSlideBack : function() {
+			var wrapper      = this;
+			var panel        = wrapper.children('.panel');
+			var easing       = wrapper.data('easing');
+			var pCount       = wrapper.data('pCount');
+			var duration     = wrapper.data('duration');
+			var carousel     = wrapper.data('carousel');
+			var css3         = wrapper.data('css3');
+			var pIndex       = wrapper.data('pIndex');
+			var cIndex       = wrapper.data('cIndex');
+			var itemWidth    = 100 / parseInt(carousel);
+			var slideSkip    = cIndex - pIndex;
+			var movement     = itemWidth * slideSkip;
+			var end          = cIndex + carousel;
+			//alert(end);
+			
+			
+			// check if target slide is after last slide
+			// loop back to end
+			if (slideSkip < 0) {
+				slideSkip = slideSkip + pCount;
+				movement  = itemWidth * slideSkip;
+				end       = end + pCount;
+			}
+			//console.log(movement);
+			if (css3) {
+				
+				var resetSlides  = wrapper.data('resetSlides');
+				var resetTimeout = wrapper.data('resetTimeout');
+				
+				if (resetTimeout) {
+					resetSlides();
+					clearTimeout(resetTimeout);
+				}
+				
+				var start = 0 - movement;
+				var left  = 0;
+				// loop through and show multiple slides
+				for ( var i = pIndex; i < end; i++ ) {
+					if (i < pCount) {
+						var x = i;
+					} else {
+						// target is before first slide
+						// loop back to end
+						var x = i - pCount;
+						
+					}
+					//console.log(start);
+					panel.eq(x).addClass('init').css('left',start+'%');
+					panel.eq(x).css('display');
+					panel.eq(x).removeClass('init').css('left',left+'%');
+					
+					left  = left + itemWidth;
+					start = start + itemWidth;
+				}
+				
+				
+				// reset active slide
+				resetSlides = function() {
+					
+					panel.addClass('init');
+					resetTimeout = false;
+				};
+				resetTimeout = setTimeout(resetSlides,duration);
+				
+				wrapper.data({
+					resetSlides:  resetSlides,
+					resetTimeout: resetTimeout
+				});
+				
+			} else { // no css3, use jQuery
+				
+				var start = 0 - movement;
+				var left  = 0;
+				// loop through and show multiple slides
+				for ( var i = pIndex; i < end; i++ ) {
+					if (i < pCount) {
+						var x = i;
+					} else {
+						// end is higher than number of slides
+						// loop back to beginning
+						var x = i - pCount;
+						
+					}
+					
+					panel.eq(x).css('left',start+'%').animate({
+						left: left+'%'
+					});
+					
+					left  = left + itemWidth;
+					start = start + itemWidth;
+				}
+			} // end css3 check
+			
+		}, // End carSlideBack
 		/*
 		toggle : function() {
 			var wrapper = this;
