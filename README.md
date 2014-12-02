@@ -7,6 +7,22 @@ Author: Richard Hung
 
 More documentation and examples: http://www.bbslider.com
 
+## Install
+
+Install it using [Bower](http://bower.io):
+
+```sh
+$ bower install bare-bones-slider
+```
+
+Install it using [npm](https://www.npmjs.org/):
+
+```sh
+$ npm install bare-bones-slider
+```
+
+Or [download as ZIP](https://github.com/Richard1320/Bare-Bones-Slider/archive/master.zip).
+
 Key Features
 --------------------
 
