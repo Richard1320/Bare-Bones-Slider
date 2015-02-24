@@ -7,9 +7,9 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.1.9
+ * 1.2.0
  * 
- * Copyright (c) 2014 Richard Hung.
+ * Copyright (c) 2015 Richard Hung.
  * 
  * License
  * Bare Bones Slider by Richard Hung is licensed under a Creative Commons Attribution-NonCommercial 3.0 Unported License.
@@ -23,30 +23,31 @@
 
 			// Set default parameters
 			var defaultSettings = {
-				page:         1,                   // Page to start on
-				duration:     1000,                // Duration of transition
-				controls:     false,               // Display next / prev controls
-				pager:        false,               // Create clickable pagination links
-				pagerWrap:    '.pager-wrap',       // Container for pagination (Created externally)
-				pageInfo:     false,               // Display current panel information
-				infoWrap:     '.info-wrap',        // Container for page information (Created externally)
-				onDemand:     false,               // Create placeholder image and load on-demand
-				placeholder:  '/images/blank.gif', // Location of placeholder image
-				auto:         false,               // Pages play automatically
-				timer:        5000,                // Amount of time for autoplay
-				loop:         true,                // Loop back to the beginning
-				transition:   'fade',              // Fade, slide, slideVert, or none
-				callback:     null,                // Callback function after each new page.
-				easing:       'swing',             // Easing transition
-				autoHeight:   true,                // Automatically set height 
-				pauseOnHit:   true,                // Pause autoplay when controls or pagers used 
-				randomPlay:   false,               // Autoplay goes to random slides
-				loopTrans:    true,                // Use backward and forward transition for loop
-				touch:        false,               // Allow touchscreen controls
-				touchoffset:  50,                  // Amount of pixels to swipe for touch controls
-				css3:         true,                // Use CSS3 transitions instead of jQuery animate
-				carousel:     false,               // Number of items per slide
-				carouselMove: 1                    // Amount of slides to move per carousel prev / next
+				page:          1,                   // Page to start on
+				duration:      1000,                // Duration of transition
+				controls:      false,               // Display next / prev controls
+				pager:         false,               // Create clickable pagination links
+				pagerWrap:     '.pager-wrap',       // Container for pagination (Created externally)
+				pageInfo:      false,               // Display current panel information
+				infoWrap:      '.info-wrap',        // Container for page information (Created externally)
+				onDemand:      false,               // Create placeholder image and load on-demand
+				placeholder:   '/images/blank.gif', // Location of placeholder image
+				auto:          false,               // Pages play automatically
+				timer:         5000,                // Amount of time for autoplay
+				loop:          true,                // Loop back to the beginning
+				transition:    'fade',              // Fade, slide, slideVert, or none
+				callback:      null,                // Callback function after each new page.
+				easing:        'swing',             // Easing transition
+				autoHeight:    true,                // Automatically set height 
+				dynamicHeight: false,               // Height of slider changes with current panel
+				pauseOnHit:    true,                // Pause autoplay when controls or pagers used 
+				randomPlay:    false,               // Autoplay goes to random slides
+				loopTrans:     true,                // Use backward and forward transition for loop
+				touch:         false,               // Allow touchscreen controls
+				touchoffset:   50,                  // Amount of pixels to swipe for touch controls
+				css3:          true,                // Use CSS3 transitions instead of jQuery animate
+				carousel:      false,               // Number of items per slide
+				carouselMove:  1                    // Amount of slides to move per carousel prev / next
 			}; // End options
 			
 			// Override default options
@@ -63,29 +64,30 @@
 				
 				// Bind variables to object
 				wrapper.data({
-					autoPlay:     false,
-					pIndex:       pIndex,
-					cIndex:       cIndex,
-					pCount:       pCount,
-					transition:   settings.transition,
-					easing:       settings.easing,
-					duration:     settings.duration,
-					onDemand:     settings.onDemand,
-					infoWrap:     settings.infoWrap,
-					pageInfo:     settings.pageInfo,
-					callback:     settings.callback,
-					loop:         settings.loop,
-					timer:        settings.timer,
-					loopTrans:    settings.loopTrans,
-					pauseOnHit:   settings.pauseOnHit,
-					randomPlay:   settings.randomPlay,
-					placeholder:  settings.placeholder,
-					pager:        settings.pager,
-					pagerWrap:    settings.pagerWrap,
-					autoHeight:   settings.autoHeight,
-					css3:         settings.css3,
-					carousel:     settings.carousel,
-					carouselMove: settings.carouselMove
+					autoPlay:      false,
+					pIndex:        pIndex,
+					cIndex:        cIndex,
+					pCount:        pCount,
+					transition:    settings.transition,
+					easing:        settings.easing,
+					duration:      settings.duration,
+					onDemand:      settings.onDemand,
+					infoWrap:      settings.infoWrap,
+					pageInfo:      settings.pageInfo,
+					callback:      settings.callback,
+					loop:          settings.loop,
+					timer:         settings.timer,
+					loopTrans:     settings.loopTrans,
+					pauseOnHit:    settings.pauseOnHit,
+					randomPlay:    settings.randomPlay,
+					placeholder:   settings.placeholder,
+					pager:         settings.pager,
+					pagerWrap:     settings.pagerWrap,
+					autoHeight:    settings.autoHeight,
+					dynamicHeight: settings.dynamicHeight,
+					css3:          settings.css3,
+					carousel:      settings.carousel,
+					carouselMove:  settings.carouselMove
 				});
 				
 				// Apply basic CSS
@@ -188,16 +190,8 @@
 				
 				// Create autoheight 
 				if (settings.autoHeight == true) {
-					// Get max panel height and width
-					var hi = 0;
-					panel.each(function(){
-						var h = $(this).outerHeight(true);
-						if(h > hi){
-							hi = h;
-						}    
-					});
-
-					wrapper.height(hi);
+					
+					wrapper.bbslider('recalcHeight',true);
 				}// End autoheight
 				
 			}); // End object loop
@@ -208,14 +202,15 @@
 			return this.each(function(){
 				
 				// Create variables
-				var wrapper    = $(this);
-				var panel      = wrapper.children(':not(.control-wrapper)');
-				var pCount     = panel.length; // number of pages
-				var onDemand   = wrapper.data('onDemand'); 
-				var pageInfo   = wrapper.data('pageInfo'); 
-				var pager      = wrapper.data('pager');
-				var autoHeight = wrapper.data('autoHeight');
-				var pIndex     = wrapper.data('pIndex');
+				var wrapper       = $(this);
+				var panel         = wrapper.children(':not(.control-wrapper)');
+				var pCount        = panel.length; // number of pages
+				var onDemand      = wrapper.data('onDemand'); 
+				var pageInfo      = wrapper.data('pageInfo'); 
+				var pager         = wrapper.data('pager');
+				var autoHeight    = wrapper.data('autoHeight');
+				var dynamicHeight = wrapper.data('dynamicHeight');
+				var pIndex        = wrapper.data('pIndex');
 				
 				// Set data
 				wrapper.data('pCount',pCount);
@@ -251,15 +246,7 @@
 				
 				// Create autoheight 
 				if (autoHeight == true) {
-					// Get max panel height and width
-					var hi = 0;
-					panel.each(function(){
-						var h = $(this).outerHeight(true);
-						if(h > hi){
-							hi = h;
-						}
-					});
-					wrapper.height(hi);
+					wrapper.bbslider('recalcHeight',true);
 				} // End autoheight
 				
 			}); // End object loop
@@ -327,6 +314,49 @@
 				wrapper.removeData();
 			});
 		}, // End destroy
+		recalcHeight : function(init) {
+			return this.each(function() {
+				var wrapper       = $(this);
+				var autoHeight    = wrapper.data('autoHeight');
+				var dynamicHeight = wrapper.data('dynamicHeight');
+				var css3          = wrapper.data('css3');
+				var pIndex        = wrapper.data('pIndex');
+				var duration      = wrapper.data('duration');
+				var easing        = wrapper.data('easing');
+				var panel         = wrapper.children('.panel');
+				
+				if (init == true && autoHeight == true) { // Initial slider creation or update
+					if (dynamicHeight == true) {
+						
+						// Get current panel height
+						var hi = panel.eq(pIndex).outerHeight(true);
+	
+					} else { // no dynamic height, use max panel height
+						// Get max panel height and width
+						var hi = 0;
+						panel.each(function(){
+							var h = $(this).outerHeight(true);
+							if(h > hi){
+								hi = h;
+							}
+						});
+					} // end dynamic height check
+					wrapper.height(hi);
+				} else if (dynamicHeight == true && autoHeight == true) { // not initialized, update on dynamic height
+					// Get current panel height
+					var hi = panel.eq(pIndex).outerHeight(true);
+					
+					if (css3) {
+						wrapper.height(hi);
+					} else {
+						wrapper.animate({
+							height: hi
+						},duration,easing);
+					}
+				}
+				
+			});
+		}, // end recalculate height
 		play : function() { 
 			return this.each(function() {
 				var wrapper    = $(this);
@@ -485,8 +515,7 @@
 			panel.eq(pIndex).addClass('active');
 			
 			if (css3) {
-				wrapper.addClass('css3');
-				panel.css({
+				wrapper.addClass('css3').add(panel).css({
 					WebkitTransitionDuration: duration / 1000 + 's',
 					msTransitionDuration: duration / 1000 + 's',
 					MozTransitionDuration: duration / 1000 + 's',
@@ -809,12 +838,14 @@
 		}, // End travel 
 		backPage : function(pIndex) {
 			return this.each(function() {
-				var wrapper    = $(this);
-				var loop       = wrapper.data('loop');
-				var pIndex     = wrapper.data('pIndex');
-				var transition = wrapper.data('transition');
-				var carousel   = wrapper.data('carousel');
-				var panel      = wrapper.children('.panel');
+				var wrapper       = $(this);
+				var loop          = wrapper.data('loop');
+				var pIndex        = wrapper.data('pIndex');
+				var transition    = wrapper.data('transition');
+				var carousel      = wrapper.data('carousel');
+				var panel         = wrapper.children('.panel');
+				var autoHeight    = wrapper.data('autoHeight');
+				var dynamicHeight = wrapper.data('dynamicHeight');
 				
 				// Add active class to panel
 				panel.removeClass('active').eq(pIndex).addClass('active');
@@ -877,6 +908,11 @@
 				
 				wrapper.bbslider('pagerUpdate');
 				
+				// dynamically change height
+				if (dynamicHeight == true && autoHeight == true) {
+					wrapper.bbslider('recalcHeight',false);
+				}
+				
 				var callback = wrapper.data('callback');
 				if ($.isFunction(callback)) {
 					callback.call(this);
@@ -886,13 +922,15 @@
 		}, // End back page 
 		forPage : function(pIndex) {
 			return this.each(function() {
-				var wrapper    = $(this);
-				var pCount     = wrapper.data('pCount');
-				var loop       = wrapper.data('loop');
-				var pIndex     = wrapper.data('pIndex');
-				var carousel   = wrapper.data('carousel');
-				var transition = wrapper.data('transition');
-				var panel      = wrapper.children('.panel');
+				var wrapper       = $(this);
+				var pCount        = wrapper.data('pCount');
+				var loop          = wrapper.data('loop');
+				var pIndex        = wrapper.data('pIndex');
+				var carousel      = wrapper.data('carousel');
+				var transition    = wrapper.data('transition');
+				var panel         = wrapper.children('.panel');
+				var autoHeight    = wrapper.data('autoHeight');
+				var dynamicHeight = wrapper.data('dynamicHeight');
 								
 				// Add active class to panel
 				panel.removeClass('active').eq(pIndex).addClass('active');
@@ -954,6 +992,11 @@
 				};// End infoParse
 				
 				wrapper.bbslider('pagerUpdate');
+				
+				// dynamically change height
+				if (dynamicHeight == true && autoHeight == true) {
+					wrapper.bbslider('recalcHeight',false);
+				}
 				
 				// Allow callback function
 				var callback = wrapper.data('callback');

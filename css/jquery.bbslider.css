@@ -5,6 +5,13 @@
 	overflow:hidden;
 	position:relative;
 }
+.bbslider-wrapper.css3 {
+    -o-transition-property: height;
+	-ms-transition-property: height;
+    -moz-transition-property: height;
+    -webkit-transition-property: height;
+	transition-property:height;
+}
 .bbslider-wrapper > .panel {
 	display:block;
 	position:absolute;
