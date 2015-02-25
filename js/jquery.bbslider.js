@@ -64,30 +64,11 @@
 				
 				// Bind variables to object
 				wrapper.data({
-					autoPlay:      false,
-					pIndex:        pIndex,
-					cIndex:        cIndex,
-					pCount:        pCount,
-					transition:    settings.transition,
-					easing:        settings.easing,
-					duration:      settings.duration,
-					onDemand:      settings.onDemand,
-					infoWrap:      settings.infoWrap,
-					pageInfo:      settings.pageInfo,
-					callback:      settings.callback,
-					loop:          settings.loop,
-					timer:         settings.timer,
-					loopTrans:     settings.loopTrans,
-					pauseOnHit:    settings.pauseOnHit,
-					randomPlay:    settings.randomPlay,
-					placeholder:   settings.placeholder,
-					pager:         settings.pager,
-					pagerWrap:     settings.pagerWrap,
-					autoHeight:    settings.autoHeight,
-					dynamicHeight: settings.dynamicHeight,
-					css3:          settings.css3,
-					carousel:      settings.carousel,
-					carouselMove:  settings.carouselMove
+					autoPlay: false,
+					pIndex:   pIndex,
+					cIndex:   cIndex,
+					pCount:   pCount,
+					settings: settings
 				});
 				
 				// Apply basic CSS
@@ -205,12 +186,13 @@
 				var wrapper       = $(this);
 				var panel         = wrapper.children(':not(.control-wrapper)');
 				var pCount        = panel.length; // number of pages
-				var onDemand      = wrapper.data('onDemand'); 
-				var pageInfo      = wrapper.data('pageInfo'); 
-				var pager         = wrapper.data('pager');
-				var autoHeight    = wrapper.data('autoHeight');
-				var dynamicHeight = wrapper.data('dynamicHeight');
+				var settings      = wrapper.data('settings'); 
 				var pIndex        = wrapper.data('pIndex');
+				var onDemand      = settings.onDemand; 
+				var pageInfo      = settings.pageInfo; 
+				var pager         = settings.pager;
+				var autoHeight    = settings.autoHeight;
+				var dynamicHeight = settings.dynamicHeight;
 				
 				// Set data
 				wrapper.data('pCount',pCount);
@@ -254,8 +236,9 @@
 		destroy : function() {
 			return this.each(function(){
 				
-				var wrapper = $(this);
-				var panel   = wrapper.children('.panel');
+				var wrapper  = $(this);
+				var panel    = wrapper.children('.panel');
+				var settings = wrapper.data('settings');
 				
 				// Remove CSS
 				wrapper.removeClass('bbslider-wrapper css3 carousel');
@@ -276,7 +259,7 @@
 				};// End infoParse
 				
 				// Hide panels and show first panel
-				var transition = wrapper.data('transition');
+				var transition = settings.transition;
 				switch (transition) {
 					case 'fade':
 						panel.removeClass('fade');
@@ -317,13 +300,14 @@
 		recalcHeight : function(init) {
 			return this.each(function() {
 				var wrapper       = $(this);
-				var autoHeight    = wrapper.data('autoHeight');
-				var dynamicHeight = wrapper.data('dynamicHeight');
-				var css3          = wrapper.data('css3');
-				var pIndex        = wrapper.data('pIndex');
-				var duration      = wrapper.data('duration');
-				var easing        = wrapper.data('easing');
 				var panel         = wrapper.children('.panel');
+				var settings      = wrapper.data('settings'); 
+				var pIndex        = wrapper.data('pIndex');
+				var autoHeight    = settings.autoHeight;
+				var dynamicHeight = settings.dynamicHeight;
+				var css3          = settings.css3;
+				var duration      = settings.duration;
+				var easing        = settings.easing;
 				
 				if (init == true && autoHeight == true) { // Initial slider creation or update
 					if (dynamicHeight == true) {
@@ -360,13 +344,14 @@
 		play : function() { 
 			return this.each(function() {
 				var wrapper    = $(this);
+				var settings   = wrapper.data('settings'); 
 				var autoPlay   = wrapper.data('autoPlay');
-				var randomPlay = wrapper.data('randomPlay');
+				var randomPlay = settings.randomPlay;
 				
 				// check if slider is already playing
 				if (autoPlay == false) {
-					var duration = wrapper.data('duration');
-					var timer    = wrapper.data('timer');
+					var duration = settings.duration;
+					var timer    = settings.timer;
 					
 					var tid = setInterval(function() {
 						// Check for random play
@@ -396,9 +381,10 @@
 		randomSlide : function() {
 			return this.each(function() {
 				var wrapper   = $(this);
+				var settings  = wrapper.data('settings'); 
 				var pCount    = wrapper.data('pCount');
-				var loopTrans = wrapper.data('loopTrans');
 				var pIndex    = wrapper.data('pIndex');
+				var loopTrans = settings.loopTrans;
 				
 				var x = Math.round(1 + Math.floor(Math.random() * pCount));
 				var y = x - 1;
@@ -418,13 +404,14 @@
 			// Hide panels and show first panel
 			var wrapper    = this;
 			var panel      = wrapper.children('.panel');
+			var settings   = wrapper.data('settings'); 
 			var pIndex     = wrapper.data('pIndex');
-			var transition = wrapper.data('transition');
-			var css3       = wrapper.data('css3');
-			var duration   = wrapper.data('duration');
-			var easing     = wrapper.data('easing');
-			var carousel   = wrapper.data('carousel');
 			var pCount     = wrapper.data('pCount');
+			var transition = settings.transition;
+			var css3       = settings.css3;
+			var duration   = settings.duration;
+			var easing     = settings.easing;
+			var carousel   = settings.carousel;
 			
 			if (carousel) {
 				
@@ -530,7 +517,8 @@
 			}
 		}, // End setup
 		placeholder : function() { 
-			var placeholder = this.data('placeholder');
+			var wrapper     = this.data('settings');
+			var placeholder = settings.placeholder;
 			var images      = this.children('.panel').find('img');
 			$(images).each(function() {
 				if(!$(this).attr('data-placeholder')) {
@@ -552,20 +540,22 @@
 		}, // End load image
  	    infoParse : function() { 
 			var wrapper  = this;
+			var settings = wrapper.data('settings'); 
 			var pCount   = wrapper.data('pCount');
 			var pIndex   = wrapper.data('pIndex');
-			var infoWrap = $(wrapper.data('infoWrap'));
+			var infoWrap = $(settings.infoWrap);
 			var page     = pIndex + 1;
 			
 			infoWrap.text(page + ' of ' + pCount);
 		}, // End infoParse
 		pager : function() {
 			var wrapper   = this;
+			var panel     = wrapper.children('.panel');
 			var pCount    = wrapper.data('pCount');
+			var settings  = wrapper.data('settings');
 			// var pagerList = pagerWrap.children('.page-list');
-			var panel     = wrapper.find('.panel');
 			var wid       = wrapper.attr('id');
-			var pagerWrap = $(wrapper.data('pagerWrap'));
+			var pagerWrap = $(settings.pagerWrap);
 			
 			// remove any previous pager-list
 			pagerWrap.find('#'+wid+'-pager').remove();
@@ -608,7 +598,8 @@
 				var wid        = $(this).attr('data-link');
 				var wrapper    = $('#'+wid);
 				var pIndex     = wrapper.data('pIndex');
-				var pauseOnHit = wrapper.data('pauseOnHit');
+				var settings   = wrapper.data('settings');
+				var pauseOnHit = settings.pauseOnHit;
 				
 				if (pagerIndex > pIndex) { // New page is after current page, show next animation
 					
@@ -635,9 +626,10 @@
 			}); // End bind
 		}, // End bindpager
 		controls : function() {
-			var pIndex  = this.data('pIndex');
-			var pCount  = this.data('pCount');
-			var loop    = this.data('loop');
+			var settings = this.data('settings'); 
+			var pIndex   = this.data('pIndex');
+			var pCount   = this.data('pCount');
+			var loop     = settings.loop;
 			
 			// Create variables for wrapper
 			var prev = $('<a class="prev control" href="#">Prev</a>').prependTo(this);
@@ -669,12 +661,13 @@
 		prev : function() {
 			return this.each(function() {
 				var wrapper      = $(this);
-				var loop         = wrapper.data('loop');
+				var settings     = wrapper.data('settings'); 
+				var loop         = settings.loop;
 				var pCount       = wrapper.data('pCount');
 				var pIndex       = wrapper.data('pIndex');
-				var loopTrans    = wrapper.data('loopTrans');
-				var carousel     = wrapper.data('carousel');
-				var carouselMove = wrapper.data('carouselMove');
+				var loopTrans    = settings.loopTrans;
+				var carousel     = settings.carousel;
+				var carouselMove = settings.carouselMove;
 				var cIndex       = pIndex;
 						
 				wrapper.data('cIndex',cIndex);
@@ -717,12 +710,13 @@
 		next : function() {
 			return this.each(function() {
 				var wrapper      = $(this);
-				var loop         = wrapper.data('loop');
+				var settings     = wrapper.data('settings');
 				var pCount       = wrapper.data('pCount');
 				var pIndex       = wrapper.data('pIndex');
-				var loopTrans    = wrapper.data('loopTrans');
-				var carousel     = wrapper.data('carousel');
-				var carouselMove = wrapper.data('carouselMove');
+				var loop         = settings.loop;
+				var loopTrans    = settings.loopTrans;
+				var carousel     = settings.carousel;
+				var carouselMove = settings.carouselMove;
 				var cIndex       = pIndex;
 				
 				wrapper.data('cIndex',cIndex);
@@ -766,9 +760,10 @@
 		travel : function(xIndex) {
 			return this.each(function() {
 				var wrapper  = $(this);
+				var settings = wrapper.data('settings');
 				var pIndex   = wrapper.data('pIndex');
-				var carousel = wrapper.data('carousel');
 				var pCount   = wrapper.data('pCount');
+				var carousel = settings.carousel;
 	
 				// reset autoplay timer
 				if (wrapper.data('autoPlay')) {
@@ -839,19 +834,20 @@
 		backPage : function(pIndex) {
 			return this.each(function() {
 				var wrapper       = $(this);
-				var loop          = wrapper.data('loop');
-				var pIndex        = wrapper.data('pIndex');
-				var transition    = wrapper.data('transition');
-				var carousel      = wrapper.data('carousel');
 				var panel         = wrapper.children('.panel');
-				var autoHeight    = wrapper.data('autoHeight');
-				var dynamicHeight = wrapper.data('dynamicHeight');
+				var settings      = wrapper.data('settings');
+				var pIndex        = wrapper.data('pIndex');
+				var loop          = settings.loop;
+				var transition    = settings.transition;
+				var carousel      = settings.carousel;
+				var autoHeight    = settings.autoHeight;
+				var dynamicHeight = settings.dynamicHeight;
 				
 				// Add active class to panel
 				panel.removeClass('active').eq(pIndex).addClass('active');
 				
 				// Load new image
-				if (wrapper.data('onDemand') == true) {
+				if (settings.onDemand == true) {
 					panel.eq(pIndex).bbslider('loadImg');
 				} // End onDemand check
 				
@@ -902,7 +898,7 @@
 				wrapper.find('.next-control-wrapper').css('display','block');
 				
 				// Create page numbers info function
-				if (wrapper.data('pageInfo') == true) {
+				if (settings.pageInfo == true) {
 					wrapper.bbslider('infoParse');
 				};// End infoParse
 				
@@ -913,7 +909,7 @@
 					wrapper.bbslider('recalcHeight',false);
 				}
 				
-				var callback = wrapper.data('callback');
+				var callback = settings.callback;
 				if ($.isFunction(callback)) {
 					callback.call(this);
 				}
@@ -923,20 +919,22 @@
 		forPage : function(pIndex) {
 			return this.each(function() {
 				var wrapper       = $(this);
-				var pCount        = wrapper.data('pCount');
-				var loop          = wrapper.data('loop');
-				var pIndex        = wrapper.data('pIndex');
-				var carousel      = wrapper.data('carousel');
-				var transition    = wrapper.data('transition');
 				var panel         = wrapper.children('.panel');
-				var autoHeight    = wrapper.data('autoHeight');
-				var dynamicHeight = wrapper.data('dynamicHeight');
+				var settings      = wrapper.data('settings');
+				var pCount        = wrapper.data('pCount');
+				var pIndex        = wrapper.data('pIndex');
+
+				var loop          = settings.loop;
+				var carousel      = settings.carousel;
+				var transition    = settings.transition;
+				var autoHeight    = settings.autoHeight;
+				var dynamicHeight = settings.dynamicHeight;
 								
 				// Add active class to panel
 				panel.removeClass('active').eq(pIndex).addClass('active');
 				
 				// Load new image
-				if (wrapper.data('onDemand') == true) {
+				if (settings.onDemand == true) {
 					panel.eq(pIndex).bbslider('loadImg');
 				} // End onDemand check
 				
@@ -987,7 +985,7 @@
 				wrapper.find('.prev-control-wrapper').css('display','block');
 				
 				// Create page numbers info function
-				if (wrapper.data('pageInfo') == true) {
+				if (settings.pageInfo == true) {
 					wrapper.bbslider('infoParse');
 				};// End infoParse
 				
@@ -999,7 +997,7 @@
 				}
 				
 				// Allow callback function
-				var callback = wrapper.data('callback');
+				var callback = settings.callback;
 				if ($.isFunction(callback)) {
 					callback.call(this);
 				}
@@ -1009,11 +1007,12 @@
 		carToggle : function() {
 			var wrapper   = this;
 			var panel     = wrapper.children('.panel');
+			var settings  = wrapper.data('settings');
 			var pCount    = wrapper.data('pCount');
-			var carousel  = wrapper.data('carousel');
-			var css3      = wrapper.data('css3');
 			var pIndex    = wrapper.data('pIndex');
 			var cIndex    = wrapper.data('cIndex');
+			var carousel  = settings.carousel;
+			var css3      = settings.css3;
 			var itemWidth = 100 / parseInt(carousel);
 			var end       = pIndex + parseInt(carousel);	
 			
@@ -1041,13 +1040,14 @@
 		carFade : function() {
 			var wrapper   = this;
 			var panel     = wrapper.children('.panel');
-			var easing    = wrapper.data('easing');
+			var settings  = wrapper.data('settings');
 			var pCount    = wrapper.data('pCount');
-			var duration  = wrapper.data('duration');
-			var carousel  = wrapper.data('carousel');
-			var css3      = wrapper.data('css3');
 			var pIndex    = wrapper.data('pIndex');
 			var cIndex    = wrapper.data('cIndex');
+			var duration  = settings.duration;
+			var easing    = settings.easing;
+			var carousel  = settings.carousel;
+			var css3      = settings.css3;
 			var itemWidth = 100 / parseInt(carousel);
 			var end       = pIndex + parseInt(carousel);	
 			
@@ -1132,13 +1132,14 @@
 		carSlideFor : function() {
 			var wrapper      = this;
 			var panel        = wrapper.children('.panel');
-			var easing       = wrapper.data('easing');
-			var pCount       = wrapper.data('pCount');
-			var duration     = wrapper.data('duration');
-			var carousel     = wrapper.data('carousel');
-			var css3         = wrapper.data('css3');
+			var settings     = wrapper.data('settings');
 			var pIndex       = wrapper.data('pIndex');
 			var cIndex       = wrapper.data('cIndex');
+			var pCount       = wrapper.data('pCount');
+			var easing       = settings.easing;
+			var duration     = settings.duration;
+			var carousel     = settings.carousel;
+			var css3         = settings.css3;
 			var slideSkip    = pIndex - cIndex;
 			var itemWidth    = 100 / parseInt(carousel);
 			var movement     = itemWidth * slideSkip;
@@ -1226,13 +1227,14 @@
 		carSlideBack : function() {
 			var wrapper      = this;
 			var panel        = wrapper.children('.panel');
-			var easing       = wrapper.data('easing');
+			var settings     = wrapper.data('settings');
 			var pCount       = wrapper.data('pCount');
-			var duration     = wrapper.data('duration');
-			var carousel     = wrapper.data('carousel');
-			var css3         = wrapper.data('css3');
 			var pIndex       = wrapper.data('pIndex');
 			var cIndex       = wrapper.data('cIndex');
+			var easing       = settings.easing;
+			var duration     = settings.duration;
+			var carousel     = settings.carousel;
+			var css3         = settings.css3;
 			var itemWidth    = 100 / parseInt(carousel);
 			var slideSkip    = cIndex - pIndex;
 			var movement     = itemWidth * slideSkip;
@@ -1320,11 +1322,12 @@
 		}, // End carSlideBack
 		/*
 		toggle : function() {
-			var wrapper = this;
-			var pIndex  = wrapper.data('pIndex');
-			var cIndex  = wrapper.data('cIndex');
-			var panel   = wrapper.children('.panel');
-			var css3    = wrapper.data('css3');
+			var wrapper  = this;
+			var settings = wrapper.data('settings');
+			var pIndex   = wrapper.data('pIndex');
+			var cIndex   = wrapper.data('cIndex');
+			var panel    = wrapper.children('.panel');
+			var css3     = settings.css3;
 			
 			if (!css3) {
 				
@@ -1340,11 +1343,12 @@
 		fade : function() {
 			var wrapper  = this;
 			var panel    = wrapper.children('.panel');
+			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
-			var easing   = wrapper.data('easing');
-			var duration = wrapper.data('duration');
-			var css3     = wrapper.data('css3');
+			var easing   = settings.easing;
+			var duration = settings.duration;
+			var css3     = settings.css3;
 			
 			if (css3) {
 				var resetSlides  = wrapper.data('resetSlides');
@@ -1391,13 +1395,14 @@
 		blindFor : function() {
 			var wrapper  = this;
 			var panel    = wrapper.children('.panel');
-			var pWrap    = wrapper.find('.panel-inner');
+			var pWrap    = panel.children('.panel-inner');
+			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
-			var easing   = wrapper.data('easing');
-			var duration = wrapper.data('duration');
+			var easing   = settings.easing;
+			var duration = settings.duration;
 			var width    = wrapper.width();
-			var css3     = wrapper.data('css3');
+			var css3     = settings.css3;
 			
 			if (css3) {
 				
@@ -1503,13 +1508,14 @@
 		blindBack : function() {
 			var wrapper  = this;
 			var panel    = wrapper.children('.panel');
-			var pWrap    = wrapper.find('.panel-inner');
+			var pWrap    = panel.children('.panel-inner');
+			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
-			var easing   = wrapper.data('easing');
-			var duration = wrapper.data('duration');
 			var width    = wrapper.width();
-			var css3     = wrapper.data('css3');
+			var easing   = settings.easing;
+			var duration = settings.duration;
+			var css3     = settings.css3;
 			
 			if (css3) {
 				
@@ -1619,11 +1625,12 @@
 		slideFor : function() {
 			var wrapper  = this;
 			var panel    = wrapper.children('.panel');
+			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
-			var easing   = wrapper.data('easing');
-			var duration = wrapper.data('duration');
-			var css3     = wrapper.data('css3');
+			var easing   = settings.easing;
+			var duration = settings.duration;
+			var css3     = settings.css3;
 			
 			if (css3) {
 				
@@ -1693,11 +1700,12 @@
 		slideBack : function() {
 			var wrapper  = this;
 			var panel    = wrapper.children('.panel');
+			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
-			var easing   = wrapper.data('easing');
-			var duration = wrapper.data('duration');
-			var css3     = wrapper.data('css3');
+			var easing   = settings.easing;
+			var duration = settings.duration;
+			var css3     = settings.css3;
 			
 			if (css3) {
 				
@@ -1766,11 +1774,12 @@
 		slideVertFor : function() {
 			var wrapper  = this;
 			var panel    = wrapper.children('.panel');
+			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
-			var easing   = wrapper.data('easing');
-			var duration = wrapper.data('duration');
-			var css3     = wrapper.data('css3');
+			var easing   = settings.easing;
+			var duration = settings.duration;
+			var css3     = settings.css3;
 			
 			if (css3) {
 				var resetSlides  = wrapper.data('resetSlides');
@@ -1841,12 +1850,13 @@
 		slideVertBack : function() {
 			var wrapper  = this;
 			var panel    = wrapper.children('.panel');
-			var pWrap    = wrapper.find('.panel-inner');
+			var pWrap    = panel.children('.panel-inner');
+			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
-			var easing   = wrapper.data('easing');
-			var duration = wrapper.data('duration');
-			var css3     = wrapper.data('css3');
+			var easing   = settings.easing;
+			var duration = settings.duration;
+			var css3     = settings.css3;
 			
 			if (css3) {
 				
