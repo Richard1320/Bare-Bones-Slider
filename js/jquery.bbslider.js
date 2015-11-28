@@ -56,7 +56,7 @@
 			}; // End options
 			
 			// Override default options
-			var settings = $.extend({}, defaultSettings, settings);
+			settings = $.extend({}, defaultSettings, settings);
 			
 			return this.each(function(){
 				
@@ -81,7 +81,7 @@
 				panel.addClass('panel');
 				
 				// image load on demand
-				if (settings.onDemand == true) {
+				if (settings.onDemand) {
 					// Create placeholder 
 					wrapper.bbslider('placeholder');
 					
@@ -90,18 +90,18 @@
 				} // End onDemand check
 			
 				// Create page numbers info function
-				if (settings.pageInfo == true) {
+				if (settings.pageInfo) {
 					wrapper.bbslider('infoParse');
-				};// End infoParse
+				} // End infoParse
 				
 	
 				// Create pager if true
-				if (settings.pager == true) {
+				if (settings.pager) {
 					wrapper.bbslider('pager',settings.pagerWrap);			
 				} // End pager check
 				
 				// create prev/next controls if true
-				if (settings.controls == true) {
+				if (settings.controls) {
 					var x = wrapper.bbslider('controls');
 					var next = x.next;
 					var prev = x.prev;
@@ -110,7 +110,7 @@
 						wrapper.bbslider('next');
 						e.preventDefault();
 				
-						if (settings.pauseOnHit == true) {
+						if (settings.pauseOnHit) {
 							wrapper.bbslider('pause');
 						}
 					});// End next click
@@ -119,7 +119,7 @@
 						wrapper.bbslider('prev');
 						e.preventDefault();
 				
-						if (settings.pauseOnHit == true) {
+						if (settings.pauseOnHit) {
 							wrapper.bbslider('pause');
 						}
 					});// End prev click
@@ -127,7 +127,7 @@
 				}// End controls check
 				
 				// Touch controls
-				if (settings.touch == true) {
+				if (settings.touch) {
 					
 					var getX;
 					var getN;
@@ -167,7 +167,7 @@
 				}// End touch
 				
 				// auto play
-				if (settings.auto == true) {
+				if (settings.auto) {
 					wrapper.bbslider('play');
 				} // End autoplay
 			
@@ -175,7 +175,7 @@
 				wrapper.bbslider('setup');
 				
 				// Create autoheight 
-				if (settings.autoHeight == true) {
+				if (settings.autoHeight) {
 					wrapper.bbslider('recalcHeight',true);
 				}// End autoheight
 				
@@ -213,7 +213,7 @@
 				panel.addClass('panel');
 				
 				// on-demand image loading
-				if (onDemand == true) {
+				if (onDemand) {
 					// Create placeholder 
 					wrapper.bbslider('placeholder');
 				
@@ -222,12 +222,12 @@
 				} // End onDemand check
 				
 				// Create page numbers info function
-				if (pageInfo == true) {
+				if (pageInfo) {
 					wrapper.bbslider('infoParse');
-				};// End infoParse
+				} // End infoParse
 				
 				// Create pager if true
-				if (pager == true) {
+				if (pager) {
 					wrapper.bbslider('pager');			
 				} // End pager check
 				
@@ -239,7 +239,7 @@
 				wrapper.bbslider('setup');
 				
 				// Create autoheight 
-				if (autoHeight == true) {
+				if (autoHeight) {
 					wrapper.bbslider('recalcHeight',true);
 				} // End autoheight
 				
@@ -264,15 +264,15 @@
 				wrapper.css('height','');
 				
 				// Show all images 
-				if (wrapper.data('onDemand') == true) {
+				if (wrapper.data('onDemand')) {
 					panel.bbslider('loadImg');
 				} // End onDemand check
 			
 				// Remove page numbers info function
-				if (wrapper.data('pageInfo') == true) {
+				if (wrapper.data('pageInfo')) {
 					var infoWrap = wrapper.data('infoWrap');
 					infoWrap.empty();
-				};// End infoParse
+				} // End infoParse
 				
 				// Hide panels and show first panel
 				var transition = settings.transition;
@@ -305,7 +305,7 @@
 				
 				// auto play
 				var autoPlay = wrapper.data('autoPlay');
-				if (autoPlay == true) {
+				if (autoPlay) {
 					wrapper.bbslider('pause');
 				}// End autoplay
 				
@@ -324,16 +324,17 @@
 				var css3          = settings.css3;
 				var duration      = settings.duration;
 				var easing        = settings.easing;
+				var hi;
 				
-				if (init == true && autoHeight == true) { // Initial slider creation or update
-					if (dynamicHeight == true) {
+				if (init && autoHeight) { // Initial slider creation or update
+					if (dynamicHeight) {
 						
 						// Get current panel height
-						var hi = panel.eq(pIndex).outerHeight(true);
+						hi = panel.eq(pIndex).outerHeight(true);
 	
 					} else { // no dynamic height, use max panel height
 						// Get max panel height and width
-						var hi = 0;
+						hi = 0;
 						panel.each(function(){
 							var h = $(this).outerHeight(true);
 							if(h > hi){
@@ -342,9 +343,9 @@
 						});
 					} // end dynamic height check
 					wrapper.height(hi);
-				} else if (dynamicHeight == true && autoHeight == true) { // not initialized, update on dynamic height
+				} else if (dynamicHeight && autoHeight) { // not initialized, update on dynamic height
 					// Get current panel height
-					var hi = panel.eq(pIndex).outerHeight(true);
+					hi = panel.eq(pIndex).outerHeight(true);
 					
 					if (css3) {
 						wrapper.height(hi);
@@ -365,13 +366,13 @@
 				var randomPlay = settings.randomPlay;
 				
 				// check if slider is already playing
-				if (autoPlay == false) {
+				if (!autoPlay) {
 					var duration = settings.duration;
 					var timer    = settings.timer;
 					
 					var tid = setInterval(function() {
 						// Check for random play
-						if (randomPlay == true) {
+						if (randomPlay) {
 							wrapper.bbslider('randomSlide');
 						} else {
 							wrapper.bbslider('next');
@@ -384,12 +385,11 @@
 			});
  	    }, // End play
 		pause : function() { 
-
 			return this.each(function() {
 				var wrapper  = $(this);
 				var tid      = wrapper.data('tid');
 				var autoPlay = wrapper.data('autoPlay');
-				if (autoPlay == true) {
+				if (autoPlay) {
 					clearInterval(tid);
 					wrapper.data('autoPlay',false);
 				}
@@ -407,7 +407,7 @@
 				var y = x - 1;
 				
 				// Check if to keep using forward animation
-				if (loopTrans == true) {
+				if (loopTrans) {
 					wrapper.data('cIndex',pIndex);
 					wrapper.data('pIndex',y);
 					
@@ -581,10 +581,11 @@
 			
 			for (var pageNum = 1; pageNum <= pCount; pageNum++) {
 				// Check whether to give a title to pager
+				var title;
 				if (panel.eq(pageNum - 1).attr('title')) { // Title attribute not empty
-					var title = panel.eq(pageNum - 1).attr('title');
+					title = panel.eq(pageNum - 1).attr('title');
 				} else {
-					var title = pageNum;
+					title = pageNum;
 				}// End title check
 				$('<li><a href="#' + pageNum + '" data-link="' + wid + '" class="bb-pager-link">' + title + '</a></li>' ).appendTo(pagerList);
 			}// End for loop
@@ -621,21 +622,21 @@
 				if (pagerIndex > pIndex) { // New page is after current page, show next animation
 					
 					wrapper.data('cIndex',pIndex);
-					var pIndex = pagerIndex;
+					pIndex = pagerIndex;
 					wrapper.data('pIndex',pIndex);
 					
 					wrapper.bbslider('forPage',pIndex);
 				} else if (pagerIndex < pIndex) { // New page is before current page, show previous animation
 					
 					wrapper.data('cIndex',pIndex);
-					var pIndex = pagerIndex;
+					pIndex = pagerIndex;
 					wrapper.data('pIndex',pIndex);
 					
 					wrapper.bbslider('backPage',pIndex);
 
 				}// End pager check
 				
-				if (pauseOnHit == true) {
+				if (pauseOnHit) {
 					wrapper.bbslider('pause');
 				}
 				
@@ -657,12 +658,12 @@
 			var nextWrap = this.children('.next-control-wrapper');
 			
 			// Check if on first page
-			if (pIndex == 0 && loop == false) {
+			if (pIndex === 0 && !loop) {
 				// hide previous button
 				prevWrap.css('display','none');
 			}
 			// check if on last page
-			if (pCount <= pIndex + 1 && loop == false) {
+			if (pCount <= pIndex + 1 && !loop) {
 				// hide next button
 
 				nextWrap.css('display','none');
@@ -703,7 +704,7 @@
 				if (carousel) {
 					pIndex = cIndex - carouselMove;
 					if (pIndex < 0) {
-						var pIndex = pIndex + pCount;
+						pIndex = pIndex + pCount;
 					}
 					wrapper.data('pIndex',pIndex);
 					wrapper.bbslider('backPage',pIndex);
@@ -713,12 +714,12 @@
 					wrapper.data('pIndex',pIndex);
 					
 					wrapper.bbslider('backPage',pIndex);
-				} else if (loop == true) { // It is first panel, loop to end
+				} else if (loop) { // It is first panel, loop to end
 					pIndex = pCount - 1;
 					
 					wrapper.data('pIndex',pIndex);
 					
-					if (loopTrans == true) {
+					if (loopTrans) {
 						// use backward animation
 						wrapper.bbslider('backPage',pIndex);
 					} else {
@@ -757,7 +758,7 @@
 				if (carousel) {
 					pIndex = cIndex + carouselMove;
 					if (pCount < pIndex + carousel + 1) {
-						var pIndex = pIndex - pCount;
+						pIndex = pIndex - pCount;
 					}
 					wrapper.data('pIndex',pIndex);
 					wrapper.bbslider('forPage',pIndex);
@@ -769,12 +770,12 @@
 					
 					wrapper.bbslider('forPage',pIndex);
 					
-				} else if (loop == true) { // It is last panel, loop to beginning
-					var pIndex = 0;
+				} else if (loop) { // It is last panel, loop to beginning
+					pIndex = 0;
 					
 					wrapper.data('pIndex',pIndex);
 					
-					if (loopTrans == true) {
+					if (loopTrans) {
 						// use forward animation
 						wrapper.bbslider('forPage',pIndex);
 					} else {
@@ -792,6 +793,7 @@
 				var pCount   = wrapper.data('pCount');
 				var carousel = settings.carousel;
 				var before   = settings.callbackBefore;
+				var cIndex;
 				
 				if ($.isFunction(before) && before.call(this) === false) {
 					return false;
@@ -803,19 +805,20 @@
 				}
 				
 				if (carousel) {
-					var cIndex = pIndex;
-					var pIndex = xIndex;
+					cIndex = pIndex;
+					pIndex = xIndex;
 					
 					wrapper.data('pIndex',pIndex);
 					wrapper.data('cIndex',cIndex);
 					
 					// get the number of panels that we will have to move
+					var low, high;
 					if (pIndex > cIndex) {
-						var low  = pIndex - pCount;
-						var high = pIndex;
+						low  = pIndex - pCount;
+						high = pIndex;
 					} else {
-						var low  = pIndex;
-						var high = pIndex + pCount;
+						low  = pIndex;
+						high = pIndex + pCount;
 					}
 					
 					var array   = [ low, high ];
@@ -835,16 +838,16 @@
 					}
 					
 				} else if (pIndex < xIndex) { // New page is after current page, show next animation
-					var cIndex = pIndex;
-					var pIndex = xIndex;
+					cIndex = pIndex;
+					pIndex = xIndex;
 					
 					wrapper.data('pIndex',pIndex);
 					wrapper.data('cIndex',cIndex);
 					
 					wrapper.bbslider('forPage',pIndex);
 				} else if (pIndex > xIndex) { // New page is before current page, show previous animation
-					var cIndex = pIndex;
-					var pIndex = xIndex;
+					cIndex = pIndex;
+					pIndex = xIndex;
 					
 					wrapper.data('pIndex',pIndex);
 					wrapper.data('cIndex',cIndex);
@@ -855,7 +858,7 @@
 				
 			}); // end each
 		}, // End travel 
-		backPage : function(pIndex) {
+		backPage : function() {
 			return this.each(function() {
 				var wrapper       = $(this);
 				var panel         = wrapper.children('.panel');
@@ -873,7 +876,7 @@
 				panel.removeClass('active').eq(pIndex).addClass('active');
 				
 				// Load new image
-				if (settings.onDemand == true) {
+				if (settings.onDemand) {
 					panel.eq(pIndex).bbslider('loadImg');
 				} // End onDemand check
 				
@@ -916,7 +919,7 @@
 				} // end carousel check
 				
 				// Check if on first page and hide control
-				if (pIndex == 0 && loop == false) {
+				if (pIndex === 0 && !loop) {
 					wrapper.find('.prev-control-wrapper').css('display','none');
 				}//  End hide control check
 				
@@ -924,14 +927,14 @@
 				wrapper.find('.next-control-wrapper').css('display','block');
 				
 				// Create page numbers info function
-				if (settings.pageInfo == true) {
+				if (settings.pageInfo) {
 					wrapper.bbslider('infoParse');
-				};// End infoParse
+				} // End infoParse
 				
 				wrapper.bbslider('pagerUpdate');
 				
 				// dynamically change height
-				if (dynamicHeight == true && autoHeight == true) {
+				if (dynamicHeight && autoHeight) {
 					wrapper.bbslider('recalcHeight',false);
 				}
 				
@@ -947,7 +950,7 @@
 				
 			});
 		}, // End back page 
-		forPage : function(pIndex) {
+		forPage : function() {
 			return this.each(function() {
 				var wrapper       = $(this);
 				var panel         = wrapper.children('.panel');
@@ -966,7 +969,7 @@
 				panel.removeClass('active').eq(pIndex).addClass('active');
 				
 				// Load new image
-				if (settings.onDemand == true) {
+				if (settings.onDemand) {
 					panel.eq(pIndex).bbslider('loadImg');
 				} // End onDemand check
 				
@@ -1009,7 +1012,7 @@
 				} // end carousel check
 				
 				// Check if on last page and hide control
-				if (pCount <= pIndex + 1 && loop == false) {
+				if (pCount <= pIndex + 1 && !loop) {
 					wrapper.find('.next-control-wrapper').css('display','none');
 				} //  End prev control check
 				
@@ -1017,14 +1020,14 @@
 				wrapper.find('.prev-control-wrapper').css('display','block');
 				
 				// Create page numbers info function
-				if (settings.pageInfo == true) {
+				if (settings.pageInfo) {
 					wrapper.bbslider('infoParse');
-				};// End infoParse
+				} // End infoParse
 				
 				wrapper.bbslider('pagerUpdate');
 				
 				// dynamically change height
-				if (dynamicHeight == true && autoHeight == true) {
+				if (dynamicHeight && autoHeight) {
 					wrapper.bbslider('recalcHeight',false);
 				}
 				
@@ -1047,9 +1050,9 @@
 			var settings  = wrapper.data('settings');
 			var pCount    = wrapper.data('pCount');
 			var pIndex    = wrapper.data('pIndex');
-			var cIndex    = wrapper.data('cIndex');
+			// var cIndex    = wrapper.data('cIndex');
 			var carousel  = settings.carousel;
-			var css3      = settings.css3;
+			// var css3      = settings.css3;
 			var itemWidth = 100 / parseInt(carousel);
 			var end       = pIndex + parseInt(carousel);	
 			
@@ -1059,12 +1062,13 @@
 			var left = 0;
 			// loop through and show multiple slides
 			for ( var i = pIndex; i < end; i++ ) {
+				var x;
 				if (i < pCount) {
-					var x = i;
+					x = i;
 				} else {
 					// end is higher than number of slides
 					// loop back to beginning
-					var x = i - pCount;
+					x = i - pCount;
 					
 				}
 				
@@ -1080,7 +1084,7 @@
 			var settings  = wrapper.data('settings');
 			var pCount    = wrapper.data('pCount');
 			var pIndex    = wrapper.data('pIndex');
-			var cIndex    = wrapper.data('cIndex');
+			// var cIndex    = wrapper.data('cIndex');
 			var duration  = settings.duration;
 			var easing    = settings.easing;
 			var carousel  = settings.carousel;
@@ -1111,12 +1115,13 @@
 					var start = 0;
 					// loop through and show multiple slides
 					for ( var i = pIndex; i < end; i++ ) {
+						var x;
 						if (i < pCount) {
-							var x = i;
+							x = i;
 						} else {
 							// end is higher than number of slides
 							// loop back to beginning
-							var x = i - pCount;
+							x = i - pCount;
 							
 						}
 						
@@ -1146,12 +1151,13 @@
 					var start = 0;
 					// loop through and show multiple slides
 					for ( var i = pIndex; i < end; i++ ) {
+						var x;
 						if (i < pCount) {
-							var x = i;
+							x = i;
 						} else {
 							// end is higher than number of slides
 							// loop back to beginning
-							var x = i - pCount;
+							x = i - pCount;
 							
 						}
 						
@@ -1173,7 +1179,7 @@
 			var pIndex       = wrapper.data('pIndex');
 			var cIndex       = wrapper.data('cIndex');
 			var pCount       = wrapper.data('pCount');
-			var easing       = settings.easing;
+			// var easing       = settings.easing;
 			var duration     = settings.duration;
 			var carousel     = settings.carousel;
 			var css3         = settings.css3;
@@ -1181,6 +1187,7 @@
 			var itemWidth    = 100 / parseInt(carousel);
 			var movement     = itemWidth * slideSkip;
 			var end          = pIndex + parseInt(carousel);	
+			var start, left, x, i;
 			
 			// check if end slide is before current slide
 			// extend the end to loop all slides
@@ -1200,16 +1207,17 @@
 					clearTimeout(resetTimeout);
 				}
 				
-				var start = 0;
-				var left  = start - movement;
+				start = 0;
+				left  = start - movement;
+				
 				// loop through and show multiple slides
-				for ( var i = cIndex; i < end; i++ ) {
+				for ( i = cIndex; i < end; i++ ) {
 					if (i < pCount) {
-						var x = i;
+						x = i;
 					} else {
 						// end is higher than number of slides
 						// loop back to beginning
-						var x = i - pCount;
+						x = i - pCount;
 						
 					}
 					
@@ -1238,16 +1246,17 @@
 				
 			} else { // no css3, use jQuery
 				
-				var start = 0;
-				var left  = start - movement;
+				start = 0;
+				left  = start - movement;
+				
 				// loop through and show multiple slides
-				for ( var i = cIndex; i < end; i++ ) {
+				for ( i = cIndex; i < end; i++ ) {
 					if (i < pCount) {
-						var x = i;
+						x = i;
 					} else {
 						// end is higher than number of slides
 						// loop back to beginning
-						var x = i - pCount;
+						x = i - pCount;
 						
 					}
 					
@@ -1268,7 +1277,7 @@
 			var pCount       = wrapper.data('pCount');
 			var pIndex       = wrapper.data('pIndex');
 			var cIndex       = wrapper.data('cIndex');
-			var easing       = settings.easing;
+			// var easing       = settings.easing;
 			var duration     = settings.duration;
 			var carousel     = settings.carousel;
 			var css3         = settings.css3;
@@ -1276,6 +1285,7 @@
 			var slideSkip    = cIndex - pIndex;
 			var movement     = itemWidth * slideSkip;
 			var end          = cIndex + carousel;
+			var start, left, x, i;
 			//alert(end);
 			
 			
@@ -1297,16 +1307,16 @@
 					clearTimeout(resetTimeout);
 				}
 				
-				var start = 0 - movement;
-				var left  = 0;
+				start = 0 - movement;
+				left  = 0;
 				// loop through and show multiple slides
-				for ( var i = pIndex; i < end; i++ ) {
+				for ( i = pIndex; i < end; i++ ) {
 					if (i < pCount) {
-						var x = i;
+						x = i;
 					} else {
 						// target is before first slide
 						// loop back to end
-						var x = i - pCount;
+						x = i - pCount;
 						
 					}
 					//console.log(start);
@@ -1334,16 +1344,16 @@
 				
 			} else { // no css3, use jQuery
 				
-				var start = 0 - movement;
-				var left  = 0;
+				start = 0 - movement;
+				left  = 0;
 				// loop through and show multiple slides
-				for ( var i = pIndex; i < end; i++ ) {
+				for ( i = pIndex; i < end; i++ ) {
 					if (i < pCount) {
-						var x = i;
+						x = i;
 					} else {
 						// end is higher than number of slides
 						// loop back to beginning
-						var x = i - pCount;
+						x = i - pCount;
 						
 					}
 					
@@ -1887,7 +1897,7 @@
 		slideVertBack : function() {
 			var wrapper  = this;
 			var panel    = wrapper.children('.panel');
-			var pWrap    = panel.children('.panel-inner');
+			// var pWrap    = panel.children('.panel-inner');
 			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
