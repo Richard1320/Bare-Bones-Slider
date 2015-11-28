@@ -1,4 +1,4 @@
-/**
+/*!
  * Bare Bones Slider
  * http://www.bbslider.com/
  *
@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.2.0
+ * 1.2.1
  * 
  * Copyright (c) 2015 Richard Hung.
  * 
@@ -16,38 +16,43 @@
  * http://creativecommons.org/licenses/by-nc/3.0/deed.en_US
  */
 
+
 (function($) {
+	'use strict';
 	
 	var methods = {
 		init : function(settings) {
 
 			// Set default parameters
 			var defaultSettings = {
-				page:          1,                   // Page to start on
-				duration:      1000,                // Duration of transition
-				controls:      false,               // Display next / prev controls
-				pager:         false,               // Create clickable pagination links
-				pagerWrap:     '.pager-wrap',       // Container for pagination (Created externally)
-				pageInfo:      false,               // Display current panel information
-				infoWrap:      '.info-wrap',        // Container for page information (Created externally)
-				onDemand:      false,               // Create placeholder image and load on-demand
-				placeholder:   '/images/blank.gif', // Location of placeholder image
-				auto:          false,               // Pages play automatically
-				timer:         5000,                // Amount of time for autoplay
-				loop:          true,                // Loop back to the beginning
-				transition:    'fade',              // Fade, slide, slideVert, or none
-				callback:      null,                // Callback function after each new page.
-				easing:        'swing',             // Easing transition
-				autoHeight:    true,                // Automatically set height 
-				dynamicHeight: false,               // Height of slider changes with current panel
-				pauseOnHit:    true,                // Pause autoplay when controls or pagers used 
-				randomPlay:    false,               // Autoplay goes to random slides
-				loopTrans:     true,                // Use backward and forward transition for loop
-				touch:         false,               // Allow touchscreen controls
-				touchoffset:   50,                  // Amount of pixels to swipe for touch controls
-				css3:          true,                // Use CSS3 transitions instead of jQuery animate
-				carousel:      false,               // Number of items per slide
-				carouselMove:  1                    // Amount of slides to move per carousel prev / next
+				page:           1,                   // Page to start on
+				duration:       1000,                // Duration of transition
+				controls:       false,               // Display next / prev controls
+				pager:          false,               // Create clickable pagination links
+				pagerWrap:      '.pager-wrap',       // Container for pagination (Created externally)
+				pageInfo:       false,               // Display current panel information
+				infoWrap:       '.info-wrap',        // Container for page information (Created externally)
+				onDemand:       false,               // Create placeholder image and load on-demand
+				placeholder:    '/images/blank.gif', // Location of placeholder image
+				auto:           false,               // Pages play automatically
+				timer:          5000,                // Amount of time for autoplay
+				loop:           true,                // Loop back to the beginning
+				transition:     'fade',              // Fade, slide, slideVert, or none
+				callbackStart:  null,                // Callback function when slider is setup
+				callbackBefore: null,                // Callback function before new slide transition
+				callbackAfter:  null,                // Callback function after new slide complete
+				callbackUpdate: null,                // Callback function after update function
+				easing:         'swing',             // Easing transition
+				autoHeight:     true,                // Automatically set height 
+				dynamicHeight:  false,               // Height of slider changes with current panel
+				pauseOnHit:     true,                // Pause autoplay when controls or pagers used 
+				randomPlay:     false,               // Autoplay goes to random slides
+				loopTrans:      true,                // Use backward and forward transition for loop
+				touch:          false,               // Allow touchscreen controls
+				touchoffset:    50,                  // Amount of pixels to swipe for touch controls
+				css3:           true,                // Use CSS3 transitions instead of jQuery animate
+				carousel:       false,               // Number of items per slide
+				carouselMove:   1                    // Amount of slides to move per carousel prev / next
 			}; // End options
 			
 			// Override default options
@@ -174,6 +179,12 @@
 					wrapper.bbslider('recalcHeight',true);
 				}// End autoheight
 				
+				
+				// callback start function
+				var callbackStart = settings.callbackStart;
+				if ($.isFunction(callbackStart)) {
+					callbackStart.call(this);
+				}
 			}); // End object loop
 			
 	
@@ -192,6 +203,8 @@
 				var pager         = settings.pager;
 				var autoHeight    = settings.autoHeight;
 				var dynamicHeight = settings.dynamicHeight;
+				var callback      = settings.callbackUpdate;
+				
 				
 				// Set data
 				wrapper.data('pCount',pCount);
@@ -230,6 +243,10 @@
 					wrapper.bbslider('recalcHeight',true);
 				} // End autoheight
 				
+				// callback update function
+				if ($.isFunction(callback)) {
+					callback.call(this);
+				}
 			}); // End object loop
 		}, // End update
 		destroy : function() {
@@ -367,6 +384,7 @@
 			});
  	    }, // End play
 		pause : function() { 
+
 			return this.each(function() {
 				var wrapper  = $(this);
 				var tid      = wrapper.data('tid');
@@ -561,7 +579,7 @@
 			
 			var pagerList = $('<ul class="page-list" id="'+wid+'-pager" />').appendTo(pagerWrap);
 			
-			for (pageNum = 1; pageNum <= pCount; pageNum++) {
+			for (var pageNum = 1; pageNum <= pCount; pageNum++) {
 				// Check whether to give a title to pager
 				if (panel.eq(pageNum - 1).attr('title')) { // Title attribute not empty
 					var title = panel.eq(pageNum - 1).attr('title');
@@ -668,7 +686,12 @@
 				var carousel     = settings.carousel;
 				var carouselMove = settings.carouselMove;
 				var cIndex       = pIndex;
-						
+				var before       = settings.callbackBefore;
+				
+				if ($.isFunction(before) && before.call(this) === false) {
+					return false;
+				}
+				
 				wrapper.data('cIndex',cIndex);
 				
 				// reset autoplay timer
@@ -717,6 +740,11 @@
 				var carousel     = settings.carousel;
 				var carouselMove = settings.carouselMove;
 				var cIndex       = pIndex;
+				var before       = settings.callbackBefore;
+				
+				if ($.isFunction(before) && before.call(this) === false) {
+					return false;
+				}
 				
 				wrapper.data('cIndex',cIndex);
 				
@@ -763,7 +791,12 @@
 				var pIndex   = wrapper.data('pIndex');
 				var pCount   = wrapper.data('pCount');
 				var carousel = settings.carousel;
-	
+				var before   = settings.callbackBefore;
+				
+				if ($.isFunction(before) && before.call(this) === false) {
+					return false;
+				}
+				
 				// reset autoplay timer
 				if (wrapper.data('autoPlay')) {
 					wrapper.bbslider('pause').bbslider('play');
@@ -775,16 +808,8 @@
 					
 					wrapper.data('pIndex',pIndex);
 					wrapper.data('cIndex',cIndex);
-					/*
-					//if ((pIndex > cIndex && pIndex + carousel + 1 < pCount) || (pIndex > cIndex && pIndex + carousel + 1 > pCount)) {
-					if ((pIndex > cIndex && pIndex + carousel + 1 < pCount) || (pIndex > cIndex && pIndex + carousel + 1 > pCount) || (pIndex > cIndex && pIndex + carousel > 0) {
-						wrapper.bbslider('forPage',pIndex);
-						console.log(pIndex);
-					} else {
-						wrapper.bbslider('backPage',pIndex);
-						//alert('bk');
-					}
-					*/
+					
+					// get the number of panels that we will have to move
 					if (pIndex > cIndex) {
 						var low  = pIndex - pCount;
 						var high = pIndex;
@@ -797,12 +822,12 @@
 					var goal    = cIndex;
 					var closest = null;
 					
+					// determine which direction is the shorter distance in the carousel
 					$.each(array, function(){
-					  if (closest === null || Math.abs(this - goal) < Math.abs(closest - goal)) {
-						closest = this;
-					  }
+						if (closest === null || Math.abs(this - goal) < Math.abs(closest - goal)) {
+							closest = this;
+						}
 					});
-					//alert(closest);
 					if (closest > goal) {
 						wrapper.bbslider('forPage',pIndex);
 					} else {
@@ -825,10 +850,10 @@
 					wrapper.data('cIndex',cIndex);
 					
 					wrapper.bbslider('backPage',pIndex);
-				}// End pager check
+				}// End carousel check
 				
 				
-			});
+			}); // end each
 		}, // End travel 
 		backPage : function(pIndex) {
 			return this.each(function() {
@@ -841,6 +866,8 @@
 				var carousel      = settings.carousel;
 				var autoHeight    = settings.autoHeight;
 				var dynamicHeight = settings.dynamicHeight;
+				var css3          = settings.css3;
+				var duration      = settings.duration;
 				
 				// Add active class to panel
 				panel.removeClass('active').eq(pIndex).addClass('active');
@@ -908,9 +935,14 @@
 					wrapper.bbslider('recalcHeight',false);
 				}
 				
-				var callback = settings.callback;
-				if ($.isFunction(callback)) {
-					callback.call(this);
+				// No real "callback" functionality for css3 transitions
+				// Plugin animates all panels on transition; no single "complete" check
+				// Use settimeout for after callback
+				var after = settings.callbackAfter;
+				if ($.isFunction(after) && css3) {
+					setTimeout(function() {
+						after.call(this);
+					},duration);
 				}
 				
 			});
@@ -922,13 +954,14 @@
 				var settings      = wrapper.data('settings');
 				var pCount        = wrapper.data('pCount');
 				var pIndex        = wrapper.data('pIndex');
-
 				var loop          = settings.loop;
 				var carousel      = settings.carousel;
 				var transition    = settings.transition;
 				var autoHeight    = settings.autoHeight;
 				var dynamicHeight = settings.dynamicHeight;
-								
+				var css3          = settings.css3;
+				var duration      = settings.duration;
+				
 				// Add active class to panel
 				panel.removeClass('active').eq(pIndex).addClass('active');
 				
@@ -995,11 +1028,16 @@
 					wrapper.bbslider('recalcHeight',false);
 				}
 				
-				// Allow callback function
-				var callback = settings.callback;
-				if ($.isFunction(callback)) {
-					callback.call(this);
+				// No real "callback" functionality for css3 transitions
+				// Plugin animates all panels on transition; no single "complete" check
+				// Use settimeout for after callback
+				var after = settings.callbackAfter;
+				if ($.isFunction(after) && css3) {
+					setTimeout(function() {
+						after.call(this);
+					},duration);
 				}
+				
 				
 			});
 		}, // End forward page 
