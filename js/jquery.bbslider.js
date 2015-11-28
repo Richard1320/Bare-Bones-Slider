@@ -158,8 +158,16 @@
 
 						if (getN > getX + offset) {
 							wrapper.bbslider('prev');
+							
+							if (settings.pauseOnHit) {
+								wrapper.bbslider('pause');
+							}
 						} else if (getN < getX - offset) {
 							wrapper.bbslider('next');
+							
+							if (settings.pauseOnHit) {
+								wrapper.bbslider('pause');
+							}
 						}
 						// alert('Touch off: '+touch.pageY+' '+touch.pageX);
 						// console.log(touch.pageY+' '+touch.pageX);
