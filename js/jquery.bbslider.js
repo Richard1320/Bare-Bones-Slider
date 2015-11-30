@@ -210,7 +210,6 @@
 				var pageInfo      = settings.pageInfo; 
 				var pager         = settings.pager;
 				var autoHeight    = settings.autoHeight;
-				var dynamicHeight = settings.dynamicHeight;
 				var callback      = settings.callbackUpdate;
 				
 				
