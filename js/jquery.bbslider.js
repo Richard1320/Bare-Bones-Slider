@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.2.1
+ * 1.2.2
  * 
  * Copyright (c) 2015 Richard Hung.
  * 
@@ -133,7 +133,7 @@
 					var getN;
 					var offset;
 					
-					wrapper.bind('touchstart',function(e) {
+					wrapper.on('touchstart',function(e) {
 						e.preventDefault();
 						var touch  = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
 						
@@ -142,14 +142,14 @@
 						// alert('Touch on: '+touch.pageY+' '+touch.pageX);
 					}); // end touchstart
 					/*
-					wrapper.bind('touchmove',function(e) {
+					wrapper.on('touchmove',function(e) {
 						e.preventDefault();
 						var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
 						// console.log(touch.pageY+' '+touch.pageX);
 						alert('Touch move: '+touch.pageY+' '+touch.pageX);
 					}); // end touchmove
 					*/
-					wrapper.bind('touchend',function(e) {
+					wrapper.on('touchend',function(e) {
 						e.preventDefault();
 						var touch  = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
 						
@@ -938,6 +938,7 @@
 					wrapper.bbslider('infoParse');
 				} // End infoParse
 				
+
 				wrapper.bbslider('pagerUpdate');
 				
 				// dynamically change height
