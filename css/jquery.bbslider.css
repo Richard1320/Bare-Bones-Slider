@@ -1,11 +1,14 @@
-/* CSS Document */
+/*!
+ * Bare Bones Slider 
+ * http://www.bbslider.com/
+ */
 
 .bbslider-wrapper {
 	display:block;
 	overflow:hidden;
 	position:relative;
 }
-.bbslider-wrapper.css3 {
+.bbslider-wrapper {
     -o-transition-property: height;
 	-ms-transition-property: height;
     -moz-transition-property: height;
@@ -17,23 +20,14 @@
 	position:absolute;
 	width:100%;
 }
-/*
-.bbslider-wrapper.css3 > .panel {
-    -o-transition-property: all;
-	-ms-transition-property: all;
-    -moz-transition-property: all;
-    -webkit-transition-property: all;
-	transition-property:all;
-}
-*/
-.bbslider-wrapper.css3 > .panel.init {
+.bbslider-wrapper > .panel.init {
 	-o-transition: none !important;
 	-ms-transition: none !important;
 	-moz-transition: none !important;
 	-webkit-transition: none !important;
 	transition:none !important;
 }
-.bbslider-wrapper.css3 > .panel > .panel-inner {
+.bbslider-wrapper > .panel > .panel-inner {
     -o-transition-duration: inherit;
 	-ms-transition-duration: inherit;
     -moz-transition-duration: inherit;
@@ -101,7 +95,7 @@
 .bbslider-wrapper > .panel.fade {
 	display:none;
 }
-.bbslider-wrapper.css3 > .panel.fade {
+.bbslider-wrapper > .panel.fade {
     -o-transition-property: opacity;
 	-ms-transition-property: opacity;
     -moz-transition-property: opacity;
@@ -109,14 +103,11 @@
 	transition-property:opacity;
 	opacity:0;
 }
-.bbslider-wrapper.carousel.css3 > .panel.fade {
+.bbslider-wrapper.carousel > .panel.fade {
 	opacity:0;
 	display:block;
 }
 .bbslider-wrapper > .panel.slide {
-	display:none;
-}
-.bbslider-wrapper.css3 > .panel.slide {
     -o-transition-property: left, right;
 	-ms-transition-property: left, right;
     -moz-transition-property: left, right;
@@ -125,9 +116,6 @@
 	display:block;
 }
 .bbslider-wrapper > .panel.slideVert {
-	display:none;
-}
-.bbslider-wrapper.css3 > .panel.slideVert {
     -o-transition-property: top;
 	-ms-transition-property: top;
     -moz-transition-property: top;
@@ -144,15 +132,15 @@
 .bbslider-wrapper > .panel.blind > .panel-inner {
 	position:absolute;
 }
-.bbslider-wrapper.css3 > .panel.blind,
-.bbslider-wrapper.css3 > .panel.blind .panel-inner {
+.bbslider-wrapper > .panel.blind,
+.bbslider-wrapper > .panel.blind .panel-inner {
     -o-transition-property: left, right, margin, width;
 	-ms-transition-property: left, right, margin, width;
     -moz-transition-property: left, right, margin, width;
     -webkit-transition-property: left, right, margin, width;
 	transition-property:left, right, margin, width;
 }
-.bbslider-wrapper.carousel.css3 > .panel.slide {
+.bbslider-wrapper.carousel > .panel.slide {
     -o-transition-property: left;
 	-ms-transition-property: left;
     -moz-transition-property: left;

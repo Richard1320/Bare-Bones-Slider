@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.2.2
+ * 1.2.3
  * 
  * Copyright (c) 2015 Richard Hung.
  * 
@@ -50,7 +50,6 @@
 				loopTrans:      true,                // Use backward and forward transition for loop
 				touch:          false,               // Allow touchscreen controls
 				touchoffset:    50,                  // Amount of pixels to swipe for touch controls
-				css3:           true,                // Use CSS3 transitions instead of jQuery animate
 				carousel:       false,               // Number of items per slide
 				carouselMove:   1                    // Amount of slides to move per carousel prev / next
 			}; // End options
@@ -237,11 +236,7 @@
 				if (pager) {
 					wrapper.bbslider('pager');			
 				} // End pager check
-				
-				// remove css3 class
-				// will check and reapply again in the setup function
-				wrapper.removeClass('css');
-			
+							
 				// Setup the slider
 				wrapper.bbslider('setup');
 				
@@ -262,9 +257,10 @@
 				var wrapper  = $(this);
 				var panel    = wrapper.children('.panel');
 				var settings = wrapper.data('settings');
+				var wid      = wrapper.attr('id');
 				
 				// Remove CSS
-				wrapper.removeClass('bbslider-wrapper css3 carousel');
+				wrapper.removeClass('bbslider-wrapper carousel');
 				panel.removeClass('panel active slide fade blind none slideVert');
 				
 				// remove autoheight 
@@ -304,7 +300,9 @@
 				} // End transition switch
 				
 				// Remove pager
-				$('#'+wid+'-pager').remove();			
+				if (settings.pager) {
+					$('#'+wid+'-pager').remove();
+				}
 				
 				// Remove controls 
 				wrapper.children('.prev-control-wrapper').remove();
@@ -328,9 +326,6 @@
 				var pIndex        = wrapper.data('pIndex');
 				var autoHeight    = settings.autoHeight;
 				var dynamicHeight = settings.dynamicHeight;
-				var css3          = settings.css3;
-				var duration      = settings.duration;
-				var easing        = settings.easing;
 				var hi;
 				
 				if (init && autoHeight) { // Initial slider creation or update
@@ -354,13 +349,7 @@
 					// Get current panel height
 					hi = panel.eq(pIndex).outerHeight(true);
 					
-					if (css3) {
-						wrapper.height(hi);
-					} else {
-						wrapper.animate({
-							height: hi
-						},duration,easing);
-					}
+					wrapper.height(hi);
 				}
 				
 			});
@@ -432,9 +421,7 @@
 			var pIndex     = wrapper.data('pIndex');
 			var pCount     = wrapper.data('pCount');
 			var transition = settings.transition;
-			var css3       = settings.css3;
 			var duration   = settings.duration;
-			var easing     = settings.easing;
 			var carousel   = settings.carousel;
 			
 			if (carousel) {
@@ -465,34 +452,20 @@
 					left = left + itemWidth;
 				} // end carousel item loop
 					
-				if (css3) {
-					panel.addClass('init');
-				}
+				panel.addClass('init');
 			} else {
 				switch (transition) {
 					case 'fade':
 						panel.addClass('fade');
-						if (css3) {
-							panel.addClass('init').eq(pIndex).show().css('opacity',1);
-						} else {
-							panel.eq(pIndex).fadeIn();
-						}
+						panel.addClass('init').eq(pIndex).show().css('opacity',1);
 						break;
 					case 'slide':
 						panel.addClass('slide');
-						if (css3) {
-							panel.addClass('init').css('left','100%').eq(pIndex).css('left',0);
-						} else {
-							panel.eq(pIndex).show();
-						}
+						panel.addClass('init').css('left','100%').eq(pIndex).css('left',0);
 						break;
 					case 'slideVert':
 						panel.addClass('slideVert');
-						if (css3) {
-							panel.addClass('init').css('top','-100%').eq(pIndex).css('top',0);
-						} else {
-							panel.eq(pIndex).show();
-						}
+						panel.addClass('init').css('top','-100%').eq(pIndex).css('top',0);
 						break;
 					case 'blind':
 						// Hide panels and show opening panel
@@ -525,20 +498,13 @@
 			// add active class to panel
 			panel.eq(pIndex).addClass('active');
 			
-			if (css3) {
-				wrapper.addClass('css3').add(panel).css({
-					WebkitTransitionDuration: duration / 1000 + 's',
-					msTransitionDuration: duration / 1000 + 's',
-					MozTransitionDuration: duration / 1000 + 's',
-					OTransitionDuration: duration / 1000 + 's',
-					transitionDuration: duration / 1000 + 's',
-					WebkitTransitionTimingFunction: easing,
-					msTransitionTimingFunction: easing,
-					MozTransitionTimingFunction: easing,
-					OTransitionTimingFunction: easing,
-					transitionTimingFunction: easing
-				});
-			}
+			wrapper.add(panel).css({
+				WebkitTransitionDuration: duration / 1000 + 's',
+				msTransitionDuration: duration / 1000 + 's',
+				MozTransitionDuration: duration / 1000 + 's',
+				OTransitionDuration: duration / 1000 + 's',
+				transitionDuration: duration / 1000 + 's',
+			});
 		}, // End setup
 		placeholder : function() { 
 			var settings    = this.data('settings');
@@ -687,6 +653,7 @@
 			return this.each(function() {
 				var wrapper      = $(this);
 				var settings     = wrapper.data('settings'); 
+
 				var loop         = settings.loop;
 				var pCount       = wrapper.data('pCount');
 				var pIndex       = wrapper.data('pIndex');
@@ -876,7 +843,6 @@
 				var carousel      = settings.carousel;
 				var autoHeight    = settings.autoHeight;
 				var dynamicHeight = settings.dynamicHeight;
-				var css3          = settings.css3;
 				var duration      = settings.duration;
 				
 				// Add active class to panel
@@ -950,7 +916,7 @@
 				// Plugin animates all panels on transition; no single "complete" check
 				// Use settimeout for after callback
 				var after = settings.callbackAfter;
-				if ($.isFunction(after) && css3) {
+				if ($.isFunction(after)) {
 					setTimeout(function() {
 						after.call(this);
 					},duration);
@@ -970,7 +936,6 @@
 				var transition    = settings.transition;
 				var autoHeight    = settings.autoHeight;
 				var dynamicHeight = settings.dynamicHeight;
-				var css3          = settings.css3;
 				var duration      = settings.duration;
 				
 				// Add active class to panel
@@ -1043,7 +1008,7 @@
 				// Plugin animates all panels on transition; no single "complete" check
 				// Use settimeout for after callback
 				var after = settings.callbackAfter;
-				if ($.isFunction(after) && css3) {
+				if ($.isFunction(after)) {
 					setTimeout(function() {
 						after.call(this);
 					},duration);
@@ -1060,7 +1025,6 @@
 			var pIndex    = wrapper.data('pIndex');
 			// var cIndex    = wrapper.data('cIndex');
 			var carousel  = settings.carousel;
-			// var css3      = settings.css3;
 			var itemWidth = 100 / parseInt(carousel);
 			var end       = pIndex + parseInt(carousel);	
 			
@@ -1094,90 +1058,58 @@
 			var pIndex    = wrapper.data('pIndex');
 			// var cIndex    = wrapper.data('cIndex');
 			var duration  = settings.duration;
-			var easing    = settings.easing;
 			var carousel  = settings.carousel;
-			var css3      = settings.css3;
 			var itemWidth = 100 / parseInt(carousel);
 			var end       = pIndex + parseInt(carousel);	
 			
 			// console.log(pIndex);
-			if (css3) {
-								
-				var resetSlides  = wrapper.data('resetSlides');
-				var resetTimeout = wrapper.data('resetTimeout');
+			var resetSlides  = wrapper.data('resetSlides');
+			var resetTimeout = wrapper.data('resetTimeout');
+			
+			if (resetTimeout) {
+				resetSlides();
+				clearTimeout(resetTimeout);
+			}
+			
+			// hide panels
+			panel.removeClass('init').css('opacity',0);
+			
+			// reset active slide
+			resetSlides = function() {
+				// remove all panels
+				panel.addClass('init').css('left','100%');
+				panel.css('display');
 				
-				if (resetTimeout) {
-					resetSlides();
-					clearTimeout(resetTimeout);
-				}
-				
-				// hide panels
-				panel.removeClass('init').css('opacity',0);
-				
-				// reset active slide
-				resetSlides = function() {
-					// remove all panels
-					panel.addClass('init').css('left','100%');
-					panel.css('display');
+				var start = 0;
+				// loop through and show multiple slides
+				for ( var i = pIndex; i < end; i++ ) {
+					var x;
+					if (i < pCount) {
+						x = i;
+					} else {
+						// end is higher than number of slides
+						// loop back to beginning
+						x = i - pCount;
+						
+					}
 					
-					var start = 0;
-					// loop through and show multiple slides
-					for ( var i = pIndex; i < end; i++ ) {
-						var x;
-						if (i < pCount) {
-							x = i;
-						} else {
-							// end is higher than number of slides
-							// loop back to beginning
-							x = i - pCount;
-							
-						}
-						
-						// hide panels
-						panel.eq(x).css('left',start+'%');
-						panel.eq(x).css('display');
-						panel.eq(x).removeClass('init').css('opacity',1);
-						
-						start = start + itemWidth;
-					}
-				
-					resetTimeout = false;
-				};
-				resetTimeout = setTimeout(resetSlides,duration);
-				
-				wrapper.data({
-					resetSlides:  resetSlides,
-					resetTimeout: resetTimeout
-				});
-				
-				
-			} else { // no css3, use jQuery
-				
-				panel.stop(true,true).animate({
-					opacity: 0
-				},duration,easing,function() {
-					var start = 0;
-					// loop through and show multiple slides
-					for ( var i = pIndex; i < end; i++ ) {
-						var x;
-						if (i < pCount) {
-							x = i;
-						} else {
-							// end is higher than number of slides
-							// loop back to beginning
-							x = i - pCount;
-							
-						}
-						
-						panel.eq(x).css('left',start+'%').animate({
-							opacity: 1
-						},duration,easing);
-						
-						start = start + itemWidth;
-					}
-				});
-				
-			} // end css3 check
+					// hide panels
+					panel.eq(x).css('left',start+'%');
+					panel.eq(x).css('display');
+					panel.eq(x).removeClass('init').css('opacity',1);
+					
+					start = start + itemWidth;
+				}
+			
+				resetTimeout = false;
+			};
+			resetTimeout = setTimeout(resetSlides,duration);
+			
+			wrapper.data({
+				resetSlides:  resetSlides,
+				resetTimeout: resetTimeout
+			});
+			
 			
 		}, // End carFade
 		carSlideFor : function() {
@@ -1190,7 +1122,6 @@
 			// var easing       = settings.easing;
 			var duration     = settings.duration;
 			var carousel     = settings.carousel;
-			var css3         = settings.css3;
 			var slideSkip    = pIndex - cIndex;
 			var itemWidth    = 100 / parseInt(carousel);
 			var movement     = itemWidth * slideSkip;
@@ -1205,78 +1136,52 @@
 				end       = end + pCount;
 			}
 			// console.log(pIndex);
-			if (css3) {
-				
-				var resetSlides  = wrapper.data('resetSlides');
-				var resetTimeout = wrapper.data('resetTimeout');
-				
-				if (resetTimeout) {
-					resetSlides();
-					clearTimeout(resetTimeout);
-				}
-				
-				start = 0;
-				left  = start - movement;
-				
-				// loop through and show multiple slides
-				for ( i = cIndex; i < end; i++ ) {
-					if (i < pCount) {
-						x = i;
-					} else {
-						// end is higher than number of slides
-						// loop back to beginning
-						x = i - pCount;
-						
-					}
-					
-					panel.eq(x).css('left',start+'%');
-					panel.eq(x).css('display');
-					panel.eq(x).removeClass('init').css('left',left+'%');
-					
-					start = start + itemWidth;
-					left  = left + itemWidth;
-				}
-				
-				
-				// reset active slide
-				resetSlides = function() {
-					
-					
-				panel.addClass('init');
-				resetTimeout = false;
-				};
-				resetTimeout = setTimeout(resetSlides,duration);
-				
-				wrapper.data({
-					resetSlides:  resetSlides,
-					resetTimeout: resetTimeout
-				});
-				
-			} else { // no css3, use jQuery
-				
-				start = 0;
-				left  = start - movement;
-				
-				// loop through and show multiple slides
-				for ( i = cIndex; i < end; i++ ) {
-					if (i < pCount) {
-						x = i;
-					} else {
-						// end is higher than number of slides
-						// loop back to beginning
-						x = i - pCount;
-						
-					}
-					
-					panel.eq(x).css('left',start+'%').animate({
-						left: left+'%'
-					});
-					
-					start = start + itemWidth;
-					left  = left + itemWidth;
-				}
-			} // end css3 check
 			
+			var resetSlides  = wrapper.data('resetSlides');
+			var resetTimeout = wrapper.data('resetTimeout');
+			
+			if (resetTimeout) {
+				resetSlides();
+				clearTimeout(resetTimeout);
+			}
+			
+			start = 0;
+			left  = start - movement;
+			
+			// loop through and show multiple slides
+			for ( i = cIndex; i < end; i++ ) {
+				if (i < pCount) {
+					x = i;
+				} else {
+					// end is higher than number of slides
+					// loop back to beginning
+					x = i - pCount;
+					
+				}
+				
+				panel.eq(x).css('left',start+'%');
+				panel.eq(x).css('display');
+				panel.eq(x).removeClass('init').css('left',left+'%');
+				
+				start = start + itemWidth;
+				left  = left + itemWidth;
+			}
+			
+			
+			// reset active slide
+			resetSlides = function() {
+				
+				
+			panel.addClass('init');
+			resetTimeout = false;
+			};
+			resetTimeout = setTimeout(resetSlides,duration);
+			
+			wrapper.data({
+				resetSlides:  resetSlides,
+				resetTimeout: resetTimeout
+			});
+						
 		}, // End carSlideFor
 		carSlideBack : function() {
 			var wrapper      = this;
@@ -1288,7 +1193,6 @@
 			// var easing       = settings.easing;
 			var duration     = settings.duration;
 			var carousel     = settings.carousel;
-			var css3         = settings.css3;
 			var itemWidth    = 100 / parseInt(carousel);
 			var slideSkip    = cIndex - pIndex;
 			var movement     = itemWidth * slideSkip;
@@ -1305,147 +1209,91 @@
 				end       = end + pCount;
 			}
 			//console.log(movement);
-			if (css3) {
-				
-				var resetSlides  = wrapper.data('resetSlides');
-				var resetTimeout = wrapper.data('resetTimeout');
-				
-				if (resetTimeout) {
-					resetSlides();
-					clearTimeout(resetTimeout);
-				}
-				
-				start = 0 - movement;
-				left  = 0;
-				// loop through and show multiple slides
-				for ( i = pIndex; i < end; i++ ) {
-					if (i < pCount) {
-						x = i;
-					} else {
-						// target is before first slide
-						// loop back to end
-						x = i - pCount;
-						
-					}
-					//console.log(start);
-					panel.eq(x).addClass('init').css('left',start+'%');
-					panel.eq(x).css('display');
-					panel.eq(x).removeClass('init').css('left',left+'%');
-					
-					left  = left + itemWidth;
-					start = start + itemWidth;
-				}
-				
-				
-				// reset active slide
-				resetSlides = function() {
-					
-					panel.addClass('init');
-					resetTimeout = false;
-				};
-				resetTimeout = setTimeout(resetSlides,duration);
-				
-				wrapper.data({
-					resetSlides:  resetSlides,
-					resetTimeout: resetTimeout
-				});
-				
-			} else { // no css3, use jQuery
-				
-				start = 0 - movement;
-				left  = 0;
-				// loop through and show multiple slides
-				for ( i = pIndex; i < end; i++ ) {
-					if (i < pCount) {
-						x = i;
-					} else {
-						// end is higher than number of slides
-						// loop back to beginning
-						x = i - pCount;
-						
-					}
-					
-					panel.eq(x).css('left',start+'%').animate({
-						left: left+'%'
-					});
-					
-					left  = left + itemWidth;
-					start = start + itemWidth;
-				}
-			} // end css3 check
 			
-		}, // End carSlideBack
-		/*
-		toggle : function() {
-			var wrapper  = this;
-			var settings = wrapper.data('settings');
-			var pIndex   = wrapper.data('pIndex');
-			var cIndex   = wrapper.data('cIndex');
-			var panel    = wrapper.children('.panel');
-			var css3     = settings.css3;
+			var resetSlides  = wrapper.data('resetSlides');
+			var resetTimeout = wrapper.data('resetTimeout');
 			
-			if (!css3) {
-				
-				// Remove current page
-				panel.eq(cIndex).hide();
-							
-				// display new page
-				panel.eq(pIndex).show();
+			if (resetTimeout) {
+				resetSlides();
+				clearTimeout(resetTimeout);
 			}
+			
+			start = 0 - movement;
+			left  = 0;
+			// loop through and show multiple slides
+			for ( i = pIndex; i < end; i++ ) {
+				if (i < pCount) {
+					x = i;
+				} else {
+					// target is before first slide
+					// loop back to end
+					x = i - pCount;
 					
-		}, // End toggle
-		*/
+				}
+				//console.log(start);
+				panel.eq(x).addClass('init').css('left',start+'%');
+				panel.eq(x).css('display');
+				panel.eq(x).removeClass('init').css('left',left+'%');
+				
+				left  = left + itemWidth;
+				start = start + itemWidth;
+			}
+			
+			
+			// reset active slide
+			resetSlides = function() {
+				
+				panel.addClass('init');
+				resetTimeout = false;
+			};
+			resetTimeout = setTimeout(resetSlides,duration);
+			
+			wrapper.data({
+				resetSlides:  resetSlides,
+				resetTimeout: resetTimeout
+			});
+						
+		}, // End carSlideBack
 		fade : function() {
 			var wrapper  = this;
 			var panel    = wrapper.children('.panel');
 			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
-			var easing   = settings.easing;
 			var duration = settings.duration;
-			var css3     = settings.css3;
 			
-			if (css3) {
-				var resetSlides  = wrapper.data('resetSlides');
-				var resetTimeout = wrapper.data('resetTimeout');
-				
-				if (resetTimeout) {
-					resetSlides();
-					clearTimeout(resetTimeout);
-				}
-				
-				// Remove current page
+			var resetSlides  = wrapper.data('resetSlides');
+			var resetTimeout = wrapper.data('resetTimeout');
+			
+			if (resetTimeout) {
+				resetSlides();
+				clearTimeout(resetTimeout);
+			}
+			
+			// Remove current page
+			panel.eq(cIndex).css('display');
+			panel.eq(cIndex).removeClass('init').css('opacity',0);
+			
+			// display the page
+			panel.eq(pIndex).show();
+			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).removeClass('init').css('opacity',1); 
+			
+			// reset active slide
+			resetSlides = function() {
 				panel.eq(cIndex).css('display');
-				panel.eq(cIndex).removeClass('init').css('opacity',0);
+				panel.eq(cIndex).addClass('init').hide();
 				
-				// display the page
-				panel.eq(pIndex).show();
-				panel.eq(pIndex).css('display');
-				panel.eq(pIndex).removeClass('init').css('opacity',1); 
+				resetTimeout = false;
+			};
+			resetTimeout = setTimeout(resetSlides,duration);
+			
+			wrapper.data({
+				resetSlides:  resetSlides,
+				resetTimeout: resetTimeout
+			});
+			
 				
-				// reset active slide
-				resetSlides = function() {
-					panel.eq(cIndex).css('display');
-					panel.eq(cIndex).addClass('init').hide();
-					
-					resetTimeout = false;
-				};
-				resetTimeout = setTimeout(resetSlides,duration);
-				
-				wrapper.data({
-					resetSlides:  resetSlides,
-					resetTimeout: resetTimeout
-				});
-				
-				
-			} else {
-				// Remove current page
-				panel.eq(cIndex).fadeOut(duration, easing);
-				
-				// display the page
-				panel.eq(pIndex).fadeIn(duration, easing); 
-			} // end css3 check
-
 		}, // End fade
 		blindFor : function() {
 			var wrapper  = this;
@@ -1454,111 +1302,78 @@
 			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
-			var easing   = settings.easing;
 			var duration = settings.duration;
 			var width    = wrapper.width();
-			var css3     = settings.css3;
 			
-			if (css3) {
-				
-				var resetSlides  = wrapper.data('resetSlides');
-				var resetTimeout = wrapper.data('resetTimeout');
-				
-				if (resetTimeout) {
-					resetSlides();
-					clearTimeout(resetTimeout);
-				}
-				
-				panel.eq(pIndex).css('display');
-				
-				// setup current page
-				panel.eq(cIndex).css({
-					left:0,
-					right:''
-				});
 			
-				// Remove current page
-				panel.eq(cIndex).css('display');
-				panel.eq(cIndex).removeClass('init').css({
-					width: 0
-				}); // End animation
-				
-				// move new page into position
-				// panel.eq(pIndex).css('display');
+			var resetSlides  = wrapper.data('resetSlides');
+			var resetTimeout = wrapper.data('resetTimeout');
+			
+			if (resetTimeout) {
+				resetSlides();
+				clearTimeout(resetTimeout);
+			}
+			
+			panel.eq(pIndex).css('display');
+			
+			// setup current page
+			panel.eq(cIndex).css({
+				left:0,
+				right:''
+			});
+		
+			// Remove current page
+			panel.eq(cIndex).css('display');
+			panel.eq(cIndex).removeClass('init').css({
+				width: 0
+			}); // End animation
+			
+			// move new page into position
+			// panel.eq(pIndex).css('display');
+			panel.eq(pIndex).addClass('init').css({
+				marginLeft:'',
+				left:'',
+				right:0
+			});
+			pWrap.eq(pIndex).css('display');
+			pWrap.eq(pIndex).css({
+				marginLeft:-(width)
+			});
+			
+			
+			// transition new page
+			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).removeClass('init').css({
+				width:'100%'
+			}); // End animation
+			
+			pWrap.eq(pIndex).css('display');
+			pWrap.eq(pIndex).css({
+				marginLeft:0
+			}); // End animation
+			
+			// reset active slide
+			resetSlides = function() {
+				panel.eq(cIndex).addClass('init');
 				panel.eq(pIndex).addClass('init').css({
 					marginLeft:'',
-					left:'',
-					right:0
-				});
-				pWrap.eq(pIndex).css('display');
-				pWrap.eq(pIndex).css({
-					marginLeft:-(width)
-				});
-				
-				
-				// transition new page
-				panel.eq(pIndex).css('display');
-				panel.eq(pIndex).removeClass('init').css({
+					right: '',
+					left: '',
 					width:'100%'
-				}); // End animation
-				
-				pWrap.eq(pIndex).css('display');
+				});
 				pWrap.eq(pIndex).css({
 					marginLeft:0
 				}); // End animation
 				
-				// reset active slide
-				resetSlides = function() {
-					panel.eq(cIndex).addClass('init');
-					panel.eq(pIndex).addClass('init').css({
-						marginLeft:'',
-						right: '',
-						left: '',
-						width:'100%'
-					});
-					pWrap.eq(pIndex).css({
-						marginLeft:0
-					}); // End animation
-					
-					resetTimeout = false;
-				};
-				resetTimeout = setTimeout(resetSlides,duration);
-				
-				wrapper.data({
-					resetSlides:  resetSlides,
-					resetTimeout: resetTimeout
-				});
-				
-			} else { // no css3, use jQuery
+				resetTimeout = false;
+			};
+			resetTimeout = setTimeout(resetSlides,duration);
 			
-				// Remove all animation queues
-				pWrap.stop(true,true);
-				panel.stop(true,true);
-				
-				// Remove current page
-				panel.eq(cIndex).css({
-					left:0,
-					right:''
-				}).animate({
-					width: 0
-				}, duration, easing); // End animation
-				
-				// display the page
-				panel.eq(pIndex).css({
-					marginLeft:'',
-					left:'',
-					right:0
-				}).animate({
-					width:'100%'
-				}, duration, easing); // End animation
-				
-				pWrap.eq(pIndex).css({
-					marginLeft:-(width)
-				}).animate({
-					marginLeft:0
-				}, duration, easing); // End animation
-			} // end css3 check
-			
+			wrapper.data({
+				resetSlides:  resetSlides,
+				resetTimeout: resetTimeout
+			});
+						
 		}, // End blindFor
 		blindBack : function() {
 			var wrapper  = this;
@@ -1568,114 +1383,78 @@
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
 			var width    = wrapper.width();
-			var easing   = settings.easing;
 			var duration = settings.duration;
-			var css3     = settings.css3;
+							
+			var resetSlides  = wrapper.data('resetSlides');
+			var resetTimeout = wrapper.data('resetTimeout');
 			
-			if (css3) {
-				
-				var resetSlides  = wrapper.data('resetSlides');
-				var resetTimeout = wrapper.data('resetTimeout');
-				
-				if (resetTimeout) {
-					resetSlides();
-					clearTimeout(resetTimeout);
-				}
-				
-				panel.eq(pIndex).css('display');
-				
-				// setup current page
-				panel.eq(cIndex).addClass('init').css({
-					left:'',
-					right:0
-				});
-				
-				pWrap.eq(cIndex).css('display');
-				pWrap.eq(cIndex).css({
-					marginLeft:''
-				});
-				
+			if (resetTimeout) {
+				resetSlides();
+				clearTimeout(resetTimeout);
+			}
 			
-				// Remove current page
-				panel.eq(cIndex).css('display');
-				panel.eq(cIndex).removeClass('init').css({
-					width: 0
-				});
-				
-				pWrap.eq(cIndex).css('display');
-				pWrap.eq(cIndex).css({
-					marginLeft:-(width)
-				});
-				
-				// move new page into position
-				// panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css('display');
+			
+			// setup current page
+			panel.eq(cIndex).addClass('init').css({
+				left:'',
+				right:0
+			});
+			
+			pWrap.eq(cIndex).css('display');
+			pWrap.eq(cIndex).css({
+				marginLeft:''
+			});
+			
+		
+			// Remove current page
+			panel.eq(cIndex).css('display');
+			panel.eq(cIndex).removeClass('init').css({
+				width: 0
+			});
+			
+			pWrap.eq(cIndex).css('display');
+			pWrap.eq(cIndex).css({
+				marginLeft:-(width)
+			});
+			
+			// move new page into position
+			// panel.eq(pIndex).css('display');
+			panel.eq(pIndex).addClass('init').css({
+				left:0,
+				right:''
+			});
+			pWrap.eq(pIndex).css('display');
+			pWrap.eq(pIndex).css({
+				marginLeft:0
+			}); // End animation
+			
+			
+			// transition new page
+			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).removeClass('init').css({
+				width:'100%'
+			}); // End animation
+			
+			// reset active slide
+			resetSlides = function() {
+				panel.eq(cIndex).addClass('init');
 				panel.eq(pIndex).addClass('init').css({
-					left:0,
-					right:''
-				});
-				pWrap.eq(pIndex).css('display');
-				pWrap.eq(pIndex).css({
-					marginLeft:0
-				}); // End animation
-				
-				
-				// transition new page
-				panel.eq(pIndex).css('display');
-				panel.eq(pIndex).removeClass('init').css({
+					marginLeft:'',
+					right: '',
+					left: '',
 					width:'100%'
-				}); // End animation
-				
-				// reset active slide
-				resetSlides = function() {
-					panel.eq(cIndex).addClass('init');
-					panel.eq(pIndex).addClass('init').css({
-						marginLeft:'',
-						right: '',
-						left: '',
-						width:'100%'
-					});
-					
-					resetTimeout = false;
-				};
-				resetTimeout = setTimeout(resetSlides,duration);
-				
-				wrapper.data({
-					resetSlides:  resetSlides,
-					resetTimeout: resetTimeout
 				});
 				
-			} else { // no css3, use jQuery
+				resetTimeout = false;
+			};
+			resetTimeout = setTimeout(resetSlides,duration);
 			
-				
-				// Remove all animation queues
-				pWrap.stop(true,true);
-				panel.stop(true,true);
-				
-				// Remove current page
-				panel.eq(cIndex).css({
-					left:'',
-					right:0
-				}).animate({
-					width:0
-				}, duration, easing); // End animation
-				pWrap.eq(cIndex).css({
-					marginLeft:''
-				}).animate({
-					marginLeft:-(width)
-				}, duration, easing); // End animation
-				
-				// display the page
-				panel.eq(pIndex).css({
-					left:0,
-					right:''
-				}).animate({
-					width:'100%'
-				}, duration, easing); // End animation
-				
-				pWrap.eq(pIndex).css({
-					marginLeft:''
-				}); // End animation
-			} // end css3 check
+			wrapper.data({
+				resetSlides:  resetSlides,
+				resetTimeout: resetTimeout
+			});
+			
 		}, // End blindBack
 		slideFor : function() {
 			var wrapper  = this;
@@ -1683,73 +1462,54 @@
 			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
-			var easing   = settings.easing;
 			var duration = settings.duration;
-			var css3     = settings.css3;
 			
-			if (css3) {
-				
-				var resetSlides  = wrapper.data('resetSlides');
-				var resetTimeout = wrapper.data('resetTimeout');
-				
-				if (resetTimeout) {
-					resetSlides();
-					clearTimeout(resetTimeout);
-				}
-				
-				panel.eq(pIndex).css('display');
-				
-				// Remove current page
-				// panel.eq(cIndex).css('display');
-				panel.eq(cIndex).removeClass('init').css({
-					left: '-100%'
-				}); // End animation
-				
-				// move new page into position
-				// panel.eq(pIndex).css('display');
-				panel.eq(pIndex).css({
-					left: '',
-					right:'-100%'
+			
+			var resetSlides  = wrapper.data('resetSlides');
+			var resetTimeout = wrapper.data('resetTimeout');
+			
+			if (resetTimeout) {
+				resetSlides();
+				clearTimeout(resetTimeout);
+			}
+			
+			panel.eq(pIndex).css('display');
+			
+			// Remove current page
+			// panel.eq(cIndex).css('display');
+			panel.eq(cIndex).removeClass('init').css({
+				left: '-100%'
+			}); // End animation
+			
+			// move new page into position
+			// panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css({
+				left: '',
+				right:'-100%'
+			});
+			
+			// transition new page
+			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).removeClass('init').css({
+				right: 0
+			}); // End animation
+			
+			// reset active slide
+			resetSlides = function() {
+				panel.eq(cIndex).addClass('init');
+				panel.eq(pIndex).addClass('init').css({
+					right: '',
+					left: 0
 				});
 				
-				// transition new page
-				panel.eq(pIndex).css('display');
-				panel.eq(pIndex).removeClass('init').css({
-					right: 0
-				}); // End animation
-				
-				// reset active slide
-				resetSlides = function() {
-					panel.eq(cIndex).addClass('init');
-					panel.eq(pIndex).addClass('init').css({
-						right: '',
-						left: 0
-					});
-					
-					resetTimeout = false;
-				};
-				resetTimeout = setTimeout(resetSlides,duration);
-				
-				wrapper.data({
-					resetSlides:  resetSlides,
-					resetTimeout: resetTimeout
-				});
-				
-			} else { // no css3, use jQuery
-				// Remove current page
-				panel.eq(cIndex).animate({
-					left: '-100%',
-					right: ''
-				}, duration, easing); // End animation
-				
-				// display new page
-				panel.eq(pIndex).show().css({
-					left: '',
-					right:'-100%'
-				}).animate({
-					right: 0
-				}, duration, easing); // End animation
-			} // end css3 check
+				resetTimeout = false;
+			};
+			resetTimeout = setTimeout(resetSlides,duration);
+			
+			wrapper.data({
+				resetSlides:  resetSlides,
+				resetTimeout: resetTimeout
+			});
 			
 		}, // End slideFor
 		slideBack : function() {
@@ -1758,73 +1518,53 @@
 			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
-			var easing   = settings.easing;
 			var duration = settings.duration;
-			var css3     = settings.css3;
 			
-			if (css3) {
+			
+			var resetSlides  = wrapper.data('resetSlides');
+			var resetTimeout = wrapper.data('resetTimeout');
+			
+			if (resetTimeout) {
+				resetSlides();
+				clearTimeout(resetTimeout);
+			}
+			
+			panel.eq(pIndex).css('display');
+			
+			// Remove current page
+			panel.eq(cIndex).removeClass('init').css({
+				left: '100%'
+			}); // End animation
+			
+			// reset past slide
+			
+			// move new page into position
+			panel.eq(pIndex).addClass('init').css({
+				right: '',
+				left:'-100%'
+			});
+			
+			// transition new page
+			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).removeClass('init').css({
+				left: 0
+			}); // End animation
+			
+			// reset active slide
+			resetSlides = function() {
+				panel.eq(cIndex).addClass('init');
+				panel.eq(pIndex).addClass('init');
 				
-				var resetSlides  = wrapper.data('resetSlides');
-				var resetTimeout = wrapper.data('resetTimeout');
-				
-				if (resetTimeout) {
-					resetSlides();
-					clearTimeout(resetTimeout);
-				}
-				
-				panel.eq(pIndex).css('display');
-				
-				// Remove current page
-				panel.eq(cIndex).removeClass('init').css({
-					left: '100%'
-				}); // End animation
-				
-				// reset past slide
-				
-				// move new page into position
-				panel.eq(pIndex).addClass('init').css({
-					right: '',
-					left:'-100%'
-				});
-				
-				// transition new page
-				panel.eq(pIndex).css('display');
-				panel.eq(pIndex).removeClass('init').css({
-					left: 0
-				}); // End animation
-				
-				// reset active slide
-				resetSlides = function() {
-					panel.eq(cIndex).addClass('init');
-					panel.eq(pIndex).addClass('init');
-					
-					resetTimeout = false;
-				};
-				resetTimeout = setTimeout(resetSlides,duration);
-				
-				wrapper.data({
-					resetSlides:  resetSlides,
-					resetTimeout: resetTimeout
-				});
-				
-				
-			} else { // no css3, use jQuery
-				// Remove current page
-				panel.eq(cIndex).animate(
-					{
-						left: '100%'
-					}, duration, easing
-				); // End animation
-				
-				// display the page
-				panel.eq(pIndex).show().css({
-					right: '',
-					left:'-100%'
-				}).animate({
-					left: 0
-				}, duration, easing); // End animation
-						
-			} // end css3 check
+				resetTimeout = false;
+			};
+			resetTimeout = setTimeout(resetSlides,duration);
+			
+			wrapper.data({
+				resetSlides:  resetSlides,
+				resetTimeout: resetTimeout
+			});
+			
+			
 		}, // End slideBack
 		slideVertFor : function() {
 			var wrapper  = this;
@@ -1832,75 +1572,52 @@
 			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
-			var easing   = settings.easing;
 			var duration = settings.duration;
-			var css3     = settings.css3;
 			
-			if (css3) {
-				var resetSlides  = wrapper.data('resetSlides');
-				var resetTimeout = wrapper.data('resetTimeout');
-				
-				if (resetTimeout) {
-					resetSlides();
-					clearTimeout(resetTimeout);
-				}
-				
-				panel.eq(pIndex).css('display');
-				
-				// Remove current page
-				// panel.eq(cIndex).css('display');
-				panel.eq(cIndex).removeClass('init').css({
-					top: '-100%'
-				}); // End animation
-				
-				// move new page into position
-				// panel.eq(pIndex).css('display');
-				panel.eq(pIndex).css({
-					top: '100%'
+			var resetSlides  = wrapper.data('resetSlides');
+			var resetTimeout = wrapper.data('resetTimeout');
+			
+			if (resetTimeout) {
+				resetSlides();
+				clearTimeout(resetTimeout);
+			}
+			
+			panel.eq(pIndex).css('display');
+			
+			// Remove current page
+			// panel.eq(cIndex).css('display');
+			panel.eq(cIndex).removeClass('init').css({
+				top: '-100%'
+			}); // End animation
+			
+			// move new page into position
+			// panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css({
+				top: '100%'
+			});
+			
+			// transition new page
+			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).removeClass('init').css({
+				top: 0
+			}); // End animation
+			
+			// reset active slide
+			resetSlides = function() {
+				panel.eq(cIndex).addClass('init');
+				panel.eq(pIndex).addClass('init').css({
+					top: 0
 				});
 				
-				// transition new page
-				panel.eq(pIndex).css('display');
-				panel.eq(pIndex).removeClass('init').css({
-					top: 0
-				}); // End animation
+				resetTimeout = false;
+			};
+			resetTimeout = setTimeout(resetSlides,duration);
+			
+			wrapper.data({
+				resetSlides:  resetSlides,
+				resetTimeout: resetTimeout
+			});
 				
-				// reset active slide
-				resetSlides = function() {
-					panel.eq(cIndex).addClass('init');
-					panel.eq(pIndex).addClass('init').css({
-						top: 0
-					});
-					
-					resetTimeout = false;
-				};
-				resetTimeout = setTimeout(resetSlides,duration);
-				
-				wrapper.data({
-					resetSlides:  resetSlides,
-					resetTimeout: resetTimeout
-				});
-				
-			} else { // no css3, use jQuery
-				// Remove all animation queues
-				panel.stop(true,true);
-				// Remove current page
-				panel.eq(cIndex).css({
-					top:0
-				}).animate({
-					top: '-100%'
-				}, duration, easing, function() {
-					$(this).hide();
-				}); // End animation
-				
-				// display the page
-				panel.eq(pIndex).show().css({
-					top: '100%'
-				}).animate({
-					top: 0
-				}, duration, easing); // End animation
-				
-			} // end css3 check
 		}, // End slideVertFor
 		slideVertBack : function() {
 			var wrapper  = this;
@@ -1909,78 +1626,53 @@
 			var settings = wrapper.data('settings');
 			var cIndex   = wrapper.data('cIndex');
 			var pIndex   = wrapper.data('pIndex');
-			var easing   = settings.easing;
 			var duration = settings.duration;
-			var css3     = settings.css3;
 			
-			if (css3) {
 				
-				var resetSlides  = wrapper.data('resetSlides');
-				var resetTimeout = wrapper.data('resetTimeout');
-				
-				if (resetTimeout) {
-					resetSlides();
-					clearTimeout(resetTimeout);
-				}
-				
-				panel.eq(pIndex).css('display');
-				
-				// Remove current page
-				panel.eq(cIndex).removeClass('init').css({
-					top: '100%'
-				}); // End animation
-				
-				// reset past slide
-				
-				// move new page into position
-				panel.eq(pIndex).addClass('init').css({
-					top: '-100%'
-				});
-				
-				// transition new page
-				panel.eq(pIndex).css('display');
-				panel.eq(pIndex).removeClass('init').css({
-					top: 0
-				}); // End animation
-				
-				// reset active slide
-				resetSlides = function() {
-					panel.eq(cIndex).addClass('init');
-					panel.eq(pIndex).addClass('init');
-					
-					resetTimeout = false;
-				};
-				resetTimeout = setTimeout(resetSlides,duration);
-				
-				wrapper.data({
-					resetSlides:  resetSlides,
-					resetTimeout: resetTimeout
-				});
-				
-				
-			} else { // no css3, use jQuery
-				
-				// Remove all animation queues
-				panel.stop(true,true);
-				
-				// Remove current page
-				panel.eq(cIndex).css({
-					top:0
-				}).animate({
-					top: '100%'
-				}, duration, easing, function() {
-					$(this).hide();
-				}); // End animation
-				
-				// display the page
-				panel.eq(pIndex).show().css({
-					top: '-100%'
-				}).animate({
-					top: 0
-				}, duration, easing); // End animation
-			} // end css3 check
+			var resetSlides  = wrapper.data('resetSlides');
+			var resetTimeout = wrapper.data('resetTimeout');
 			
-		} // End slideVertVack
+			if (resetTimeout) {
+				resetSlides();
+				clearTimeout(resetTimeout);
+			}
+			
+			panel.eq(pIndex).css('display');
+			
+			// Remove current page
+			panel.eq(cIndex).removeClass('init').css({
+				top: '100%'
+			}); // End animation
+			
+			// reset past slide
+			
+			// move new page into position
+			panel.eq(pIndex).addClass('init').css({
+				top: '-100%'
+			});
+			
+			// transition new page
+			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).removeClass('init').css({
+				top: 0
+			}); // End animation
+			
+			// reset active slide
+			resetSlides = function() {
+				panel.eq(cIndex).addClass('init');
+				panel.eq(pIndex).addClass('init');
+				
+				resetTimeout = false;
+			};
+			resetTimeout = setTimeout(resetSlides,duration);
+			
+			wrapper.data({
+				resetSlides:  resetSlides,
+				resetTimeout: resetTimeout
+			});
+			
+				
+		} // End slideVertBack
 	}; // End method
     
 	
