@@ -42,7 +42,7 @@
 				callbackBefore: null,                // Callback function before new slide transition
 				callbackAfter:  null,                // Callback function after new slide complete
 				callbackUpdate: null,                // Callback function after update function
-				easing:         'swing',             // Easing transition
+				easing:         'ease',              // Easing transition
 				autoHeight:     true,                // Automatically set height 
 				dynamicHeight:  false,               // Height of slider changes with current panel
 				pauseOnHit:     true,                // Pause autoplay when controls or pagers used 
@@ -470,7 +470,7 @@
 					case 'blind':
 						// Hide panels and show opening panel
 						var width  = wrapper.width();
-	
+						
 						panel.children('.panel-inner').contents().unwrap();
 						panel.wrapInner('<div class="panel-inner" />');
 						panel.addClass('blind init').eq(pIndex).css({
@@ -500,7 +500,6 @@
 			
 			wrapper.add(panel).css({
 				WebkitTransitionDuration: duration / 1000 + 's',
-				msTransitionDuration: duration / 1000 + 's',
 				MozTransitionDuration: duration / 1000 + 's',
 				OTransitionDuration: duration / 1000 + 's',
 				transitionDuration: duration / 1000 + 's',
