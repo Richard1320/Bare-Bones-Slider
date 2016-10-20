@@ -461,7 +461,7 @@
 						break;
 					case 'slide':
 						panel.addClass('slide');
-						panel.addClass('init').css('left','100%').eq(pIndex).css('left',0);
+						panel.addClass('init').css('transform','translateX(100%)').eq(pIndex).css('transform','translateX(0%)');
 						break;
 					case 'slideVert':
 						panel.addClass('slideVert');
@@ -653,7 +653,6 @@
 			return this.each(function() {
 				var wrapper      = $(this);
 				var settings     = wrapper.data('settings'); 
-
 				var loop         = settings.loop;
 				var pCount       = wrapper.data('pCount');
 				var pIndex       = wrapper.data('pIndex');
@@ -1464,7 +1463,6 @@
 			var pIndex   = wrapper.data('pIndex');
 			var duration = settings.duration;
 			
-			
 			var resetSlides  = wrapper.data('resetSlides');
 			var resetTimeout = wrapper.data('resetTimeout');
 			
@@ -1478,28 +1476,26 @@
 			// Remove current page
 			// panel.eq(cIndex).css('display');
 			panel.eq(cIndex).removeClass('init').css({
-				left: '-100%'
+				transform: 'translateX(-100%)'
 			}); // End animation
 			
 			// move new page into position
 			// panel.eq(pIndex).css('display');
 			panel.eq(pIndex).css({
-				left: '',
-				right:'-100%'
+				transform: 'translateX(100%)'
 			});
 			
 			// transition new page
 			panel.eq(pIndex).css('display');
 			panel.eq(pIndex).removeClass('init').css({
-				right: 0
+				transform: 'translateX(0%)'
 			}); // End animation
 			
 			// reset active slide
 			resetSlides = function() {
 				panel.eq(cIndex).addClass('init');
 				panel.eq(pIndex).addClass('init').css({
-					right: '',
-					left: 0
+					transform: 'translateX(0%)'
 				});
 				
 				resetTimeout = false;
@@ -1533,21 +1529,20 @@
 			
 			// Remove current page
 			panel.eq(cIndex).removeClass('init').css({
-				left: '100%'
+				transform: 'translateX(100%)'
 			}); // End animation
 			
 			// reset past slide
 			
 			// move new page into position
 			panel.eq(pIndex).addClass('init').css({
-				right: '',
-				left:'-100%'
+				transform: 'translateX(-100%)'
 			});
 			
 			// transition new page
 			panel.eq(pIndex).css('display');
 			panel.eq(pIndex).removeClass('init').css({
-				left: 0
+				transform: 'translateX(0%)'
 			}); // End animation
 			
 			// reset active slide
