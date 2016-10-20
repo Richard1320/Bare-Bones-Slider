@@ -465,7 +465,7 @@
 						break;
 					case 'slideVert':
 						panel.addClass('slideVert');
-						panel.addClass('init').css('top','-100%').eq(pIndex).css('top',0);
+						panel.addClass('init').css('transform','translateY(100%)').eq(pIndex).css('transform','translateY(0%)');
 						break;
 					case 'blind':
 						// Hide panels and show opening panel
@@ -1582,26 +1582,26 @@
 			// Remove current page
 			// panel.eq(cIndex).css('display');
 			panel.eq(cIndex).removeClass('init').css({
-				top: '-100%'
+				transform:'translateY(-100%)'
 			}); // End animation
 			
 			// move new page into position
 			// panel.eq(pIndex).css('display');
 			panel.eq(pIndex).css({
-				top: '100%'
+				transform:'translateY(100%)'
 			});
 			
 			// transition new page
 			panel.eq(pIndex).css('display');
 			panel.eq(pIndex).removeClass('init').css({
-				top: 0
+				transform:'translateY(0%)'
 			}); // End animation
 			
 			// reset active slide
 			resetSlides = function() {
 				panel.eq(cIndex).addClass('init');
 				panel.eq(pIndex).addClass('init').css({
-					top: 0
+					transform:'translateY(0%)'
 				});
 				
 				resetTimeout = false;
@@ -1636,20 +1636,20 @@
 			
 			// Remove current page
 			panel.eq(cIndex).removeClass('init').css({
-				top: '100%'
+				transform:'translateY(100%)'
 			}); // End animation
 			
 			// reset past slide
 			
 			// move new page into position
 			panel.eq(pIndex).addClass('init').css({
-				top: '-100%'
+				transform:'translateY(-100%)'
 			});
 			
 			// transition new page
 			panel.eq(pIndex).css('display');
 			panel.eq(pIndex).removeClass('init').css({
-				top: 0
+				transform:'translateY(0%)'
 			}); // End animation
 			
 			// reset active slide

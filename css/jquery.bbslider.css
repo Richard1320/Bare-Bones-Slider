@@ -116,11 +116,11 @@
 	display:block;
 }
 .bbslider-wrapper > .panel.slideVert {
-    -o-transition-property: top;
-	-ms-transition-property: top;
-    -moz-transition-property: top;
-    -webkit-transition-property: top;
-	transition-property:top;
+    -o-transition-property: transform;
+	-ms-transition-property: transform;
+    -moz-transition-property: transform;
+    -webkit-transition-property: transform;
+	transition-property:transform;
 	display:block;
 }
 .bbslider-wrapper > .panel.blind {
@@ -156,5 +156,4 @@
 .bbslider-wrapper.carousel > .panel.none {
 	position:absolute;
 	display:block;
-
 }
