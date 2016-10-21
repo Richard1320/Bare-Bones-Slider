@@ -260,7 +260,7 @@
 				var wid      = wrapper.attr('id');
 				
 				// Remove CSS
-				wrapper.removeClass('bbslider-wrapper carousel');
+				wrapper.removeClass('bbslider-wrapper carousel ease linear ease-in ease-out ease-in-out easeInQuad easeInCubic easeInQuart easeInQuint easeInSine easeInExpo easeInCirc easeInBack easeOutQuad easeOutCubic easeOutQuart easeOutQuint easeOutSine easeOutExpo easeOutCirc easeOutBack easeInOutQuad easeInOutCubic easeInOutQuart easeInOutQuint easeInOutSine easeInOutExpo easeInOutCirc easeInOutBack');
 				panel.removeClass('panel active slide fade blind none slideVert');
 				
 				// remove autoheight 
@@ -424,13 +424,15 @@
 			var duration   = settings.duration;
 			var carousel   = settings.carousel;
 			
+			panel.addClass('init '+ transition);
+			
 			if (carousel) {
 				
-				wrapper.addClass('carousel');
+				wrapper.addClass('carousel '+settings.easing);
 				var itemWidth = 100 / parseInt(carousel);
 				var end       = pIndex + parseInt(carousel);					
-				
-				var left = 0;
+				var x         = i;
+				var left      = 0;
 				
 				panel.css({
 					width: itemWidth+'%',
@@ -439,33 +441,36 @@
 				
 				// loop through and show multiple slides
 				for ( var i = pIndex; i < end; i++ ) {
-					if (i < pCount) {
-						
-						panel.eq(i).css('left',left+'%');
-					} else {
-						// end is higher than number of slides
-						// loop back to beginning
-						var x = i - pCount;
-						
-						panel.eq(x).css('left',left+'%');
-					}
-					left = left + itemWidth;
-				} // end carousel item loop
+					x = i;
 					
-				panel.addClass('init');
+					// end is higher than number of slides
+					// loop back to beginning
+					if (i >= pCount) {
+						x = i - pCount;
+						
+					}
+					
+					panel.eq(x).css('left',left+'%');
+					left = left + itemWidth;
+					
+					// Display initial items
+					if (transition === 'fade') {
+						panel.eq(x).css('opacity',1);
+					}
+				} // end carousel item loop
+				
 			} else {
+				wrapper.addClass(settings.easing);
+				
 				switch (transition) {
 					case 'fade':
-						panel.addClass('fade');
-						panel.addClass('init').eq(pIndex).show().css('opacity',1);
+						panel.eq(pIndex).show().css('opacity',1);
 						break;
 					case 'slide':
-						panel.addClass('slide');
-						panel.addClass('init').css('transform','translateX(100%)').eq(pIndex).css('transform','translateX(0%)');
+						panel.css('transform','translateX(100%)').eq(pIndex).css('transform','translateX(0%)');
 						break;
 					case 'slideVert':
-						panel.addClass('slideVert');
-						panel.addClass('init').css('transform','translateY(100%)').eq(pIndex).css('transform','translateY(0%)');
+						panel.css('transform','translateY(100%)').eq(pIndex).css('transform','translateY(0%)');
 						break;
 					case 'blind':
 						// Hide panels and show opening panel
@@ -489,9 +494,6 @@
 						panel.height(hi);
 						panel.children('.panel-inner').height(hi);
 						break;
-					case 'none':
-					default:
-						panel.addClass('none');
 				} // End transition switch
 			} // end carousel check
 			
@@ -521,7 +523,7 @@
  	    loadImg : function() {
 			var images = this.find('img');
 			// loop through images in panel
-			$(images).each(function() {
+			images.each(function() {
 				//alert('image found');
 				$(this).attr('src', $(this).attr('data-placeholder')).removeAttr('data-placeholder');
 			});
@@ -1076,7 +1078,6 @@
 			resetSlides = function() {
 				// remove all panels
 				panel.addClass('init').css('left','100%');
-				panel.css('display');
 				
 				var start = 0;
 				// loop through and show multiple slides
@@ -1093,7 +1094,6 @@
 					
 					// hide panels
 					panel.eq(x).css('left',start+'%');
-					panel.eq(x).css('display');
 					panel.eq(x).removeClass('init').css('opacity',1);
 					
 					start = start + itemWidth;
@@ -1158,7 +1158,7 @@
 				}
 				
 				panel.eq(x).css('left',start+'%');
-				panel.eq(x).css('display');
+				panel.eq(x).css('display'); // Recalculate computed style
 				panel.eq(x).removeClass('init').css('left',left+'%');
 				
 				start = start + itemWidth;
@@ -1230,7 +1230,7 @@
 				}
 				//console.log(start);
 				panel.eq(x).addClass('init').css('left',start+'%');
-				panel.eq(x).css('display');
+				panel.eq(x).css('display'); // Recalculate computed style
 				panel.eq(x).removeClass('init').css('left',left+'%');
 				
 				left  = left + itemWidth;
@@ -1269,17 +1269,15 @@
 			}
 			
 			// Remove current page
-			panel.eq(cIndex).css('display');
 			panel.eq(cIndex).removeClass('init').css('opacity',0);
 			
 			// display the page
 			panel.eq(pIndex).show();
-			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css('display'); // Recalculate computed style
 			panel.eq(pIndex).removeClass('init').css('opacity',1); 
 			
 			// reset active slide
 			resetSlides = function() {
-				panel.eq(cIndex).css('display');
 				panel.eq(cIndex).addClass('init').hide();
 				
 				resetTimeout = false;
@@ -1312,8 +1310,6 @@
 				clearTimeout(resetTimeout);
 			}
 			
-			panel.eq(pIndex).css('display');
-			
 			// setup current page
 			panel.eq(cIndex).css({
 				left:0,
@@ -1321,31 +1317,28 @@
 			});
 		
 			// Remove current page
-			panel.eq(cIndex).css('display');
+			panel.eq(cIndex).css('display'); // Recalculate computed style
 			panel.eq(cIndex).removeClass('init').css({
 				width: 0
 			}); // End animation
 			
 			// move new page into position
-			// panel.eq(pIndex).css('display');
 			panel.eq(pIndex).addClass('init').css({
 				marginLeft:'',
 				left:'',
 				right:0
 			});
-			pWrap.eq(pIndex).css('display');
 			pWrap.eq(pIndex).css({
 				marginLeft:-(width)
 			});
 			
 			
 			// transition new page
-			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css('display'); // Recalculate computed style
 			panel.eq(pIndex).removeClass('init').css({
 				width:'100%'
 			}); // End animation
-			
-			pWrap.eq(pIndex).css('display');
+			pWrap.eq(pIndex).css('display'); // Recalculate computed style
 			pWrap.eq(pIndex).css({
 				marginLeft:0
 			}); // End animation
@@ -1391,45 +1384,40 @@
 				clearTimeout(resetTimeout);
 			}
 			
-			panel.eq(pIndex).css('display');
-			
 			// setup current page
 			panel.eq(cIndex).addClass('init').css({
 				left:'',
 				right:0
 			});
 			
-			pWrap.eq(cIndex).css('display');
 			pWrap.eq(cIndex).css({
 				marginLeft:''
 			});
 			
 		
 			// Remove current page
-			panel.eq(cIndex).css('display');
+			panel.eq(cIndex).css('display'); // Recalculate computed style
 			panel.eq(cIndex).removeClass('init').css({
 				width: 0
 			});
 			
-			pWrap.eq(cIndex).css('display');
+			pWrap.eq(cIndex).css('display'); // Recalculate computed style
 			pWrap.eq(cIndex).css({
 				marginLeft:-(width)
 			});
 			
 			// move new page into position
-			// panel.eq(pIndex).css('display');
 			panel.eq(pIndex).addClass('init').css({
 				left:0,
 				right:''
 			});
-			pWrap.eq(pIndex).css('display');
 			pWrap.eq(pIndex).css({
 				marginLeft:0
 			}); // End animation
 			
 			
 			// transition new page
-			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css('display'); // Recalculate computed style
 			panel.eq(pIndex).removeClass('init').css({
 				width:'100%'
 			}); // End animation
@@ -1470,22 +1458,20 @@
 				clearTimeout(resetTimeout);
 			}
 			
-			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css('display'); // Recalculate computed style
 			
 			// Remove current page
-			// panel.eq(cIndex).css('display');
 			panel.eq(cIndex).removeClass('init').css({
 				transform: 'translateX(-100%)'
 			}); // End animation
 			
 			// move new page into position
-			// panel.eq(pIndex).css('display');
 			panel.eq(pIndex).css({
 				transform: 'translateX(100%)'
 			});
 			
 			// transition new page
-			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css('display'); // Recalculate computed style
 			panel.eq(pIndex).removeClass('init').css({
 				transform: 'translateX(0%)'
 			}); // End animation
@@ -1524,7 +1510,7 @@
 				clearTimeout(resetTimeout);
 			}
 			
-			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css('display'); // Recalculate computed style
 			
 			// Remove current page
 			panel.eq(cIndex).removeClass('init').css({
@@ -1539,7 +1525,7 @@
 			});
 			
 			// transition new page
-			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css('display'); // Recalculate computed style
 			panel.eq(pIndex).removeClass('init').css({
 				transform: 'translateX(0%)'
 			}); // End animation
@@ -1576,22 +1562,20 @@
 				clearTimeout(resetTimeout);
 			}
 			
-			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css('display'); // Recalculate computed style
 			
 			// Remove current page
-			// panel.eq(cIndex).css('display');
 			panel.eq(cIndex).removeClass('init').css({
 				transform:'translateY(-100%)'
 			}); // End animation
 			
 			// move new page into position
-			// panel.eq(pIndex).css('display');
 			panel.eq(pIndex).css({
 				transform:'translateY(100%)'
 			});
 			
 			// transition new page
-			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css('display'); // Recalculate computed style
 			panel.eq(pIndex).removeClass('init').css({
 				transform:'translateY(0%)'
 			}); // End animation
@@ -1631,7 +1615,7 @@
 				clearTimeout(resetTimeout);
 			}
 			
-			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css('display'); // Recalculate computed style
 			
 			// Remove current page
 			panel.eq(cIndex).removeClass('init').css({
@@ -1646,7 +1630,7 @@
 			});
 			
 			// transition new page
-			panel.eq(pIndex).css('display');
+			panel.eq(pIndex).css('display'); // Recalculate computed style
 			panel.eq(pIndex).removeClass('init').css({
 				transform:'translateY(0%)'
 			}); // End animation
