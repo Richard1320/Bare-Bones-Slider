@@ -2,7 +2,7 @@
 	
 "name": "bbslider",
 "title": "Bare Bones Slider",
-"description": "Bare Bones Slider is a minimalistic jQuery slider. The biggest strength of this slider isn't what it does; it's what it doesn't do. By default, there's very little bloat so developers can focus on adding new functionality without having to undo the plugin's 'helpful' features. Beginners can use pre-coded options, while experts can control it using public methods. You also have the choice of CSS3 transitions or jQuery animations. It even has a carousel for mutiple items per slide.",
+"description": "Bare Bones Slider is a minimalistic jQuery slider. The biggest strength of this slider isn't what it does; it's what it doesn't do. By default, there's very little bloat so developers can focus on adding new functionality without having to undo the plugin's 'helpful' features. Beginners can use pre-coded options, while experts can control it using public methods. It even has a carousel for mutiple items per slide.",
 "keywords": [
 	"slider",
 	"animation",
@@ -10,7 +10,7 @@
 	"carousel",
 	"CSS3 transitions"
 ],
-"version": "1.2.1",
+"version": "1.2.3",
 "author": {
 	"name": "Richard Hung",
 	"email": "richardhung111@gmail.com",

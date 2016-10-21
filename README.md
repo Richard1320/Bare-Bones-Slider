@@ -27,7 +27,7 @@ Key Features
 --------------------
 
 * Carousel to show multiple slides simultaneously
-* Choice between CSS3 transitions and jQuery animations
+* Uses CSS3 transitions with advanced easing
 * Loads images on demand
 * Allows you to make your own pagination and controls
 * Public methods that you can call outside of the plugin
