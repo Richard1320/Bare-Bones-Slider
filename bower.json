@@ -8,7 +8,6 @@
   "ignore": [
 	"images/demo",
 	"js/jquery-2.1.3.min.js",
-	"js/jquery.easing.1.3.js",
 	"js/jquery.bbslider.min.js",
 	"demo.html",
 	"bbslider.jquery.json",
@@ -22,7 +21,7 @@
 	"carousel",
 	"CSS3 transitions"
   ],
-  "version": "1.2.3",
+  "version": "1.2.4",
   "dependencies": {
     "jquery": ">=1.4"
   },
