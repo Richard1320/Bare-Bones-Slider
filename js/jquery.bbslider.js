@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.2.4
+ * 1.2.5
  *
  * Copyright (c) 2016 Richard Hung.
  *
@@ -70,6 +70,7 @@
 				wrapper.data({
 					autoPlay: false,
 					pIndex:   pIndex,
+					xIndex:   pIndex,
 					cIndex:   cIndex,
 					pCount:   pCount,
 					settings: settings
@@ -685,6 +686,22 @@
 				var cIndex       = pIndex;
 				var before       = settings.callbackBefore;
 
+				// check if first / last
+				if (carousel) {
+					pIndex = cIndex - carouselMove;
+					if (pIndex < 0) {
+						pIndex = pIndex + pCount;
+					}
+				} else if (pIndex > 0) { // It is not the first panel, move backward
+					pIndex = cIndex - 1;
+
+				} else if (loop) { // It is first panel, loop to end
+					pIndex = pCount - 1;
+				}
+
+				// Set xindex for before callback
+				wrapper.data('xIndex',pIndex);
+
 				if ($.isFunction(before) && before.call(this) === false) {
 					return false;
 				}
@@ -696,25 +713,13 @@
 					wrapper.bbslider('pause').bbslider('play');
 				}
 
-				// check if first / last
+				// Transition to new panel
+				wrapper.data('pIndex',pIndex);
 				if (carousel) {
-					pIndex = cIndex - carouselMove;
-					if (pIndex < 0) {
-						pIndex = pIndex + pCount;
-					}
-					wrapper.data('pIndex',pIndex);
 					wrapper.bbslider('backPage',pIndex);
 				} else if (pIndex > 0) { // It is not the first panel, move backward
-					pIndex = cIndex - 1;
-
-					wrapper.data('pIndex',pIndex);
-
 					wrapper.bbslider('backPage',pIndex);
 				} else if (loop) { // It is first panel, loop to end
-					pIndex = pCount - 1;
-
-					wrapper.data('pIndex',pIndex);
-
 					if (loopTrans) {
 						// use backward animation
 						wrapper.bbslider('backPage',pIndex);
@@ -739,6 +744,21 @@
 				var cIndex       = pIndex;
 				var before       = settings.callbackBefore;
 
+				// check if first / last
+				if (carousel) {
+					pIndex = cIndex + carouselMove;
+					if (pCount < pIndex + carousel + 1) {
+						pIndex = pIndex - pCount;
+					}
+				} else if (pCount > pIndex + 1) { // It is not the last panel, move forward
+					pIndex = cIndex + 1;
+				} else if (loop) { // It is last panel, loop to beginning
+					pIndex = 0;
+				}
+
+				// Set xindex for before callback
+				wrapper.data('xIndex',pIndex);
+
 				if ($.isFunction(before) && before.call(this) === false) {
 					return false;
 				}
@@ -750,26 +770,15 @@
 					wrapper.bbslider('pause').bbslider('play');
 				}
 
-				// check if first / last
+				// Transition to new panel
+				wrapper.data('pIndex',pIndex);
 				if (carousel) {
-					pIndex = cIndex + carouselMove;
-					if (pCount < pIndex + carousel + 1) {
-						pIndex = pIndex - pCount;
-					}
-					wrapper.data('pIndex',pIndex);
 					wrapper.bbslider('forPage',pIndex);
 
 				} else if (pCount > pIndex + 1) { // It is not the last panel, move forward
-					pIndex = cIndex + 1;
-
-					wrapper.data('pIndex',pIndex);
-
 					wrapper.bbslider('forPage',pIndex);
 
 				} else if (loop) { // It is last panel, loop to beginning
-					pIndex = 0;
-
-					wrapper.data('pIndex',pIndex);
 
 					if (loopTrans) {
 						// use forward animation
@@ -790,6 +799,9 @@
 				var carousel = settings.carousel;
 				var before   = settings.callbackBefore;
 				var cIndex;
+
+				// Set xindex for before callback
+				wrapper.data('xIndex',xIndex);
 
 				if ($.isFunction(before) && before.call(this) === false) {
 					return false;
