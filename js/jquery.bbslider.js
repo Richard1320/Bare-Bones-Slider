@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.2.5
+ * 1.2.6
  *
  * Copyright (c) 2016 Richard Hung.
  *
@@ -50,6 +50,8 @@
 				loopTrans:      true,                // Use backward and forward transition for loop
 				touch:          false,               // Allow touchscreen controls
 				touchoffset:    50,                  // Amount of pixels to swipe for touch controls
+				dragControls:   false,               // Allow mouse click and drag controls
+				dragoffset:     50,                  // Amount of pixels to swipe for drag controls
 				carousel:       false,               // Number of items per slide
 				carouselMove:   1                    // Amount of slides to move per carousel prev / next
 			}; // End options
@@ -127,15 +129,30 @@
 				}// End controls check
 
 				// Touch controls
-				if (settings.touch) {
-
+				if (settings.touch || settings.dragControls) {
+					var onEvents = '';
+					var offEvents = '';
 					var getX;
 					var getN;
 					var offset;
 
-					wrapper.on('touchstart',function(e) {
+					if (settings.touch) {
+						onEvents = onEvents +'touchstart ';
+						offEvents = offEvents +'touchend ';
+					}
+					if (settings.dragControls) {
+						onEvents = onEvents +'mousedown ';
+						offEvents = offEvents +'mouseup ';
+					}
+
+					wrapper.on(onEvents,function(e) {
 						e.preventDefault();
-						var touch  = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+
+						var touch = e;
+						if (e.type != 'mousedown') {
+							var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+						}
+						// console.log(e);
 
 						getX = touch.pageX;
 						// console.log(touch.pageY+' '+touch.pageX);
@@ -149,12 +166,17 @@
 						alert('Touch move: '+touch.pageY+' '+touch.pageX);
 					}); // end touchmove
 					*/
-					wrapper.on('touchend',function(e) {
+					wrapper.on(offEvents,function(e) {
 						e.preventDefault();
-						var touch  = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
 
-						getN   = touch.pageX;
-						offset = settings.touchoffset;
+						var touch = e;
+						offset = settings.dragoffset;
+						if (e.type != 'mouseup') {
+							var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+							offset = settings.touchoffset;
+						}
+
+						getN = touch.pageX;
 
 						if (getN > getX + offset) {
 							wrapper.bbslider('prev');
