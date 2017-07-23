@@ -21,7 +21,7 @@
 	"carousel",
 	"CSS3 transitions"
   ],
-  "version": "1.2.6",
+  "version": "1.2.7",
   "dependencies": {
     "jquery": ">=1.4"
   },
