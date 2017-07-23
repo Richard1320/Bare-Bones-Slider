@@ -1,5 +1,5 @@
 /*!
- * Bare Bones Slider 
+ * Bare Bones Slider
  * http://www.bbslider.com/
  */
 
@@ -9,9 +9,9 @@
 	position:relative;
 }
 .bbslider-wrapper {
-    -o-transition-property: height;
-    -moz-transition-property: height;
-    -webkit-transition-property: height;
+  -o-transition-property: height;
+  -moz-transition-property: height;
+  -webkit-transition-property: height;
 	transition-property:height;
 }
 .bbslider-wrapper > .panel {
@@ -19,71 +19,28 @@
 	position:absolute;
 	width:100%;
 }
-.bbslider-wrapper > .panel.init {
+.bbslider-wrapper > .panel.init,
+.bbslider-wrapper > .panel.init > .panel-inner {
 	-o-transition: none !important;
 	-moz-transition: none !important;
 	-webkit-transition: none !important;
 	transition:none !important;
 }
 .bbslider-wrapper > .panel > .panel-inner {
-    -o-transition-duration: inherit;
-    -moz-transition-duration: inherit;
-    -webkit-transition-duration: inherit;
+  -o-transition-duration: inherit;
+  -moz-transition-duration: inherit;
+  -webkit-transition-duration: inherit;
 	transition-duration:inherit;
-    -o-transition-timing-function: inherit;
-    -moz-transition-timing-function: inherit;
-    -webkit-transition-timing-function: inherit;
+  -o-transition-timing-function: inherit;
+  -moz-transition-timing-function: inherit;
+  -webkit-transition-timing-function: inherit;
 	transition-timing-function:inherit;
 }
-.bbslider-wrapper .prev-control-wrapper {
-	display:block;
-	z-index:10;
-	width:50px;
-	height:100%;
-	position:absolute;
-	left:0;
-	background-image:url("../images/blank.gif");
-}
-.bbslider-wrapper .next-control-wrapper {
-	display:block;
-	z-index:10;
-	width:50px;
-	height:100%;
-	position:absolute;
-	right:0;
-	background-image:url("../images/blank.gif");
-}
-.bbslider-wrapper.vertical .prev-control-wrapper {
-	width:100%;
-	height:50px;
-	left:auto;
-	top:0;
-}
-.bbslider-wrapper.vertical .next-control-wrapper {
-	width:100%;
-	height:50px;
-	right:auto;
-	bottom:0;
-}
-.bbslider-wrapper .prev-control-wrapper .prev,
-.bbslider-wrapper .next-control-wrapper .next {
+.bbslider-wrapper.loop-false.first-panel .prev-control-wrapper {
 	display:none;
 }
-.bbslider-wrapper .prev-control-wrapper:hover a,
-.bbslider-wrapper .next-control-wrapper:hover a  {
-	display:block;
-	width:50px;
-	height:100%;
-	background-repeat:no-repeat;
-	background-position:center;
-	text-indent:-9999px;
-	overflow:hidden;
-}
-.bbslider-wrapper .prev {
-	background-image:url("../images/prev.png");
-}
-.bbslider-wrapper .next {
-	background-image:url("../images/next.png");
+.bbslider-wrapper.loop-false.last-panel .next-control-wrapper {
+	display:none;
 }
 .bbslider-wrapper.carousel > .panel {
 	overflow:hidden;
@@ -92,9 +49,9 @@
 	display:none;
 }
 .bbslider-wrapper > .panel.fade {
-    -o-transition-property: opacity;
-    -moz-transition-property: opacity;
-    -webkit-transition-property: opacity;
+  -o-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -webkit-transition-property: opacity;
 	transition-property:opacity;
 	opacity:0;
 }
@@ -103,16 +60,16 @@
 	display:block;
 }
 .bbslider-wrapper > .panel.slide {
-    -o-transition-property: transform;
-    -moz-transition-property: transform;
-    -webkit-transition-property: transform;
+  -o-transition-property: transform;
+  -moz-transition-property: transform;
+  -webkit-transition-property: transform;
 	transition-property:transform;
 	display:block;
 }
 .bbslider-wrapper > .panel.slideVert {
-    -o-transition-property: transform;
-    -moz-transition-property: transform;
-    -webkit-transition-property: transform;
+  -o-transition-property: transform;
+  -moz-transition-property: transform;
+  -webkit-transition-property: transform;
 	transition-property:transform;
 	display:block;
 }
@@ -127,15 +84,15 @@
 }
 .bbslider-wrapper > .panel.blind,
 .bbslider-wrapper > .panel.blind .panel-inner {
-    -o-transition-property: left, right, margin, width;
-    -moz-transition-property: left, right, margin, width;
-    -webkit-transition-property: left, right, margin, width;
+  -o-transition-property: left, right, margin, width;
+  -moz-transition-property: left, right, margin, width;
+  -webkit-transition-property: left, right, margin, width;
 	transition-property:left, right, margin, width;
 }
 .bbslider-wrapper.carousel > .panel.slide {
-    -o-transition-property: left;
-    -moz-transition-property: left;
-    -webkit-transition-property: left;
+  -o-transition-property: left;
+  -moz-transition-property: left;
+  -webkit-transition-property: left;
 	transition-property:left;
 }
 .bbslider-wrapper > .panel.none {

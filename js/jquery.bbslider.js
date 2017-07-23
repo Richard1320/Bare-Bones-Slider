@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.2.6
+ * 1.2.7
  *
  * Copyright (c) 2016 Richard Hung.
  *
@@ -25,35 +25,38 @@
 
 			// Set default parameters
 			var defaultSettings = {
-				page:           1,                   // Page to start on
-				duration:       1000,                // Duration of transition
-				controls:       false,               // Display next / prev controls
-				pager:          false,               // Create clickable pagination links
-				pagerWrap:      '.pager-wrap',       // Container for pagination (Created externally)
-				pageInfo:       false,               // Display current panel information
-				infoWrap:       '.info-wrap',        // Container for page information (Created externally)
-				onDemand:       false,               // Create placeholder image and load on-demand
-				placeholder:    '/images/blank.gif', // Location of placeholder image
-				auto:           false,               // Pages play automatically
-				timer:          5000,                // Amount of time for autoplay
-				loop:           true,                // Loop back to the beginning
-				transition:     'fade',              // Fade, slide, slideVert, or none
-				callbackStart:  null,                // Callback function when slider is setup
-				callbackBefore: null,                // Callback function before new slide transition
-				callbackAfter:  null,                // Callback function after new slide complete
-				callbackUpdate: null,                // Callback function after update function
-				easing:         'ease',              // Easing transition
-				autoHeight:     true,                // Automatically set height
-				dynamicHeight:  false,               // Height of slider changes with current panel
-				pauseOnHit:     true,                // Pause autoplay when controls or pagers used
-				randomPlay:     false,               // Autoplay goes to random slides
-				loopTrans:      true,                // Use backward and forward transition for loop
-				touch:          false,               // Allow touchscreen controls
-				touchoffset:    50,                  // Amount of pixels to swipe for touch controls
-				dragControls:   false,               // Allow mouse click and drag controls
-				dragoffset:     50,                  // Amount of pixels to swipe for drag controls
-				carousel:       false,               // Number of items per slide
-				carouselMove:   1                    // Amount of slides to move per carousel prev / next
+				page:             1,                   // Page to start on
+				duration:         1000,                // Duration of transition
+				controls:         false,               // Display next / prev controls
+				controlsText:[                         // HTML output for controls
+					'<a class="prev control" href="#">Prev</a>',
+					'<a class="next control" href="#">Next</a>'],
+				pager:            false,               // Create clickable pagination links
+				pagerWrap:        '.pager-wrap',       // Container for pagination (Created externally)
+				pageInfo:         false,               // Display current panel information
+				infoWrap:         '.info-wrap',        // Container for page information (Created externally)
+				onDemand:         false,               // Create placeholder image and load on-demand
+				placeholder:      '/images/blank.gif', // Location of placeholder image
+				auto:             false,               // Pages play automatically
+				timer:            5000,                // Amount of time for autoplay
+				loop:             true,                // Loop back to the beginning
+				transition:       'fade',              // Fade, slide, slideVert, or none
+				callbackStart:    null,                // Callback function when slider is setup
+				callbackBefore:   null,                // Callback function before new slide transition
+				callbackAfter:    null,                // Callback function after new slide complete
+				callbackUpdate:   null,                // Callback function after update function
+				easing:           'ease',              // Easing transition
+				autoHeight:       true,                // Automatically set height
+				dynamicHeight:    false,               // Height of slider changes with current panel
+				pauseOnHit:       true,                // Pause autoplay when controls or pagers used
+				randomPlay:       false,               // Autoplay goes to random slides
+				loopTrans:        true,                // Use backward and forward transition for loop
+				touch:            false,               // Allow touchscreen controls
+				touchoffset:      50,                  // Amount of pixels to swipe for touch controls
+				dragControls:     false,               // Allow mouse click and drag controls
+				dragoffset:       50,                  // Amount of pixels to swipe for drag controls
+				carousel:         false,               // Number of items per slide
+				carouselMove:     1,                   // Amount of slides to move per carousel prev / next
 			}; // End options
 
 			// Override default options
@@ -81,6 +84,13 @@
 				// Apply basic CSS
 				wrapper.addClass('bbslider-wrapper');
 				panel.addClass('panel');
+
+				// auto controls hide
+				if (settings.loop) {
+					wrapper.addClass('loop-true');
+				} else {
+					wrapper.addClass('loop-false');
+				}
 
 				// image load on demand
 				if (settings.onDemand) {
@@ -113,7 +123,7 @@
 						e.preventDefault();
 
 						if (settings.pauseOnHit) {
-							wrapper.bbslider('pause');
+							wrapper.bbslider('autoPlayPause');
 						}
 					});// End next click
 
@@ -122,7 +132,7 @@
 						e.preventDefault();
 
 						if (settings.pauseOnHit) {
-							wrapper.bbslider('pause');
+							wrapper.bbslider('autoPlayPause');
 						}
 					});// End prev click
 
@@ -182,13 +192,13 @@
 							wrapper.bbslider('prev');
 
 							if (settings.pauseOnHit) {
-								wrapper.bbslider('pause');
+								wrapper.bbslider('autoPlayPause');
 							}
 						} else if (getN < getX - offset) {
 							wrapper.bbslider('next');
 
 							if (settings.pauseOnHit) {
-								wrapper.bbslider('pause');
+								wrapper.bbslider('autoPlayPause');
 							}
 						}
 						// alert('Touch off: '+touch.pageY+' '+touch.pageX);
@@ -198,7 +208,8 @@
 
 				// auto play
 				if (settings.auto) {
-					wrapper.bbslider('play');
+					wrapper.data('autoPlay',true);
+					wrapper.bbslider('autoPlayStart');
 				} // End autoplay
 
 				// Setup the slider
@@ -283,7 +294,7 @@
 				var wid      = wrapper.attr('id');
 
 				// Remove CSS
-				wrapper.removeClass('bbslider-wrapper carousel ease linear ease-in ease-out ease-in-out easeInQuad easeInCubic easeInQuart easeInQuint easeInSine easeInExpo easeInCirc easeInBack easeOutQuad easeOutCubic easeOutQuart easeOutQuint easeOutSine easeOutExpo easeOutCirc easeOutBack easeInOutQuad easeInOutCubic easeInOutQuart easeInOutQuint easeInOutSine easeInOutExpo easeInOutCirc easeInOutBack');
+				wrapper.removeClass('bbslider-wrapper first-panel last-panel loop-true loop-false carousel ease linear ease-in ease-out ease-in-out easeInQuad easeInCubic easeInQuart easeInQuint easeInSine easeInExpo easeInCirc easeInBack easeOutQuad easeOutCubic easeOutQuart easeOutQuint easeOutSine easeOutExpo easeOutCirc easeOutBack easeInOutQuad easeInOutCubic easeInOutQuart easeInOutQuint easeInOutSine easeInOutExpo easeInOutCirc easeInOutBack');
 				panel.removeClass('panel active slide fade blind none slideVert');
 
 				// remove autoheight
@@ -334,7 +345,7 @@
 				// auto play
 				var autoPlay = wrapper.data('autoPlay');
 				if (autoPlay) {
-					wrapper.bbslider('pause');
+					wrapper.bbslider('autoPlayPause');
 				}// End autoplay
 
 				// Remove data
@@ -399,7 +410,7 @@
 				wrapper.height(hi);
 			});
 		}, // end recalculate height
-		play : function() {
+		autoPlayStart : function() {
 			return this.each(function() {
 				var wrapper    = $(this);
 				var settings   = wrapper.data('settings');
@@ -407,7 +418,7 @@
 				var randomPlay = settings.randomPlay;
 
 				// check if slider is already playing
-				if (!autoPlay) {
+				if (autoPlay) {
 					var duration = settings.duration;
 					var timer    = settings.timer;
 
@@ -421,11 +432,10 @@
 					}, timer + duration); // End setinterval
 
 					wrapper.data('tid',tid);
-					wrapper.data('autoPlay',true);
 				}
 			});
- 	    }, // End play
-		pause : function() {
+ 	  }, // End auto play start
+		autoPlayPause : function() {
 			return this.each(function() {
 				var wrapper  = $(this);
 				var tid      = wrapper.data('tid');
@@ -435,7 +445,19 @@
 					wrapper.data('autoPlay',false);
 				}
 			});
- 	    }, // End pause
+ 	  }, // End auto play pause
+		autoPlayReset : function() {
+			return this.each(function() {
+				console.log('reset');
+				var wrapper  = $(this);
+				var tid      = wrapper.data('tid');
+				var autoPlay = wrapper.data('autoPlay');
+				if (autoPlay) {
+					clearInterval(tid);
+					wrapper.bbslider('autoPlayStart');
+				}
+			});
+ 	  }, // End auto play reset
 		randomSlide : function() {
 			return this.each(function() {
 				var wrapper   = $(this);
@@ -656,7 +678,7 @@
 				}// End pager check
 
 				if (pauseOnHit) {
-					wrapper.bbslider('pause');
+					wrapper.bbslider('autoPlayPause');
 				}
 
 				e.preventDefault();
@@ -669,29 +691,26 @@
 			var loop     = settings.loop;
 
 			// Create variables for wrapper
-			var prev = $('<a class="prev control" href="#">Prev</a>').prependTo(this);
-			var next = $('<a class="next control" href="#">Next</a>').prependTo(this);
-			prev.wrap('<div class="prev-control-wrapper control-wrapper" />');
+			var next = $(settings.controlsText[1]).prependTo(this);
+			var prev = $(settings.controlsText[0]).prependTo(this);
 			next.wrap('<div class="next-control-wrapper control-wrapper" />');
-			var prevWrap = this.children('.prev-control-wrapper');
+			prev.wrap('<div class="prev-control-wrapper control-wrapper" />');
 			var nextWrap = this.children('.next-control-wrapper');
+			var prevWrap = this.children('.prev-control-wrapper');
 
 			// Check if on first page
-			if (pIndex === 0 && !loop) {
-				// hide previous button
-				prevWrap.css('display','none');
+			if (pIndex === 0) {
+				this.addClass('first-panel');
 			}
 			// check if on last page
-			if (pCount <= pIndex + 1 && !loop) {
-				// hide next button
-
-				nextWrap.css('display','none');
+			if (pCount <= pIndex + 1) {
+				this.addClass('last-panel');
 			}
 
 			var x = {};
 			x.next = next;
-
 			x.prev = prev;
+
 			return x;
 
 		}, // End controls
@@ -707,6 +726,7 @@
 				var carouselMove = settings.carouselMove;
 				var cIndex       = pIndex;
 				var before       = settings.callbackBefore;
+				var movement     = false;
 
 				// check if first / last
 				if (carousel) {
@@ -714,10 +734,12 @@
 					if (pIndex < 0) {
 						pIndex = pIndex + pCount;
 					}
+					movement = 'carousel';
 				} else if (pIndex > 0) { // It is not the first panel, move backward
 					pIndex = cIndex - 1;
-
+					movement = 'backward';
 				} else if (loop) { // It is first panel, loop to end
+					movement = 'end';
 					pIndex = pCount - 1;
 				}
 
@@ -732,16 +754,14 @@
 
 				// reset autoplay timer
 				if (wrapper.data('autoPlay')) {
-					wrapper.bbslider('pause').bbslider('play');
+					wrapper.bbslider('autoPlayReset');
 				}
 
 				// Transition to new panel
 				wrapper.data('pIndex',pIndex);
-				if (carousel) {
+				if (movement == 'carousel' || movement == 'backward') {
 					wrapper.bbslider('backPage',pIndex);
-				} else if (pIndex > 0) { // It is not the first panel, move backward
-					wrapper.bbslider('backPage',pIndex);
-				} else if (loop) { // It is first panel, loop to end
+				} else if (movement == 'end') { // It is first panel, loop to end
 					if (loopTrans) {
 						// use backward animation
 						wrapper.bbslider('backPage',pIndex);
@@ -765,6 +785,7 @@
 				var carouselMove = settings.carouselMove;
 				var cIndex       = pIndex;
 				var before       = settings.callbackBefore;
+				var movement     = false;
 
 				// check if first / last
 				if (carousel) {
@@ -772,10 +793,13 @@
 					if (pCount < pIndex + carousel + 1) {
 						pIndex = pIndex - pCount;
 					}
+					movement = 'carousel';
 				} else if (pCount > pIndex + 1) { // It is not the last panel, move forward
 					pIndex = cIndex + 1;
+					movement = 'forward';
 				} else if (loop) { // It is last panel, loop to beginning
 					pIndex = 0;
+					movement = 'first';
 				}
 
 				// Set xindex for before callback
@@ -789,18 +813,15 @@
 
 				// reset autoplay timer
 				if (wrapper.data('autoPlay')) {
-					wrapper.bbslider('pause').bbslider('play');
+					wrapper.bbslider('autoPlayReset');
 				}
 
 				// Transition to new panel
 				wrapper.data('pIndex',pIndex);
-				if (carousel) {
+				if (movement == 'carousel' || movement == 'forward') {
 					wrapper.bbslider('forPage',pIndex);
 
-				} else if (pCount > pIndex + 1) { // It is not the last panel, move forward
-					wrapper.bbslider('forPage',pIndex);
-
-				} else if (loop) { // It is last panel, loop to beginning
+				} else if (movement == 'first') { // It is last panel, loop to beginning
 
 					if (loopTrans) {
 						// use forward animation
@@ -831,7 +852,7 @@
 
 				// reset autoplay timer
 				if (wrapper.data('autoPlay')) {
-					wrapper.bbslider('pause').bbslider('play');
+					wrapper.bbslider('autoPlayReset');
 				}
 
 				if (carousel) {
@@ -947,13 +968,13 @@
 					} // End transition switch
 				} // end carousel check
 
-				// Check if on first page and hide control
-				if (pIndex === 0 && !loop) {
-					wrapper.find('.prev-control-wrapper').css('display','none');
+				// Check if on first panel
+				if (pIndex === 0) {
+					wrapper.addClass('first-panel');
 				}//  End hide control check
 
-				// Display the next control
-				wrapper.find('.next-control-wrapper').css('display','block');
+				// Remove last panel class since we're moving backwards
+				wrapper.removeClass('last-panel');
 
 				// Create page numbers info function
 				if (settings.pageInfo) {
@@ -1040,13 +1061,13 @@
 					} // End transition switch
 				} // end carousel check
 
-				// Check if on last page and hide control
-				if (pCount <= pIndex + 1 && !loop) {
-					wrapper.find('.next-control-wrapper').css('display','none');
+				// Check if on last panel
+				if (pCount <= pIndex + 1) {
+					wrapper.addClass('last-panel');
 				} //  End prev control check
 
-				// Display the prev control
-				wrapper.find('.prev-control-wrapper').css('display','block');
+				// Remove first panel class since we're moving forward
+				wrapper.removeClass('first-panel');
 
 				// Create page numbers info function
 				if (settings.pageInfo) {

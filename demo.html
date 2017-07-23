@@ -202,14 +202,14 @@
 <footer><p>Copyright &copy; 2015 <a href="http://www.magicmediamuse.com/" target="_blank">Richard Hung</a>. All Rights Reserved.</p></footer>
 
 
-<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="js/jquery.bbslider.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
+
 	$('#default').bbslider();
-	
+
 	$('#auto').bbslider({
 		auto: true,
 		timer:3000,
@@ -217,55 +217,55 @@ $(document).ready(function() {
 		loop:true,
 		pauseOnHit:false
 	});
-	
+
 	$('#pager').bbslider({
 		pager:      true,
 		pagerWrap:  '#pagination-wrapper',
 		pageInfo:   true,
 		infoWrap:   '#info-wrapper'
 	});
-	
+
 	$('#controls').bbslider({
 		controls: true,
 		loop:     false
 	});
-	
+
 	$('#none').bbslider({
 		controls:   true,
 		transition: 'none'
 	});
-	
+
 	$('#fade').bbslider({
 		controls:   true,
 		transition: 'fade',
 		duration:   1000
 	});
-	
+
 	$('#slide').bbslider({
 		controls:   true,
 		transition: 'slide',
 		duration:   1000
 	});
-	
+
 	$('#slideVert').bbslider({
 		controls:   true,
 		transition: 'slideVert',
 		duration:   1000
 	});
-	
+
 	$('#blind').bbslider({
 		controls:   true,
 		transition: 'blind',
 		duration:   1000
 	});
-	
+
 	$('#carousel-none').bbslider({
 		controls:     true,
 		transition:   'none',
 		carousel:     3,
 		carouselMove: 2
 	});
-	
+
 	$('#carousel-fade').bbslider({
 		controls:     true,
 		transition:   'fade',
@@ -273,7 +273,7 @@ $(document).ready(function() {
 		carousel:     3,
 		carouselMove: 2
 	});
-	
+
 	$('#carousel-slide').bbslider({
 		controls:     true,
 		transition:   'slide',
@@ -281,7 +281,7 @@ $(document).ready(function() {
 		carousel:     3,
 		carouselMove: 2
 	});
-	
+
 	var callBefore = function() {
 		var pCount = $('#callback').data('pCount');
 		var pIndex = $('#callback').data('pIndex');
@@ -294,13 +294,13 @@ $(document).ready(function() {
 		var panel  = pIndex + 1;
 		$('#call-log').append('<p>Panel ' + panel + ' of ' + pCount + ' total panels has started.</p>');
 	};
-	
+
 	$('#callback').bbslider({
 		controls: true,
 		callbackBefore: callBefore,
 		callbackAfter: callAfter
 	});
-	
+
 	$('#update').bbslider({
 		pager:     true,
 		pagerWrap: '#update-pager',
@@ -326,7 +326,7 @@ $(document).ready(function() {
 		transition:  'slide',
 		touchoffset: 50
 	});
-	
+
 
 	var rsz = function() {
 		$('.bbslider-wrapper').bbslider('update');
