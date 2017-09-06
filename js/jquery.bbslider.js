@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.2.7
+ * 1.2.8
  *
  * Copyright (c) 2016 Richard Hung.
  *
@@ -295,7 +295,7 @@
 
 				// Remove CSS
 				wrapper.removeClass('bbslider-wrapper first-panel last-panel loop-true loop-false carousel ease linear ease-in ease-out ease-in-out easeInQuad easeInCubic easeInQuart easeInQuint easeInSine easeInExpo easeInCirc easeInBack easeOutQuad easeOutCubic easeOutQuart easeOutQuint easeOutSine easeOutExpo easeOutCirc easeOutBack easeInOutQuad easeInOutCubic easeInOutQuart easeInOutQuint easeInOutSine easeInOutExpo easeInOutCirc easeInOutBack');
-				panel.removeClass('panel active slide fade blind none slideVert');
+				panel.removeClass('panel active slide fade blind none slideVert').removeAttr('style');
 
 				// remove autoheight
 				wrapper.css('height','');
