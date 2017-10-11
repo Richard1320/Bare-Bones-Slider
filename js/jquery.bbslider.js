@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.2.8
+ * 1.2.9
  *
  * Copyright (c) 2016 Richard Hung.
  *
@@ -448,7 +448,6 @@
  	  }, // End auto play pause
 		autoPlayReset : function() {
 			return this.each(function() {
-				console.log('reset');
 				var wrapper  = $(this);
 				var tid      = wrapper.data('tid');
 				var autoPlay = wrapper.data('autoPlay');
@@ -989,14 +988,12 @@
 					wrapper.bbslider('recalcHeight');
 				}
 
-				// No real "callback" functionality for css3 transitions
-				// Plugin animates all panels on transition; no single "complete" check
-				// Use settimeout for after callback
+				// Callback on transition complete
 				var after = settings.callbackAfter;
 				if ($.isFunction(after)) {
-					setTimeout(function() {
+					panel.eq(pIndex).one('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() {
 						after.call(this);
-					},duration);
+					});
 				}
 
 			});
@@ -1081,14 +1078,12 @@
 					wrapper.bbslider('recalcHeight');
 				}
 
-				// No real "callback" functionality for css3 transitions
-				// Plugin animates all panels on transition; no single "complete" check
-				// Use settimeout for after callback
+				// Callback on transition complete
 				var after = settings.callbackAfter;
 				if ($.isFunction(after)) {
-					setTimeout(function() {
+					panel.eq(pIndex).one('webkitTransitionEnd mozTransitionEnd MSTransitionEnd otransitionend transitionend', function() {
 						after.call(this);
-					},duration);
+					});
 				}
 
 
