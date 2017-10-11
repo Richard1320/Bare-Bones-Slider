@@ -332,7 +332,7 @@ $(document).ready(function() {
 		$('.bbslider-wrapper').bbslider('update');
 	}; // end resize
 	$(window).resize(rsz);
-	$(window).load(rsz);
+	$(window).on('load',rsz);
 });
 </script>
 
