@@ -8,7 +8,6 @@
 	"carousel",
 	"CSS3 transitions"
   ],
-  "version": "1.2.8",
   "dependencies": {
     "jquery": ">=1.7"
   },
@@ -24,12 +23,7 @@
 	}
   ],
   "main": "js/jquery.bbslider.js",
-  "files": [
-	"css/jquery.bbslider.css",
-	"images/blank.gif",
-	"images/next.png",
-	"images/prev.png"
-  ],
+  "style": "./css/jquery.bbslider.css",
   "repository": {
     "type": "git",
     "url": "https://github.com/Richard1320/Bare-Bones-Slider.git"

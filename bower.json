@@ -3,7 +3,7 @@
   "description": "Bare Bones Slider is a minimalistic jQuery slider. The biggest strength of this slider isn't what it does; it's what it doesn't do. By default, there's very little bloat so developers can focus on adding new functionality without having to undo the plugin's 'helpful' features. Beginners can use pre-coded options, while experts can control it using public methods. It even has a carousel for mutiple items per slide.",
   "main": [
     "js/jquery.bbslider.js",
-	"css/jquery.bbslider.css"
+    "css/jquery.bbslider.css"
   ],
   "ignore": [
 	"images/demo",
@@ -21,9 +21,8 @@
 	"carousel",
 	"CSS3 transitions"
   ],
-  "version": "1.2.8",
   "dependencies": {
-    "jquery": ">=1.4"
+    "jquery": ">=1.7"
   },
   "author": {
     "name": "Richard Hung",
