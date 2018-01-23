@@ -593,7 +593,7 @@
 			var pagerText = settings.pagerText;
 
 			// remove any previous pager-list
-			pagerWrap.find('#'+wrapperID+'-pager').empty();
+			pagerWrap.empty();
 
 			for (var pageNum = 1; pageNum <= pCount; pageNum++) {
 				// Check whether to give a title to pager
