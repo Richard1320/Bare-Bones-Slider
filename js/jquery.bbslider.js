@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.2.9
+ * 1.3.0
  *
  * Copyright (c) 2016 Richard Hung.
  *
@@ -19,6 +19,13 @@
 
 (function($) {
 	'use strict';
+
+	var pageTextDefault = function(pageNum,wrapperID,title) {
+		if (!title) {
+			title = pageNum;
+		}
+		return $('<div class="bb-link-wrapper"><a href="#' + pageNum + '" data-link="' + wrapperID + '" class="bb-pager-link">' + title + '</a></div>' );
+	}; // end pager text default
 
 	var methods = {
 		init : function(settings) {
@@ -33,8 +40,7 @@
 					'<a class="next control" href="#">Next</a>'],
 				pager:            false,               // Create clickable pagination links
 				pagerWrap:        '.pager-wrap',       // Container for pagination (Created externally)
-				pageInfo:         false,               // Display current panel information
-				infoWrap:         '.info-wrap',        // Container for page information (Created externally)
+				pagerText:        pageTextDefault,     // HTML output for pager
 				onDemand:         false,               // Create placeholder image and load on-demand
 				placeholder:      '/images/blank.gif', // Location of placeholder image
 				auto:             false,               // Pages play automatically
@@ -101,15 +107,9 @@
 					panel.eq(pIndex).bbslider('loadImg');
 				} // End onDemand check
 
-				// Create page numbers info function
-				if (settings.pageInfo) {
-					wrapper.bbslider('infoParse');
-				} // End infoParse
-
-
 				// Create pager if true
 				if (settings.pager) {
-					wrapper.bbslider('pager',settings.pagerWrap);
+					wrapper.bbslider('pager');
 				} // End pager check
 
 				// create prev/next controls if true
@@ -240,7 +240,6 @@
 				var settings      = wrapper.data('settings');
 				var pIndex        = wrapper.data('pIndex');
 				var onDemand      = settings.onDemand;
-				var pageInfo      = settings.pageInfo;
 				var pager         = settings.pager;
 				var autoHeight    = settings.autoHeight;
 				var callback      = settings.callbackUpdate;
@@ -260,11 +259,6 @@
 					// Only show one image
 					panel.eq(pIndex).bbslider('loadImg');
 				} // End onDemand check
-
-				// Create page numbers info function
-				if (pageInfo) {
-					wrapper.bbslider('infoParse');
-				} // End infoParse
 
 				// Create pager if true
 				if (pager) {
@@ -288,10 +282,10 @@
 		destroy : function() {
 			return this.each(function(){
 
-				var wrapper  = $(this);
-				var panel    = wrapper.children('.panel');
-				var settings = wrapper.data('settings');
-				var wid      = wrapper.attr('id');
+				var wrapper   = $(this);
+				var panel     = wrapper.children('.panel');
+				var settings  = wrapper.data('settings');
+				var wrapperID = wrapper.attr('id');
 
 				// Remove CSS
 				wrapper.removeClass('bbslider-wrapper first-panel last-panel loop-true loop-false carousel ease linear ease-in ease-out ease-in-out easeInQuad easeInCubic easeInQuart easeInQuint easeInSine easeInExpo easeInCirc easeInBack easeOutQuad easeOutCubic easeOutQuart easeOutQuint easeOutSine easeOutExpo easeOutCirc easeOutBack easeInOutQuad easeInOutCubic easeInOutQuart easeInOutQuint easeInOutSine easeInOutExpo easeInOutCirc easeInOutBack');
@@ -304,12 +298,6 @@
 				if (wrapper.data('onDemand')) {
 					panel.bbslider('loadImg');
 				} // End onDemand check
-
-				// Remove page numbers info function
-				if (wrapper.data('pageInfo')) {
-					var infoWrap = wrapper.data('infoWrap');
-					infoWrap.empty();
-				} // End infoParse
 
 				// Hide panels and show first panel
 				var transition = settings.transition;
@@ -335,7 +323,7 @@
 
 				// Remove pager
 				if (settings.pager) {
-					$('#'+wid+'-pager').remove();
+					$(settings.pagerWrap).empty();
 				}
 
 				// Remove controls
@@ -595,66 +583,47 @@
 			});
 
 		}, // End load image
- 	    infoParse : function() {
-			var wrapper  = this;
-			var settings = wrapper.data('settings');
-			var pCount   = wrapper.data('pCount');
-			var pIndex   = wrapper.data('pIndex');
-			var infoWrap = $(settings.infoWrap);
-			var page     = pIndex + 1;
-
-			infoWrap.text(page + ' of ' + pCount);
-		}, // End infoParse
 		pager : function() {
 			var wrapper   = this;
 			var panel     = wrapper.children('.panel');
 			var pCount    = wrapper.data('pCount');
 			var settings  = wrapper.data('settings');
-			// var pagerList = pagerWrap.children('.page-list');
-			var wid       = wrapper.attr('id');
+			var wrapperID = wrapper.attr('id');
 			var pagerWrap = $(settings.pagerWrap);
+			var pagerText = settings.pagerText;
 
 			// remove any previous pager-list
-			pagerWrap.find('#'+wid+'-pager').remove();
-
-			var pagerList = $('<ul class="page-list" id="'+wid+'-pager" />').appendTo(pagerWrap);
+			pagerWrap.find('#'+wrapperID+'-pager').empty();
 
 			for (var pageNum = 1; pageNum <= pCount; pageNum++) {
 				// Check whether to give a title to pager
-				var title;
-				if (panel.eq(pageNum - 1).attr('title')) { // Title attribute not empty
-					title = panel.eq(pageNum - 1).attr('title');
-				} else {
-					title = pageNum;
-				}// End title check
-				$('<li><a href="#' + pageNum + '" data-link="' + wid + '" class="bb-pager-link">' + title + '</a></li>' ).appendTo(pagerList);
+				var title = panel.eq(pageNum - 1).attr('title');
+				var link  = pagerText.call(this,pageNum,wrapperID,title);
+
+				link.appendTo(pagerWrap);
 			}// End for loop
 
-			pagerList.find('a').bbslider('bindpager');
+			pagerWrap.find('a').bbslider('bindpager');
 
 			wrapper.bbslider('pagerUpdate');
 		}, // End pager
 		pagerUpdate : function() {
-			var wid    = this.attr('id');
-			var pIndex = this.data('pIndex');
+			var settings = this.data('settings');
+			var pIndex   = this.data('pIndex');
 
-			$('#'+wid+'-pager').children().removeClass('activePanel').eq(pIndex).addClass('activePanel');
+			$(settings.pagerWrap).children().removeClass('activePanel').eq(pIndex).addClass('activePanel');
 
 		}, // End pagerUpdate
 		bindpager : function() {
 
 			return this.on('click',function(e) {
 
-
 				// Remove # from href and get index
-				// pagerIndex = parseInt($(this).attr('href').replace('#','')) - 1;
 				var href       = $(this).attr('href');
 				var hash       = href.substring(href.indexOf('#'));
 				var pagerIndex = parseInt(hash.substring(1)) - 1;
-				// alert(hash.substring(1));
-
-				var wid        = $(this).attr('data-link');
-				var wrapper    = $('#'+wid);
+				var wrapperID  = $(this).attr('data-link');
+				var wrapper    = $('#'+wrapperID);
 				var pIndex     = wrapper.data('pIndex');
 				var settings   = wrapper.data('settings');
 				var pauseOnHit = settings.pauseOnHit;
@@ -975,12 +944,6 @@
 				// Remove last panel class since we're moving backwards
 				wrapper.removeClass('last-panel');
 
-				// Create page numbers info function
-				if (settings.pageInfo) {
-					wrapper.bbslider('infoParse');
-				} // End infoParse
-
-
 				wrapper.bbslider('pagerUpdate');
 
 				// dynamically change height
@@ -1065,11 +1028,6 @@
 
 				// Remove first panel class since we're moving forward
 				wrapper.removeClass('first-panel');
-
-				// Create page numbers info function
-				if (settings.pageInfo) {
-					wrapper.bbslider('infoParse');
-				} // End infoParse
 
 				wrapper.bbslider('pagerUpdate');
 
@@ -1737,7 +1695,5 @@
 		}
 
 	}; // End slider
-
-	$('.bb-pager-link').bbslider('bindpager');
 
 })(jQuery);
