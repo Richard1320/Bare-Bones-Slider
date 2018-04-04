@@ -20,6 +20,9 @@
 (function($) {
 	'use strict';
 
+	// Create the plugin name and defaults once
+	var pluginName = 'bbslider';
+
 	var pageTextDefault = function(pageNum,wrapperID,title) {
 		if (!title) {
 			title = pageNum;
@@ -101,38 +104,38 @@
 				// image load on demand
 				if (settings.onDemand) {
 					// Create placeholder
-					wrapper.bbslider('placeholder');
+					wrapper[pluginName]('placeholder');
 
 					// Only show one image
-					panel.eq(pIndex).bbslider('loadImg');
+					panel.eq(pIndex)[pluginName]('loadImg');
 				} // End onDemand check
 
 				// Create pager if true
 				if (settings.pager) {
-					wrapper.bbslider('pager');
+					wrapper[pluginName]('pager');
 				} // End pager check
 
 				// create prev/next controls if true
 				if (settings.controls) {
-					var x = wrapper.bbslider('controls');
+					var x = wrapper[pluginName]('controls');
 					var next = x.next;
 					var prev = x.prev;
 
 					next.click(function(e) {
-						wrapper.bbslider('next');
+						wrapper[pluginName]('next');
 						e.preventDefault();
 
 						if (settings.pauseOnHit) {
-							wrapper.bbslider('autoPlayPause');
+							wrapper[pluginName]('autoPlayPause');
 						}
 					});// End next click
 
 					prev.click(function(e) {
-						wrapper.bbslider('prev');
+						wrapper[pluginName]('prev');
 						e.preventDefault();
 
 						if (settings.pauseOnHit) {
-							wrapper.bbslider('autoPlayPause');
+							wrapper[pluginName]('autoPlayPause');
 						}
 					});// End prev click
 
@@ -189,16 +192,16 @@
 						getN = touch.pageX;
 
 						if (getN > getX + offset) {
-							wrapper.bbslider('prev');
+							wrapper[pluginName]('prev');
 
 							if (settings.pauseOnHit) {
-								wrapper.bbslider('autoPlayPause');
+								wrapper[pluginName]('autoPlayPause');
 							}
 						} else if (getN < getX - offset) {
-							wrapper.bbslider('next');
+							wrapper[pluginName]('next');
 
 							if (settings.pauseOnHit) {
-								wrapper.bbslider('autoPlayPause');
+								wrapper[pluginName]('autoPlayPause');
 							}
 						}
 						// alert('Touch off: '+touch.pageY+' '+touch.pageX);
@@ -209,15 +212,15 @@
 				// auto play
 				if (settings.auto) {
 					wrapper.data('autoPlay',true);
-					wrapper.bbslider('autoPlayStart');
+					wrapper[pluginName]('autoPlayStart');
 				} // End autoplay
 
 				// Setup the slider
-				wrapper.bbslider('setup');
+				wrapper[pluginName]('setup');
 
 				// Create autoheight
 				if (settings.autoHeight) {
-					wrapper.bbslider('recalcHeight');
+					wrapper[pluginName]('recalcHeight');
 				}// End autoheight
 
 
@@ -254,23 +257,23 @@
 				// on-demand image loading
 				if (onDemand) {
 					// Create placeholder
-					wrapper.bbslider('placeholder');
+					wrapper[pluginName]('placeholder');
 
 					// Only show one image
-					panel.eq(pIndex).bbslider('loadImg');
+					panel.eq(pIndex)[pluginName]('loadImg');
 				} // End onDemand check
 
 				// Create pager if true
 				if (pager) {
-					wrapper.bbslider('pager');
+					wrapper[pluginName]('pager');
 				} // End pager check
 
 				// Setup the slider
-				wrapper.bbslider('setup');
+				wrapper[pluginName]('setup');
 
 				// Create autoheight
 				if (autoHeight) {
-					wrapper.bbslider('recalcHeight');
+					wrapper[pluginName]('recalcHeight');
 				} // End autoheight
 
 				// callback update function
@@ -296,7 +299,7 @@
 
 				// Show all images
 				if (wrapper.data('onDemand')) {
-					panel.bbslider('loadImg');
+					panel[pluginName]('loadImg');
 				} // End onDemand check
 
 				// Hide panels and show first panel
@@ -333,7 +336,7 @@
 				// auto play
 				var autoPlay = wrapper.data('autoPlay');
 				if (autoPlay) {
-					wrapper.bbslider('autoPlayPause');
+					wrapper[pluginName]('autoPlayPause');
 				}// End autoplay
 
 				// Remove data
@@ -413,9 +416,9 @@
 					var tid = setInterval(function() {
 						// Check for random play
 						if (randomPlay) {
-							wrapper.bbslider('randomSlide');
+							wrapper[pluginName]('randomSlide');
 						} else {
-							wrapper.bbslider('next');
+							wrapper[pluginName]('next');
 						}
 					}, timer + duration); // End setinterval
 
@@ -441,7 +444,7 @@
 				var autoPlay = wrapper.data('autoPlay');
 				if (autoPlay) {
 					clearInterval(tid);
-					wrapper.bbslider('autoPlayStart');
+					wrapper[pluginName]('autoPlayStart');
 				}
 			});
  	  }, // End auto play reset
@@ -461,9 +464,9 @@
 					wrapper.data('cIndex',pIndex);
 					wrapper.data('pIndex',y);
 
-					wrapper.bbslider('forPage',y);
+					wrapper[pluginName]('forPage',y);
 				} else {
-					wrapper.bbslider('travel',y);
+					wrapper[pluginName]('travel',y);
 				}
 			});
 		}, // End randomSlide
@@ -603,9 +606,9 @@
 				link.appendTo(pagerWrap);
 			}// End for loop
 
-			pagerWrap.find('a').bbslider('bindpager');
+			pagerWrap.find('a')[pluginName]('bindpager');
 
-			wrapper.bbslider('pagerUpdate');
+			wrapper[pluginName]('pagerUpdate');
 		}, // End pager
 		pagerUpdate : function() {
 			var settings = this.data('settings');
@@ -634,19 +637,19 @@
 					pIndex = pagerIndex;
 					wrapper.data('pIndex',pIndex);
 
-					wrapper.bbslider('forPage',pIndex);
+					wrapper[pluginName]('forPage',pIndex);
 				} else if (pagerIndex < pIndex) { // New page is before current page, show previous animation
 
 					wrapper.data('cIndex',pIndex);
 					pIndex = pagerIndex;
 					wrapper.data('pIndex',pIndex);
 
-					wrapper.bbslider('backPage',pIndex);
+					wrapper[pluginName]('backPage',pIndex);
 
 				}// End pager check
 
 				if (pauseOnHit) {
-					wrapper.bbslider('autoPlayPause');
+					wrapper[pluginName]('autoPlayPause');
 				}
 
 				e.preventDefault();
@@ -722,20 +725,20 @@
 
 				// reset autoplay timer
 				if (wrapper.data('autoPlay')) {
-					wrapper.bbslider('autoPlayReset');
+					wrapper[pluginName]('autoPlayReset');
 				}
 
 				// Transition to new panel
 				wrapper.data('pIndex',pIndex);
 				if (movement == 'carousel' || movement == 'backward') {
-					wrapper.bbslider('backPage',pIndex);
+					wrapper[pluginName]('backPage',pIndex);
 				} else if (movement == 'end') { // It is first panel, loop to end
 					if (loopTrans) {
 						// use backward animation
-						wrapper.bbslider('backPage',pIndex);
+						wrapper[pluginName]('backPage',pIndex);
 					} else {
 						// use forward animation
-						wrapper.bbslider('forPage',pIndex);
+						wrapper[pluginName]('forPage',pIndex);
 					}
 				}
 
@@ -781,22 +784,22 @@
 
 				// reset autoplay timer
 				if (wrapper.data('autoPlay')) {
-					wrapper.bbslider('autoPlayReset');
+					wrapper[pluginName]('autoPlayReset');
 				}
 
 				// Transition to new panel
 				wrapper.data('pIndex',pIndex);
 				if (movement == 'carousel' || movement == 'forward') {
-					wrapper.bbslider('forPage',pIndex);
+					wrapper[pluginName]('forPage',pIndex);
 
 				} else if (movement == 'first') { // It is last panel, loop to beginning
 
 					if (loopTrans) {
 						// use forward animation
-						wrapper.bbslider('forPage',pIndex);
+						wrapper[pluginName]('forPage',pIndex);
 					} else {
 						// use backward animation
-						wrapper.bbslider('backPage',pIndex);
+						wrapper[pluginName]('backPage',pIndex);
 					}
 				}
 			});
@@ -820,7 +823,7 @@
 
 				// reset autoplay timer
 				if (wrapper.data('autoPlay')) {
-					wrapper.bbslider('autoPlayReset');
+					wrapper[pluginName]('autoPlayReset');
 				}
 
 				if (carousel) {
@@ -851,9 +854,9 @@
 						}
 					});
 					if (closest > goal) {
-						wrapper.bbslider('forPage',pIndex);
+						wrapper[pluginName]('forPage',pIndex);
 					} else {
-						wrapper.bbslider('backPage',pIndex);
+						wrapper[pluginName]('backPage',pIndex);
 					}
 
 				} else if (pIndex < xIndex) { // New page is after current page, show next animation
@@ -863,7 +866,7 @@
 					wrapper.data('pIndex',pIndex);
 					wrapper.data('cIndex',cIndex);
 
-					wrapper.bbslider('forPage',pIndex);
+					wrapper[pluginName]('forPage',pIndex);
 				} else if (pIndex > xIndex) { // New page is before current page, show previous animation
 					cIndex = pIndex;
 					pIndex = xIndex;
@@ -871,7 +874,7 @@
 					wrapper.data('pIndex',pIndex);
 					wrapper.data('cIndex',cIndex);
 
-					wrapper.bbslider('backPage',pIndex);
+					wrapper[pluginName]('backPage',pIndex);
 				}// End carousel check
 
 
@@ -895,7 +898,7 @@
 
 				// Load new image
 				if (settings.onDemand) {
-					panel.eq(pIndex).bbslider('loadImg');
+					panel.eq(pIndex)[pluginName]('loadImg');
 				} // End onDemand check
 
 				// Stop current animations
@@ -904,34 +907,34 @@
 				if (carousel) {
 					switch (transition) {
 						case 'fade':
-							wrapper.bbslider('carFade');
+							wrapper[pluginName]('carFade');
 							break;
 						case 'slide':
-							wrapper.bbslider('carSlideBack');
+							wrapper[pluginName]('carSlideBack');
 							break;
 						case 'none':
 						default:
-							wrapper.bbslider('carToggle');
+							wrapper[pluginName]('carToggle');
 					} // End transition switch
 
 				} else {
 					switch (transition) {
 						case 'fade':
-							wrapper.bbslider('fade');
+							wrapper[pluginName]('fade');
 							break;
 						case 'slide':
-							wrapper.bbslider('slideBack');
+							wrapper[pluginName]('slideBack');
 							break;
 						case 'slideVert':
-							wrapper.bbslider('slideVertBack');
+							wrapper[pluginName]('slideVertBack');
 							break;
 						case 'blind':
-							wrapper.bbslider('blindBack');
+							wrapper[pluginName]('blindBack');
 							break;
 						/*
 						case 'none':
 						default:
-							wrapper.bbslider('toggle');
+							wrapper[pluginName]('toggle');
 						*/
 					} // End transition switch
 				} // end carousel check
@@ -944,11 +947,11 @@
 				// Remove last panel class since we're moving backwards
 				wrapper.removeClass('last-panel');
 
-				wrapper.bbslider('pagerUpdate');
+				wrapper[pluginName]('pagerUpdate');
 
 				// dynamically change height
 				if (dynamicHeight && autoHeight) {
-					wrapper.bbslider('recalcHeight');
+					wrapper[pluginName]('recalcHeight');
 				}
 
 				// Callback on transition complete
@@ -980,7 +983,7 @@
 
 				// Load new image
 				if (settings.onDemand) {
-					panel.eq(pIndex).bbslider('loadImg');
+					panel.eq(pIndex)[pluginName]('loadImg');
 				} // End onDemand check
 
 				// Stop current animations
@@ -989,34 +992,34 @@
 				if (carousel) {
 					switch (transition) {
 						case 'fade':
-							wrapper.bbslider('carFade');
+							wrapper[pluginName]('carFade');
 							break;
 						case 'slide':
-							wrapper.bbslider('carSlideFor');
+							wrapper[pluginName]('carSlideFor');
 							break;
 						case 'none':
 						default:
-							wrapper.bbslider('carToggle');
+							wrapper[pluginName]('carToggle');
 					} // End transition switch
 
 				} else {
 					switch (transition) {
 						case 'fade':
-							wrapper.bbslider('fade');
+							wrapper[pluginName]('fade');
 							break;
 						case 'slide':
-							wrapper.bbslider('slideFor');
+							wrapper[pluginName]('slideFor');
 							break;
 						case 'slideVert':
-							wrapper.bbslider('slideVertFor');
+							wrapper[pluginName]('slideVertFor');
 							break;
 						case 'blind':
-							wrapper.bbslider('blindFor');
+							wrapper[pluginName]('blindFor');
 							break;
 						/*
 						case 'none':
 						default:
-							wrapper.bbslider('toggle');
+							wrapper[pluginName]('toggle');
 						*/
 					} // End transition switch
 				} // end carousel check
@@ -1029,11 +1032,11 @@
 				// Remove first panel class since we're moving forward
 				wrapper.removeClass('first-panel');
 
-				wrapper.bbslider('pagerUpdate');
+				wrapper[pluginName]('pagerUpdate');
 
 				// dynamically change height
 				if (dynamicHeight && autoHeight) {
-					wrapper.bbslider('recalcHeight');
+					wrapper[pluginName]('recalcHeight');
 				}
 
 				// Callback on transition complete
@@ -1684,14 +1687,14 @@
 	}; // End method
 
 
-	$.fn.bbslider = function(method) {
+	$.fn[pluginName] = function(method) {
 
 		if ( methods[method] ) {
 			return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
 		} else if ( typeof method === 'object' || ! method ) {
 			return methods.init.apply( this, arguments );
 		} else {
-			$.error( 'Method ' +  method + ' does not exist on jQuery.bbslider' );
+			$.error( 'Method ' +  method + ' does not exist on jQuery[pluginName]' );
 		}
 
 	}; // End slider
