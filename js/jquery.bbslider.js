@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.3.0
+ * 1.3.1
  *
  * Copyright (c) 2016 Richard Hung.
  *
@@ -148,7 +148,7 @@
 
 					if (settings.touch) {
 						onEvents = onEvents +'touchstart ';
-						offEvents = offEvents +'touchend ';
+						offEvents = offEvents +'touchend touchcancel ';
 					}
 					if (settings.dragControls) {
 						onEvents = onEvents +'mousedown ';
@@ -156,7 +156,7 @@
 					}
 
 					wrapper.on(onEvents,function(e) {
-						e.preventDefault();
+						// e.preventDefault();
 
 						var touch = e;
 						if (e.type != 'mousedown') {
@@ -177,7 +177,7 @@
 					}); // end touchmove
 					*/
 					wrapper.on(offEvents,function(e) {
-						e.preventDefault();
+						// e.preventDefault();
 
 						var touch = e;
 						offset = settings.dragoffset;
