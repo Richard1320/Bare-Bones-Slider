@@ -7,7 +7,7 @@
  * http://www.magicmediamuse.com/
  *
  * Version
- * 1.3.1
+ * 1.3.2
  *
  * Copyright (c) 2016 Richard Hung.
  *
@@ -35,7 +35,7 @@
 
 			// Set default parameters
 			var defaultSettings = {
-				page:             1,                   // Page to start on
+				start:            1,                   // Panel to start on
 				duration:         1000,                // Duration of transition
 				controls:         false,               // Display next / prev controls
 				controlsText:[                         // HTML output for controls
@@ -65,7 +65,9 @@
 				dragControls:     false,               // Allow mouse click and drag controls
 				dragoffset:       50,                  // Amount of pixels to swipe for drag controls
 				carousel:         false,               // Number of items per slide
-				carouselMove:     1,                   // Amount of slides to move per carousel prev / next
+        carouselMove:     1,                   // Amount of slides to move per carousel prev / next
+        maskImage:        '/images/mask.png',  // Image file for mask transition
+        maskSteps:        23,                  // Number of steps in mask image
 			}; // End options
 
 			// Override default options
@@ -76,8 +78,8 @@
 				// Create variables
 				var wrapper = $(this);
 				var panel   = wrapper.children();
-				var pIndex  = settings.page - 1; // New index
-				var cIndex  = settings.page - 1; // Current index (for animating out the current panel)
+				var pIndex  = settings.start - 1; // New index
+				var cIndex  = settings.start - 1; // Current index (for animating out the current panel)
 				var pCount  = panel.length; // number of pages
 
 				// Bind variables to object
@@ -292,7 +294,7 @@
 
 				// Remove CSS
 				wrapper.removeClass('bbslider-wrapper first-panel last-panel loop-true loop-false carousel ease linear ease-in ease-out ease-in-out easeInQuad easeInCubic easeInQuart easeInQuint easeInSine easeInExpo easeInCirc easeInBack easeOutQuad easeOutCubic easeOutQuart easeOutQuint easeOutSine easeOutExpo easeOutCirc easeOutBack easeInOutQuad easeInOutCubic easeInOutQuart easeInOutQuint easeInOutSine easeInOutExpo easeInOutCirc easeInOutBack');
-				panel.removeClass('panel active slide fade blind none slideVert').removeAttr('style');
+				panel.removeClass('panel active slide fade blind none slideVert mask').removeAttr('style');
 
 				// remove autoheight
 				wrapper.css('height','');
@@ -302,27 +304,10 @@
 					panel[pluginName]('loadImg');
 				} // End onDemand check
 
-				// Hide panels and show first panel
-				var transition = settings.transition;
-				switch (transition) {
-					case 'fade':
-						panel.removeClass('fade');
-						break;
-					case 'slide':
-						panel.removeClass('slide');
-						break;
-					case 'slideVert':
-						panel.removeClass('slideVert');
-						break;
-					case 'blind':
-						// Hide panels and show opening panel
-						panel.removeClass('blind');
-						wrapper.find('.panel-inner').contents().unwrap();
-						break;
-					case 'none':
-					default:
-						panel.removeClass('none');
-				} // End transition switch
+        // Remove blind inner panel
+        if (settings.transition == 'blind') {
+          wrapper.find('.panel-inner').contents().unwrap();
+        }
 
 				// Remove pager
 				if (settings.pager) {
@@ -483,7 +468,8 @@
 
 			panel.addClass('init '+ transition);
 
-			if (carousel) {
+
+      if (carousel) {
 
 				wrapper.addClass('carousel '+settings.easing);
 				var itemWidth = 100 / parseInt(carousel);
@@ -523,6 +509,24 @@
 					case 'fade':
 						panel.eq(pIndex).show().css('opacity',1);
 						break;
+          case 'mask':
+          
+            var timingSteps = settings.maskSteps - 1;
+            panel.eq(pIndex).show();
+            
+            wrapper.removeClass(settings.easing);
+
+            panel.css({
+              MaskImage:                      'url("' + settings.maskImage + '")',
+              webkitMaskImage:                'url("' + settings.maskImage + '")',
+              MaskSize:                       settings.maskSteps * 100 + '% 100%',
+              webkitMaskSize:                 settings.maskSteps * 100 + '% 100%',
+              WebkitTransitionTimingFunction: 'steps(' + timingSteps + ')',
+              MozTransitionTimingFunction:    'steps(' + timingSteps + ')',
+              OTransitionTimingFunction:      'steps(' + timingSteps + ')',
+              transitionTimingFunction:       'steps(' + timingSteps + ')',
+            });
+						break;
 					case 'slide':
 						panel.css('transform','translateX(100%)').eq(pIndex).css('transform','translateX(0%)');
 						break;
@@ -552,12 +556,12 @@
 						panel.children('.panel-inner').height(hi);
 						break;
 				} // End transition switch
-			} // end carousel check
-
-			// add active class to panel
+      } // end carousel check
+      
+      // add active class to panel
 			panel.eq(pIndex).addClass('active');
 
-			wrapper.add(panel).css({
+			panel.css({
 				WebkitTransitionDuration: duration / 1000 + 's',
 				MozTransitionDuration: duration / 1000 + 's',
 				OTransitionDuration: duration / 1000 + 's',
@@ -922,6 +926,9 @@
 						case 'fade':
 							wrapper[pluginName]('fade');
 							break;
+						case 'mask':
+							wrapper[pluginName]('mask');
+							break;
 						case 'slide':
 							wrapper[pluginName]('slideBack');
 							break;
@@ -1006,6 +1013,9 @@
 					switch (transition) {
 						case 'fade':
 							wrapper[pluginName]('fade');
+							break;
+						case 'mask':
+							wrapper[pluginName]('mask');
 							break;
 						case 'slide':
 							wrapper[pluginName]('slideFor');
@@ -1312,6 +1322,46 @@
 			// reset active slide
 			resetSlides = function() {
 				panel.eq(cIndex).addClass('init').hide();
+
+				resetTimeout = false;
+			};
+			resetTimeout = setTimeout(resetSlides,duration);
+
+			wrapper.data({
+				resetSlides:  resetSlides,
+				resetTimeout: resetTimeout
+			});
+
+
+		}, // End fade
+		mask : function() {
+			var wrapper  = this;
+			var panel    = wrapper.children('.panel');
+			var settings = wrapper.data('settings');
+			var cIndex   = wrapper.data('cIndex');
+			var pIndex   = wrapper.data('pIndex');
+			var duration = settings.duration;
+
+			var resetSlides  = wrapper.data('resetSlides');
+			var resetTimeout = wrapper.data('resetTimeout');
+
+			if (resetTimeout) {
+				resetSlides();
+				clearTimeout(resetTimeout);
+			}
+
+			// Remove current page
+			panel.eq(cIndex).removeClass('init');
+      panel.eq(cIndex).css('display'); // Recalculate computed style
+      panel.eq(cIndex).addClass('hide');
+
+
+			// display the page
+			panel.eq(pIndex).show();
+
+			// reset active slide
+			resetSlides = function() {
+				panel.eq(cIndex).removeClass('hide').hide();
 
 				resetTimeout = false;
 			};
