@@ -44,8 +44,6 @@
 				pager:            false,               // Create clickable pagination links
 				pagerWrap:        '.pager-wrap',       // Container for pagination (Created externally)
 				pagerText:        pageTextDefault,     // HTML output for pager
-				onDemand:         false,               // Create placeholder image and load on-demand
-				placeholder:      '/images/blank.gif', // Location of placeholder image
 				auto:             false,               // Pages play automatically
 				timer:            5000,                // Amount of time for autoplay
 				loop:             true,                // Loop back to the beginning
@@ -102,15 +100,6 @@
 				} else {
 					wrapper.addClass('loop-false');
 				}
-
-				// image load on demand
-				if (settings.onDemand) {
-					// Create placeholder
-					wrapper[pluginName]('placeholder');
-
-					// Only show one image
-					panel.eq(pIndex)[pluginName]('loadImg');
-				} // End onDemand check
 
 				// Create pager if true
 				if (settings.pager) {
@@ -244,7 +233,6 @@
 				var pCount        = panel.length; // number of pages
 				var settings      = wrapper.data('settings');
 				var pIndex        = wrapper.data('pIndex');
-				var onDemand      = settings.onDemand;
 				var pager         = settings.pager;
 				var autoHeight    = settings.autoHeight;
 				var callback      = settings.callbackUpdate;
@@ -255,15 +243,6 @@
 
 				// Apply basic CSS
 				panel.addClass('panel');
-
-				// on-demand image loading
-				if (onDemand) {
-					// Create placeholder
-					wrapper[pluginName]('placeholder');
-
-					// Only show one image
-					panel.eq(pIndex)[pluginName]('loadImg');
-				} // End onDemand check
 
 				// Create pager if true
 				if (pager) {
@@ -298,11 +277,6 @@
 
 				// remove autoheight
 				wrapper.css('height','');
-
-				// Show all images
-				if (wrapper.data('onDemand')) {
-					panel[pluginName]('loadImg');
-				} // End onDemand check
 
         // Remove blind inner panel
         if (settings.transition == 'blind') {
@@ -568,28 +542,6 @@
 				transitionDuration: duration / 1000 + 's',
 			});
 		}, // End setup
-		placeholder : function() {
-			var settings    = this.data('settings');
-			var placeholder = settings.placeholder;
-			var images      = this.children('.panel').find('img');
-			images.each(function() {
-				if(!$(this).attr('data-placeholder')) {
-					//Write the original source to a temporary location
-					$(this).attr('data-placeholder', $(this).attr('src'));
-					//Change the image source to the loading image
-					$(this).attr('src', placeholder);
-				}
-			});
- 	    }, // End placeholder
- 	    loadImg : function() {
-			var images = this.find('img');
-			// loop through images in panel
-			images.each(function() {
-				//alert('image found');
-				$(this).attr('src', $(this).attr('data-placeholder')).removeAttr('data-placeholder');
-			});
-
-		}, // End load image
 		pager : function() {
 			var wrapper   = this;
 			var panel     = wrapper.children('.panel');
@@ -900,11 +852,6 @@
 				// Add active class to panel
 				panel.removeClass('active').eq(pIndex).addClass('active');
 
-				// Load new image
-				if (settings.onDemand) {
-					panel.eq(pIndex)[pluginName]('loadImg');
-				} // End onDemand check
-
 				// Stop current animations
 				wrapper.children('.panel').stop(true,true);
 
@@ -987,11 +934,6 @@
 
 				// Add active class to panel
 				panel.removeClass('active').eq(pIndex).addClass('active');
-
-				// Load new image
-				if (settings.onDemand) {
-					panel.eq(pIndex)[pluginName]('loadImg');
-				} // End onDemand check
 
 				// Stop current animations
 				wrapper.children('.panel').stop(true,true);
