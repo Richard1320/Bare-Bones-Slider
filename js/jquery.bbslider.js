@@ -154,7 +154,7 @@
 
 						var touch = e;
 						if (e.type != 'mousedown') {
-							var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+							touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
 						}
 						// console.log(e);
 
@@ -165,7 +165,7 @@
 					/*
 					wrapper.on('touchmove',function(e) {
 						e.preventDefault();
-						var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+						touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
 						// console.log(touch.pageY+' '+touch.pageX);
 						alert('Touch move: '+touch.pageY+' '+touch.pageX);
 					}); // end touchmove
@@ -173,10 +173,10 @@
 					wrapper.on(offEvents,function(e) {
 						// e.preventDefault();
 
-						var touch = e;
+						touch = e;
 						offset = settings.dragoffset;
 						if (e.type != 'mouseup') {
-							var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+							touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
 							offset = settings.touchoffset;
 						}
 
@@ -842,12 +842,10 @@
 				var panel         = wrapper.children('.panel');
 				var settings      = wrapper.data('settings');
 				var pIndex        = wrapper.data('pIndex');
-				var loop          = settings.loop;
 				var transition    = settings.transition;
 				var carousel      = settings.carousel;
 				var autoHeight    = settings.autoHeight;
 				var dynamicHeight = settings.dynamicHeight;
-				var duration      = settings.duration;
 
 				// Add active class to panel
 				panel.removeClass('active').eq(pIndex).addClass('active');
@@ -863,7 +861,8 @@
 						case 'slide':
 							wrapper[pluginName]('carSlideBack');
 							break;
-						case 'none':
+            case 'none':
+              /* falls through */
 						default:
 							wrapper[pluginName]('carToggle');
 					} // End transition switch
@@ -925,15 +924,13 @@
 				var settings      = wrapper.data('settings');
 				var pCount        = wrapper.data('pCount');
 				var pIndex        = wrapper.data('pIndex');
-				var loop          = settings.loop;
 				var carousel      = settings.carousel;
 				var transition    = settings.transition;
 				var autoHeight    = settings.autoHeight;
 				var dynamicHeight = settings.dynamicHeight;
-				var duration      = settings.duration;
 
 				// Add active class to panel
-				panel.removeClass('active').eq(pIndex).addClass('active');
+        panel.removeClass('active').eq(pIndex).addClass('active');
 
 				// Stop current animations
 				wrapper.children('.panel').stop(true,true);
@@ -946,7 +943,8 @@
 						case 'slide':
 							wrapper[pluginName]('carSlideFor');
 							break;
-						case 'none':
+            case 'none':
+              /* falls through */
 						default:
 							wrapper[pluginName]('carToggle');
 					} // End transition switch
