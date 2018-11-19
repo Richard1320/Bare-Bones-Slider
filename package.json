@@ -2,13 +2,13 @@
   "name": "bare-bones-slider",
   "description": "Bare Bones Slider is a minimalistic jQuery slider. The biggest strength of this slider isn't what it does; it's what it doesn't do. By default, there's very little bloat so developers can focus on adding new functionality without having to undo the plugin's 'helpful' features. Beginners can use pre-coded options, while experts can control it using public methods. It even has a carousel for mutiple items per slide.",
   "keywords": [
-	"slider",
-	"animation",
-	"jquery-plugin",
-	"carousel",
-	"CSS3 transitions"
+    "slider",
+    "animation",
+    "jquery-plugin",
+    "carousel",
+    "CSS3 transitions"
   ],
-  "version": "1.3.2",
+  "version": "1.3.3",
   "dependencies": {
     "jquery": ">=1.7"
   },
@@ -17,12 +17,10 @@
     "email": "richardhung111@gmail.com",
     "url": "http://www.magicmediamuse.com/"
   },
-  "licenses": [
-	{
-		"type": "Creative Commons Attribution-NonCommercial 3.0 Unported License",
-		"url": "http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"
-	}
-  ],
+  "licenses": [{
+    "type": "Creative Commons Attribution-NonCommercial 3.0 Unported License",
+    "url": "http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"
+  }],
   "main": "js/jquery.bbslider.js",
   "style": "./css/jquery.bbslider.css",
   "repository": {
