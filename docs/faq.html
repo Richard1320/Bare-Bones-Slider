@@ -1,0 +1,116 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Frequently asked questions about Bare Bones Slider, a jQuery slider with very little bloat." />
+    <title>Frequently Asked Questions | Bare Bones Slider</title>
+    <link rel="shortcut icon" type="image/x-icon" href="//www.magicmediamuse.com/favicon.ico" />
+    <link type="text/css" href="/css/html5reset.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/fonts.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/shCoreDefault.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/lavalamp.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/jquery.bbslider.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/style.css" rel="stylesheet" media="screen" />
+
+
+</head>
+
+
+<body class="faq">
+
+<noscript><div class="no-js"><p>Please note that this plugin requires JavaScript. You must enable JavaScript to get the full experience.</p></div></noscript>
+
+<div id="wrapper">
+
+    <header>
+
+        <a href="/"><img src="/images/logo.png" alt="Bare Bones Slider" id="logo" /></a>
+        <nav>
+            <a href="#" id="nav-show"><span class="icon">&#xf0c9;</span> Menu</a>
+            <ul id="navlist">
+                <li ><a href="/index.html">Home</a></li><li ><a href="https://github.com/Richard1320/Bare-Bones-Slider/tags">Download</a></li><li ><a href="/options.html">Options</a></li><li ><a href="/methods.html">Methods</a></li><li ><a href="/examples.html">Examples</a></li><li ><a href="/faq.html">FAQ</a></li></ul>
+        </nav>
+
+        <div class="clear"></div>
+    </header>
+
+
+    <div id="container">
+
+        <div id="content">
+
+            <h1 class="page-title">Frequently Asked Questions</h1>
+
+            <h2>Bug Fixes</h2>
+
+            <h3>The slider is broken; animations are going completely haywire.</h3>
+            <p>Remove all styles from the slides and slider wrapper elements (The elements with "bbslider-wrapper" and "panel" classes). Pay special attention to the position, margin, and padding properties; margin and padding should be zero, and you should not touch position unless you know what you're doing. For an easier time, wrap your slide content in a third level wrapper and style that instead.</p>
+
+            <h3>The slider is cut off or completely gone.</h3>
+            <p>Make sure the slider has the correct width and height. Did you turn off autoHeight and forget to give it a height? If you have content that is not fully loaded when the slider is initiated, like images, autoHeight will get a weird value. Also check the width; the overflow property sometimes shrink-wraps the content.</p>
+
+            <h3>Nothing is happening.</h3>
+            <p>Did you include jQuery, jquery.bbslider.min.js and jquery.bbslider.css? By default, the slider doesn't have any functionality. You need to add controls or create your own functions to navigate it.</p>
+
+            <h3>The controls are not showing.</h3>
+            <p>Note about controls:</p>
+            <ul class="normList">
+                <li>The controls are hidden until you hover over them.</li>
+                <li>The previous control doesn't show on the first panel and next doesn't show on the last panel if loop is false.</li>
+                <li>The next control is 50px from the right of the slider. Without a width on the slider, it's going to be 100% of its container.</li>
+            </ul>
+
+            <h2>Code</h2>
+
+            <h3>How do I strip it down to the bare bones?</h3>
+            <p>Short version: turn off autoHeight and leave the rest default. Long version:</p>
+            <ul class="normList">
+                <li>onDemand: false</li>
+                <li>controls: false</li>
+                <li>autoHeight: false</li>
+                <li>pager: false</li>
+                <li>pageInfo: false</li>
+            </ul>
+            <p>Note: Turning off autoHeight will require you to set your own height.</p>
+
+            <h2>General</h2>
+
+            <h3>Why is this called bare bones slider?</h3>
+            <p>By default, there is very little code added. You can use different options to create pre-built controls or use your own functions to navigate the slider. This allows the developer to spend more time building functionality instead of trying to undo most of the defaults.</p>
+
+            <h3>What content can be put into the slider?</h3>
+            <p>Anything. If you can put it in HTML, you can put it in the slider.</p>
+
+            <h3>What structure does the slider have to be in?</h3>
+            <p>Anything should work as long as it has a parent-child relationship. However, all my testing was using div tags so that would be your safest bet.</p>
+
+            <h3>I have a bug report/question/suggestion/comment.</h3>
+            <p><a href="https://github.com/Richard1320/Bare-Bones-Slider/tags" target="_blank">https://github.com/Richard1320/Bare-Bones-Slider/tags</a>.</p>
+
+            <div class="clear"></div>
+        </div><!-- End Content -->
+
+        <div class="clear"></div>
+    </div><!-- End Container -->
+
+    <footer><p>Copyright &copy; 2018 <a href="https://www.magicmediamuse.com/" target="_blank">Richard Hung</a>. All Rights Reserved.</p></footer>
+
+</div><!-- End Wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery-3.5.1.min.js"><\/script>')</script>
+
+<script type="text/javascript" src="/js/lavalamp.js"></script>
+<script type="text/javascript" src="/js/jquery.bbslider.min.js"></script>
+<script type="text/javascript" src="/js/shCore.js"></script>
+<script type="text/javascript" src="/js/shBrushJScript.js"></script>
+<script type="text/javascript" src="/js/shBrushXml.js"></script>
+<script type="text/javascript" src="/js/scripts.js"></script>
+
+
+
+</body>
+</html>

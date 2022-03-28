@@ -1,0 +1,133 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bare Bones Slider is a minimalistic jQuery slider. This slider has very little bloat so developers can add new functionality without having to undo helpful plugin features. Beginners can use pre-coded options, while experts can control it using public methods." />
+    <title>Minimalistic jQuery Slider | Bare Bones Slider</title>
+    <link rel="shortcut icon" type="image/x-icon" href="//www.magicmediamuse.com/favicon.ico" />
+    <link type="text/css" href="/css/html5reset.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/fonts.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/shCoreDefault.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/lavalamp.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/jquery.bbslider.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/style.css" rel="stylesheet" media="screen" />
+
+
+</head>
+
+
+<body class="index">
+
+<noscript><div class="no-js"><p>Please note that this plugin requires JavaScript. You must enable JavaScript to get the full experience.</p></div></noscript>
+
+<div id="wrapper">
+
+    <header>
+
+        <a href="/"><img src="/images/logo.png" alt="Bare Bones Slider" id="logo" /></a>
+        <nav>
+            <a href="#" id="nav-show"><span class="icon">&#xf0c9;</span> Menu</a>
+            <ul id="navlist">
+                <li ><a href="/index.html">Home</a></li><li ><a href="https://github.com/Richard1320/Bare-Bones-Slider/tags">Download</a></li><li ><a href="/options.html">Options</a></li><li ><a href="/methods.html">Methods</a></li><li ><a href="/examples.html">Examples</a></li><li ><a href="/faq.html">FAQ</a></li></ul>
+        </nav>
+
+        <div class="clear"></div>
+    </header>
+
+
+    <div id="container">
+
+        <div id="content">
+
+            <div id="slider-wrapper">
+
+                <div id="frame">
+
+                    <div id="slider">
+                        <div><img src="/images/slideshow/alice.jpg" alt="" /></div><div><img src="/images/slideshow/magic-lake.jpg" alt="" /></div><div><img src="/images/slideshow/reflection.jpg" alt="" /></div><div><img src="/images/slideshow/underwater.jpg" alt="" /></div></div><!-- End slider -->
+                </div><!-- End frame -->
+
+            </div><!-- End slider wrapper -->
+
+            <h1 class="page-title">Welcome to Bare Bones Slider</h1>
+
+            <p>Bare Bones Slider is a minimalistic jQuery slider. The biggest strength of this slider isn't what it does; it's what it doesn't do. By default, there's very little bloat so developers can add new functionality without having to undo the plugin's "helpful" features. Beginners can use pre-coded options, while experts can control it using public methods.</p>
+
+            <p>Why should I use this slider?</p>
+            <ul class="normList">
+                <li>Carousel to show multiple slides simultaneously</li>
+                <li>Uses CSS3 transitions with advanced easing</li>
+                <li>Mask image for custom animations</li>
+                <li>Allows you to make your own pagination and controls</li>
+                <li>Public methods that you can call outside of the plugin</li>
+                <li>Variables can be retrieved at any time</li>
+                <li>Has touch controls for phones</li>
+                <li><a href="/options.html">Lots of options</a></li>
+            </ul>
+
+            <h2>How to install</h2>
+            <h3>1. Link files</h3>
+            <p>Bare Bones slider has a .js and a .css file in addition to the jQuery library.</p>
+            <pre class="brush: xml;">
+
+&lt;!-- Include the stylesheet --&gt;
+&lt;link type=&quot;text/css&quot; href=&quot;css/jquery.bbslider.css&quot; rel=&quot;stylesheet&quot; media=&quot;screen&quot; /&gt;
+
+&lt;!-- Include jQuery --&gt;
+&lt;script src=&quot;http://code.jquery.com/jquery-latest.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- Include the slider plugin --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.bbslider.min.js&quot;&gt;&lt;/script&gt;
+</pre>
+
+            <h3>2. Create HTML</h3>
+            <p>Create a container for the slider and children for the panels.</p>
+            <pre class="brush: xml;">
+
+&lt;div class=&quot;slider&quot;&gt;
+    &lt;div&gt;&lt;img src=&quot;images/image-1.jpg&quot; alt=&quot;first image&quot; /&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;img src=&quot;images/image-2.jpg&quot; alt=&quot;second image&quot; /&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;img src=&quot;images/image-3.jpg&quot; alt=&quot;third image&quot; /&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;img src=&quot;images/image-4.jpg&quot; alt=&quot;forth image&quot; /&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;img src=&quot;images/image-5.jpg&quot; alt=&quot;fifth image&quot; /&gt;&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+            <h3>3. Call the slider</h3>
+            <p>Call the slider after the HTML markup.</p>
+            <pre class="brush: js;">
+$('.slider').bbslider({
+	auto:  true,
+	timer: 3000,
+    loop:  true
+});
+</pre>
+
+
+            <div class="clear"></div>
+        </div><!-- End Content -->
+
+        <div class="clear"></div>
+    </div><!-- End Container -->
+
+    <footer><p>Copyright &copy; 2018 <a href="https://www.magicmediamuse.com/" target="_blank">Richard Hung</a>. All Rights Reserved.</p></footer>
+
+</div><!-- End Wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery-3.5.1.min.js"><\/script>')</script>
+
+<script type="text/javascript" src="/js/lavalamp.js"></script>
+<script type="text/javascript" src="/js/jquery.bbslider.min.js"></script>
+<script type="text/javascript" src="/js/shCore.js"></script>
+<script type="text/javascript" src="/js/shBrushJScript.js"></script>
+<script type="text/javascript" src="/js/shBrushXml.js"></script>
+<script type="text/javascript" src="/js/scripts.js"></script>
+
+
+
+</body>
+</html>

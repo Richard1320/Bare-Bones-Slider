@@ -1,0 +1,108 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A list of pre-made options for Bare Bones Slider, a jQuery slider with very little bloat." />
+    <title>Options | Bare Bones Slider</title>
+    <link rel="shortcut icon" type="image/x-icon" href="//www.magicmediamuse.com/favicon.ico" />
+    <link type="text/css" href="/css/html5reset.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/fonts.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/shCoreDefault.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/lavalamp.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/jquery.bbslider.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/style.css" rel="stylesheet" media="screen" />
+
+
+</head>
+
+
+<body class="options">
+
+<noscript><div class="no-js"><p>Please note that this plugin requires JavaScript. You must enable JavaScript to get the full experience.</p></div></noscript>
+
+<div id="wrapper">
+
+    <header>
+
+        <a href="/"><img src="/images/logo.png" alt="Bare Bones Slider" id="logo" /></a>
+        <nav>
+            <a href="#" id="nav-show"><span class="icon">&#xf0c9;</span> Menu</a>
+            <ul id="navlist">
+                <li ><a href="/index.html">Home</a></li><li ><a href="https://github.com/Richard1320/Bare-Bones-Slider/tags">Download</a></li><li ><a href="/options.html">Options</a></li><li ><a href="/methods.html">Methods</a></li><li ><a href="/examples.html">Examples</a></li><li ><a href="/faq.html">FAQ</a></li></ul>
+        </nav>
+
+        <div class="clear"></div>
+    </header>
+
+
+    <div id="container">
+
+        <div id="content">
+
+            <h1 class="page-title">Options</h1>
+
+            <div class="options-table">
+                <table class="border">
+                    <thead><tr><th>Option</th><th>Default</th><th>Parameters</th><th>Description</th><th>Notes</th></tr></thead>
+                    <tbody>
+                    <tr><td>autoHeight</td><td>true</td><td>true/false</td><td>Automatically sets the height to the largest panel.</td><td>The slider must have a set height. If you turn this off, you must set your own.</td></tr>
+                    <tr><td>dynamicHeight</td><td>false</td><td>true/false</td><td>Recalculates height based on current panel</td><td>Only works if autoHeight is true.</td></tr>
+                    <tr><td>start</td><td>1</td><td>Integer</td><td>The panel to start on.</td><td></td></tr>
+                    <tr><td>duration</td><td>1000</td><td>Integer</td><td>Duration of transition animation.</td><td></td></tr>
+                    <tr><td>easing</td><td>"ease"</td><td>ease, linear, ease-in, ease-out, ease-in-out, easeInQuad, easeInCubic, easeInQuart, easeInQuint, easeInSine, easeInExpo, easeInCirc, easeInBack, easeOutQuad, easeOutCubic, easeOutQuart, easeOutQuint, easeOutSine, easeOutExpo, easeOutCirc, easeOutBack, easeInOutQuad, easeInOutCubic, easeInOutQuart, easeInOutQuint, easeInOutSine, easeInOutExpo, easeInOutCirc, easeInOutBack</td><td>Easing of transition animation.</td><td></td></tr>
+                    <tr><td>controls</td><td>false</td><td>true/false</td><td>Creates prev/next controls.</td><td>You can create your own controls even if you turn this off.</td></tr>
+                    <tr><td>controlsText</td><td>['&lt;a class="prev control" href="#"&gt;Prev&lt;/a&gt;','&lt;a class="next control" href="#">Next&lt;/a&gt;']</td><td>array</td><td>HTML element output for controls</td><td></td></tr>
+                    <tr><td>pager</td><td>false</td><td>true/false</td><td>Creates pagination.</td><td>You can create your own pager even if you turn this off. The slider must have a unique id for this to work.</td></tr>
+                    <tr><td>pagerWrap</td><td>".pager-wrap"</td><td>Selector</td><td>The element to append the pager to.</td><td>Only used if pager is on. This must be already on the page when the slider is initiated.</td></tr>
+                    <tr><td>pagerText</td><td><a href="/examples.php#pre-built-controls-head">See example</a></td><td>Function</td><td>Function to return a single item of the pager</td><td></td></tr>
+                    <tr><td>maskImage</td><td>"/images/mask.png"</td><td>location</td><td>The mask image for the mask transition.</td><td></td></tr>
+                    <tr><td>maskSteps</td><td>23</td><td>Integer</td><td>The number of steps in your mask image.</td><td>Only used if transition type is mask.</td></tr>
+                    <tr><td>auto</td><td>false</td><td>true/false</td><td>Panels play automatically.</td><td></td></tr>
+                    <tr><td>timer</td><td>5000</td><td>Integer</td><td>Timer between slides for auto play.</td><td></td></tr>
+                    <tr><td>loop</td><td>true</td><td>true/false</td><td>Loops to beginning and end when controls are hit.</td><td></td></tr>
+                    <tr><td>loopTrans</td><td>true</td><td>true/false</td><td>Use the forward animation when looping back to beginning.</td><td></td></tr>
+                    <tr><td>transition</td><td>fade</td><td>none, fade, slide, slideVert, blind, mask</td><td>Transition effects between slides.</td><td></td></tr>
+                    <tr><td>pauseOnHit</td><td>true</td><td>true/false</td><td>Pause autoplay when someone uses controls or pager</td><td></td></tr>
+                    <tr><td>randomPlay</td><td>false</td><td>true/false</td><td>Slides are random on auto play</td><td></td></tr>
+                    <tr><td>touch</td><td>false</td><td>true/false</td><td>Use touch controls for phones and tablets</td><td></td></tr>
+                    <tr><td>touchoffset</td><td>50</td><td>Integer</td><td>Amount of pixels to touch drag before moving to new slide</td><td></td></tr>
+                    <tr><td>dragControls</td><td>false</td><td>true/false</td><td>Use mouse click-and-drag left / right controls</td><td></td></tr>
+                    <tr><td>dragoffset</td><td>50</td><td>Integer</td><td>Amount of pixels to mouse drag before moving to new slide</td><td></td></tr>
+                    <tr><td>carousel</td><td>false</td><td>Integer/false</td><td>Number of slides to show simultaneously</td><td>Blind and vertical slide transitions currently do not work.</td></tr>
+                    <tr><td>carouselMove</td><td>1</td><td>Integer</td><td>Number of slides to move for next / previous functions</td><td></td></tr>
+                    <tr><td>callbackStart</td><td>null</td><td>Function</td><td>Function to call when slider initializes</td><td></td></tr>
+                    <tr><td>callbackBefore</td><td>null</td><td>Function</td><td>Function to call before every slide</td><td>Return false to abort the slide transition. Type checking is active so make sure false is a boolean.</td></tr>
+                    <tr><td>callbackAfter</td><td>null</td><td>Function</td><td>Function to call after every slide</td><td></td></tr>
+                    <tr><td>callbackUpdate</td><td>null</td><td>Function</td><td>Function to call whenever the update method is called</td><td></td></tr>
+                    </tbody>
+                </table>
+
+            </div><!-- options table -->
+
+            <div class="clear"></div>
+        </div><!-- End Content -->
+
+        <div class="clear"></div>
+    </div><!-- End Container -->
+
+    <footer><p>Copyright &copy; 2018 <a href="https://www.magicmediamuse.com/" target="_blank">Richard Hung</a>. All Rights Reserved.</p></footer>
+
+</div><!-- End Wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery-3.5.1.min.js"><\/script>')</script>
+
+<script type="text/javascript" src="/js/lavalamp.js"></script>
+<script type="text/javascript" src="/js/jquery.bbslider.min.js"></script>
+<script type="text/javascript" src="/js/shCore.js"></script>
+<script type="text/javascript" src="/js/shBrushJScript.js"></script>
+<script type="text/javascript" src="/js/shBrushXml.js"></script>
+<script type="text/javascript" src="/js/scripts.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,1085 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Examples of how to use Bare Bones Slider, a jQuery slider with very little bloat." />
+    <title>Examples | Bare Bones Slider</title>
+    <link rel="shortcut icon" type="image/x-icon" href="//www.magicmediamuse.com/favicon.ico" />
+    <link type="text/css" href="/css/html5reset.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/fonts.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/shCoreDefault.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/lavalamp.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/jquery.bbslider.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/style.css" rel="stylesheet" media="screen" />
+
+
+</head>
+
+
+<body class="examples">
+
+<noscript><div class="no-js"><p>Please note that this plugin requires JavaScript. You must enable JavaScript to get the full experience.</p></div></noscript>
+
+<div id="wrapper">
+
+    <header>
+
+        <a href="/"><img src="/images/logo.png" alt="Bare Bones Slider" id="logo" /></a>
+        <nav>
+            <a href="#" id="nav-show"><span class="icon">&#xf0c9;</span> Menu</a>
+            <ul id="navlist">
+                <li ><a href="/index.html">Home</a></li><li ><a href="https://github.com/Richard1320/Bare-Bones-Slider/tags">Download</a></li><li ><a href="/options.html">Options</a></li><li ><a href="/methods.html">Methods</a></li><li ><a href="/examples.html">Examples</a></li><li ><a href="/faq.html">FAQ</a></li></ul>
+        </nav>
+
+        <div class="clear"></div>
+    </header>
+
+
+    <div id="container">
+
+        <div id="content">
+
+            <h1 class="page-title">Examples</h1>
+
+            <div id="example-nav-wrapper">
+                <a href="#" id="example-nav-show" class="icon"></a>
+                <ol class="normList" id="example-nav">
+                    <li><a href="#default-head">Default</a></li>
+                    <li><a href="#autoplay-head">Autoplay</a></li>
+                    <li><a href="#pagination-head">Pagination</a>
+                    </li>
+                    <li><a href="#controls-head">Controls</a>
+                        <ul class="normList">
+                            <li><a href="#pre-built-controls-head">Pre-built Controls</a></li>
+                            <li><a href="#custom-controls-head">Custom Controls</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#transitions-head">Transitions</a>
+                        <ul class="normList">
+                            <li><a href="#none-head">None</a></li>
+                            <li><a href="#fade-head">Fade</a></li>
+                            <li><a href="#slide-head">Slide</a></li>
+                            <li><a href="#slideVert-head">Slide Vertical</a></li>
+                            <li><a href="#blind-head">Blind</a></li>
+                            <li><a href="#mask-head">Mask</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#carousel-head">Carousel</a>
+                        <ul class="normList">
+                            <li><a href="#carousel-none-head">None</a></li>
+                            <li><a href="#carousel-fade-head">Fade</a></li>
+                            <li><a href="#carousel-slide-head">Slide</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#callback-head">Callback</a></li>
+                    <li><a href="#update-head">Update</a></li>
+                    <li><a href="#touch-head">Touch</a></li>
+                </ol>
+
+            </div><!-- end example nav wrapper -->
+
+            <div id="example-content">
+
+                <h2 id="default-head">Default</h2>
+                <p>Doesn't do anything without controls, pagination, or autoplay.</p>
+
+                <div id="default">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;default&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#default').bbslider();
+</pre>
+
+                <h2 id="autoplay-head">Autoplay</h2>
+                <p>Slides play automatically.</p>
+
+                <div id="auto">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;auto&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#auto').bbslider({
+	auto: true,
+	timer:3000,
+	loop:true
+});
+</pre>
+
+                <h2 id="pagination-head">Pagination</h2>
+                <p>Bare Bones Slider allows the slider to create pagination for you. You can use a function to return the HTML of the pager element.</p>
+                <p>You can also use the travel method to use your own JavaScript to move between panels.</p>
+
+
+                <div id="pager">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <div id="pagination-wrapper"></div><pre class="brush: xml;">
+	&lt;div id=&quot;pager&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div id=&quot;pagination-wrapper&quot;&gt;&lt;/div&gt;</pre>
+                <pre class="brush: js;">
+var pageTextDefault = function (pageNum, wrapperID, title) {
+  if (!title) {
+    title = pageNum;
+  }
+  return $('<div class="bb-link-wrapper"><a href="#" class="bb-pager-link">' + title + '</a></div>');
+};
+
+$('#pager').bbslider({
+	pager:	  true,
+	pagerWrap:  '#pagination-wrapper',
+	pagerText: pagerHTML
+});
+</pre>
+
+                <h2 id="controls-head">Controls</h2>
+
+                <h3 id="pre-built-controls-head">Pre-built Controls</h3>
+                <p>Add next and previous controls that appear when hovered on the sides of the slider. The previous control doesn't show on the first panel and next doesn't show on the last panel if loop is false.</p>
+
+                <div id="controls">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;controls&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#controls').bbslider({
+	controls: true,
+	loop:     false,
+	controlsText:[
+		'<a class="prev control fa fa-angle-left" href="#"></a>',
+		'<a class="next control fa fa-angle-right" href="#"></a>'],
+});
+</pre>
+
+                <h3 id="custom-controls-head">Custom Controls</h3>
+                <p>You can create your own custom next and previous controls using public methods.</p>
+
+                <div id="custom-controls">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;custom-controls&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#custom-controls').bbslider();
+$('#prev').click(function(e) {
+	$('#custom-controls').bbslider('prev');
+	e.preventDefault();
+});
+$('#next').click(function(e) {
+	$('#custom-controls').bbslider('next');
+	e.preventDefault();
+});
+</pre>
+
+                <h2 id="transitions-head">Transitions</h2>
+                <h3 id="none-head">None</h3>
+
+                <div id="none">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;none&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#none').bbslider({
+	controls:   true,
+	transition: 'none',
+	controlsText:[
+		'<a class="prev control fa fa-angle-left" href="#"></a>',
+		'<a class="next control fa fa-angle-right" href="#"></a>'],
+
+});
+</pre>
+
+                <h3 id="fade-head">Fade</h3>
+
+                <div id="fade">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;fade&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#fade').bbslider({
+	controls:   true,
+	transition: 'fade',
+	duration:   1000,
+	controlsText:[
+		'<a class="prev control fa fa-angle-left" href="#"></a>',
+		'<a class="next control fa fa-angle-right" href="#"></a>'],
+
+});
+</pre>
+
+                <h3 id="slide-head">Slide</h3>
+
+                <div id="slide">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;slide&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#slide').bbslider({
+	controls:   true,
+	transition: 'slide',
+	duration:   1000,
+	controlsText:[
+		'<a class="prev control fa fa-angle-left" href="#"></a>',
+		'<a class="next control fa fa-angle-right" href="#"></a>'],
+
+});
+</pre>
+
+                <h3 id="slideVert-head">Slide Vertical</h3>
+
+                <div id="slideVert">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;slideVert&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#slideVert').bbslider({
+	controls:   true,
+	transition: 'slideVert',
+	duration:   1000,
+	controlsText:[
+		'<a class="prev control fa fa-angle-left" href="#"></a>',
+		'<a class="next control fa fa-angle-right" href="#"></a>'],
+
+});
+</pre>
+
+                <h3 id="blind-head">Blind</h3>
+
+                <div id="blind">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;blind&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#blind').bbslider({
+	controls:   true,
+	transition: 'blind',
+	duration:   1000,
+	controlsText:[
+		'<a class="prev control fa fa-angle-left" href="#"></a>',
+		'<a class="next control fa fa-angle-right" href="#"></a>'],
+
+});
+</pre>
+
+                <h3 id="mask-head">Mask</h3>
+
+                <div id="mask">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;mask&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#mask').bbslider({
+	controls:   true,
+  transition: 'mask',
+  maskImage: '/images/mask.png',
+  duration:   1000,
+  maskSteps: 23,
+	controlsText:[
+		'<a class="prev control fa fa-angle-left" href="#"></a>',
+		'<a class="next control fa fa-angle-right" href="#"></a>'],
+
+});
+</pre>
+
+                <h2 id="carousel-head">Carousels</h2>
+                <p>Blind and vertical slide transitions are currently not available. Blind transitions with carousel will never be available without DOM manipulation, which this slider doesn't do. Vertical carousels may be added in the future if enough people request it.</p>
+
+                <h3 id="carousel-none-head">None</h3>
+
+                <div id="carousel-none">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;carousel-none&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#carousel-none').bbslider({
+	controls:     true,
+	transition:   'none',
+	carousel:     3,
+	carouselMove: 2,
+	controlsText:[
+		'<a class="prev control fa fa-angle-left" href="#"></a>',
+		'<a class="next control fa fa-angle-right" href="#"></a>'],
+
+});
+</pre>
+
+                <h3 id="carousel-fade-head">Fade</h3>
+                <p>Cross-fading carousels are not possible with my slider so fade transition requires double the duration time.</p>
+
+                <div id="carousel-fade">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;carousel-fade&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#carousel-fade').bbslider({
+	controls:     true,
+	transition:   'fade',
+	duration:     1000,
+	carousel:     3,
+	carouselMove: 2,
+	controlsText:[
+		'<a class="prev control fa fa-angle-left" href="#"></a>',
+		'<a class="next control fa fa-angle-right" href="#"></a>'],
+
+});
+</pre>
+
+                <h3 id="carousel-slide-head">Slide</h3>
+
+                <div id="carousel-slide">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;carousel-slide&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#carousel-slide').bbslider({
+	controls:     true,
+	transition:   'slide',
+	duration:     1000,
+	carousel:     3,
+	carouselMove: 2,
+	controlsText:[
+		'<a class="prev control fa fa-angle-left" href="#"></a>',
+		'<a class="next control fa fa-angle-right" href="#"></a>'],
+
+});
+</pre>
+
+                <h2 id="callback-head">Callback</h2>
+                <p>Function that activates after every slide.</p>
+
+                <div id="callback">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <div id="call-log"></div><pre class="brush: xml;">
+	&lt;div id=&quot;callback&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div id=&quot;call-log&quot;&gt;&lt;/div&gt;</pre><pre class="brush: js;">
+var callBefore = function() {
+	var pCount = $('#callback').data('pCount');
+	var pIndex = $('#callback').data('pIndex');
+	var panel  = pIndex + 1;
+	$('#call-log').append('&lt;p&gt;Panel ' + panel + ' of ' + pCount + ' total panels has ended.&lt;/p&gt;');
+};
+var callAfter = function() {
+	var pCount = $('#callback').data('pCount');
+	var pIndex = $('#callback').data('pIndex');
+	var panel  = pIndex + 1;
+	$('#call-log').append('&lt;p&gt;Panel ' + panel + ' of ' + pCount + ' total panels has started.&lt;/p&gt;');
+};
+
+$('#callback').bbslider({
+	controls: true,
+	callbackBefore: callBefore,
+	callbackAfter: callAfter,
+	controlsText:[
+		'<a class="prev control fa fa-angle-left" href="#"></a>',
+		'<a class="next control fa fa-angle-right" href="#"></a>'],
+
+});
+</pre>
+
+                <h2 id="update-head">Update</h2>
+                <p>Change up the content and then update the slider to reflect those changes.</p>
+
+                <div id="update">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+
+                <p><a href="#" id="add-slides">Add Slides</a> | <a href="#" id="update-slider">Update Slider</a></p>
+                <p id="update-info"></p>
+                <div id="update-pager"></div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;update&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;#&quot; id=&quot;add-slides&quot;&gt;Add Slides&lt;/a&gt; | &lt;a href=&quot;#&quot; id=&quot;update-slider&quot;&gt;Update Slider&lt;/a&gt;&lt;/p&gt;
+&lt;p id=&quot;update-info&quot;&gt;&lt;/p&gt;
+&lt;div id=&quot;update-pager&quot;&gt;&lt;/div&gt;
+</pre><pre class="brush: js;">
+$('#update').bbslider({
+	pager:	 true,
+	pagerWrap: '#update-pager',
+	pageInfo:  true,
+	infoWrap:  '#update-info'
+});
+$('#add-slides').click(function(e) {
+	var wrapper = $('#update');
+	for (var i = 0; i &lt; 10; i++) {
+		wrapper.append('&lt;div&gt;&lt;img src="http://lorempixel.com/507/338/" alt="placeholder" width="507" height="338" /&gt;&lt;/div&gt;');
+	}
+	e.preventDefault();
+});
+$('#update-slider').click(function(e) {
+	$('#update').bbslider('update');
+	e.preventDefault();
+});
+</pre>
+
+                <h2 id="touch-head">Touch</h2>
+                <p>Allows swiping left or right to move between slides on phones and tablets. Recommended to move controls outside the slider.</p>
+
+                <div id="touch">
+                    <div title="Glasses">
+                        <img src="/images/demo/131645522.jpg" alt="glasses" width="507" height="338" />
+                    </div>
+                    <div title="Mouse">
+                        <img src="/images/demo/138071106.jpg" alt="mouse" width="507" height="338" />
+                    </div>
+                    <div title="Business">
+                        <img src="/images/demo/143177148.jpg" alt="business" width="507" height="338" />
+                    </div>
+                    <div title="Monkey">
+                        <img src="/images/demo/143921954.jpg" alt="monkey" width="507" height="338" />
+                    </div>
+                    <div title="Lion">
+                        <img src="/images/demo/200355486-002.jpg" alt="lion" width="507" height="338" />
+                    </div>
+                    <div title="Cows">
+                        <img src="/images/demo/96502411.jpg" alt="cows" width="507" height="338" />
+                    </div>
+                </div>
+                <pre class="brush: xml;">
+	&lt;div id=&quot;touch&quot;&gt;
+		&lt;div title=&quot;Glasses&quot;&gt;
+			&lt;img src=&quot;/images/demo/131645522.jpg&quot; alt=&quot;glasses&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Mouse&quot;&gt;
+			&lt;img src=&quot;/images/demo/138071106.jpg&quot; alt=&quot;mouse&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Business&quot;&gt;
+			&lt;img src=&quot;/images/demo/143177148.jpg&quot; alt=&quot;business&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Monkey&quot;&gt;
+			&lt;img src=&quot;/images/demo/143921954.jpg&quot; alt=&quot;monkey&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Lion&quot;&gt;
+			&lt;img src=&quot;/images/demo/200355486-002.jpg&quot; alt=&quot;lion&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+		&lt;div title=&quot;Cows&quot;&gt;
+			&lt;img src=&quot;/images/demo/96502411.jpg&quot; alt=&quot;cows&quot; width=&quot;507&quot; height=&quot;338&quot; /&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</pre><pre class="brush: js;">
+$('#touch').bbslider({
+	controls:	false,
+	touch:	   true,
+	transition:  'slide',
+	touchoffset: 50
+});
+</pre>
+
+            </div><!-- end example content -->
+
+
+            <div class="clear"></div>
+        </div><!-- End Content -->
+
+        <div class="clear"></div>
+    </div><!-- End Container -->
+
+    <footer><p>Copyright &copy; 2018 <a href="https://www.magicmediamuse.com/" target="_blank">Richard Hung</a>. All Rights Reserved.</p></footer>
+
+</div><!-- End Wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery-3.5.1.min.js"><\/script>')</script>
+
+<script type="text/javascript" src="/js/lavalamp.js"></script>
+<script type="text/javascript" src="/js/jquery.bbslider.min.js"></script>
+<script type="text/javascript" src="/js/shCore.js"></script>
+<script type="text/javascript" src="/js/shBrushJScript.js"></script>
+<script type="text/javascript" src="/js/shBrushXml.js"></script>
+<script type="text/javascript" src="/js/scripts.js"></script>
+
+
+
+</body>
+</html>

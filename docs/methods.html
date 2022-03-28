@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A list of public methods you can trigger for Bare Bones Slider, a jQuery slider with very little bloat." />
+    <title>Methods | Bare Bones Slider</title>
+    <link rel="shortcut icon" type="image/x-icon" href="//www.magicmediamuse.com/favicon.ico" />
+    <link type="text/css" href="/css/html5reset.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/fonts.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/shCoreDefault.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/lavalamp.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/jquery.bbslider.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="/css/style.css" rel="stylesheet" media="screen" />
+
+
+</head>
+
+
+<body class="methods">
+
+<noscript><div class="no-js"><p>Please note that this plugin requires JavaScript. You must enable JavaScript to get the full experience.</p></div></noscript>
+
+<div id="wrapper">
+
+    <header>
+
+        <a href="/"><img src="/images/logo.png" alt="Bare Bones Slider" id="logo" /></a>
+        <nav>
+            <a href="#" id="nav-show"><span class="icon">&#xf0c9;</span> Menu</a>
+            <ul id="navlist">
+                <li ><a href="/index.html">Home</a></li><li ><a href="https://github.com/Richard1320/Bare-Bones-Slider/tags">Download</a></li><li ><a href="/options.html">Options</a></li><li ><a href="/methods.html">Methods</a></li><li ><a href="/examples.html">Examples</a></li><li ><a href="/faq.html">FAQ</a></li></ul>
+        </nav>
+
+        <div class="clear"></div>
+    </header>
+
+
+    <div id="container">
+
+        <div id="content">
+
+            <h1 class="page-title">Methods</h1>
+
+            <h2>Public Methods</h2>
+            <p>These functions can be called after initialization to move to various panels. You can also bind your own pagination links; read the pagination section on the <a href="/examples.html">examples page</a> for the syntax.</p>
+            <pre class="brush: js;">
+$('#slider').bbslider('next');
+$('#slider').bbslider('prev');
+$('#slider').bbslider('randomSlide');
+$('#slider').bbslider('play');
+$('#slider').bbslider('pause');
+$('#slider').bbslider('destroy');
+$('#slider').bbslider('update');
+$('#slider').bbslider('travel',2);
+$('#clicker').bbslider('bindpager');
+</pre>
+
+            <h2>Getting data</h2>
+            <p>Data is bound to the slider object and you can retrieve those values anytime.</p>
+            <h3>Data variable</h3>
+            <ul class="normList">
+                <li>pIndex</li>
+                <li>cIndex</li>
+                <li>pCount</li>
+                <li>autoPlay</li>
+                <li>settings</li>
+            </ul>
+            <h3>Settings variable</h3>
+            <p>All options</p>
+
+            <p>autoPlay is whether or not the slider is playing. pIndex is the index for the current panel. cIndex is the index for the previous panel. pCount is for the total number of panels. Settings holds the options set at initialization.</p>
+
+            <pre class="brush: js;">
+var pIndex   = $('#slider').data('pIndex');
+var cIndex   = $('#slider').data('cIndex');
+var pCount   = $('#slider').data('pCount');
+var settings = $('#slider').data('settings');
+var duration = settings.duration;
+</pre>
+
+            <h2>Setting data</h2>
+            <p>You can set any of the above data at any time. Changing the duration, timer, loopTrans, loop, or easing should be safe, but the rest are important to the slider's initialization and should only be for advanced users. Setting the data manually could break the slider.</p>
+            <pre class="brush: js;">
+var settings = $('#slider').data('settings');
+
+settings.duration = 5000;
+
+$('#slider').data('settings',settings);
+</pre>
+
+            <div class="clear"></div>
+        </div><!-- End Content -->
+
+        <div class="clear"></div>
+    </div><!-- End Container -->
+
+    <footer><p>Copyright &copy; 2018 <a href="https://www.magicmediamuse.com/" target="_blank">Richard Hung</a>. All Rights Reserved.</p></footer>
+
+</div><!-- End Wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery-3.5.1.min.js"><\/script>')</script>
+
+<script type="text/javascript" src="/js/lavalamp.js"></script>
+<script type="text/javascript" src="/js/jquery.bbslider.min.js"></script>
+<script type="text/javascript" src="/js/shCore.js"></script>
+<script type="text/javascript" src="/js/shBrushJScript.js"></script>
+<script type="text/javascript" src="/js/shBrushXml.js"></script>
+<script type="text/javascript" src="/js/scripts.js"></script>
+
+
+
+</body>
+</html>
